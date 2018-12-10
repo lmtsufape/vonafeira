@@ -11,8 +11,8 @@
                     <form class="form-horizontal" method="POST" action="{{action('EventoController@cadastrar')}}">
                         {{ csrf_field() }}
                         <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo }}">
-                            
-                        
+
+
                         <div class="form-group{{ $errors->has('data_evento') ? ' has-error' : '' }}">
                             <label for="data_evento" class="col-md-4 control-label">Data do Evento</label>
                             <div class="col-md-6">
@@ -36,6 +36,19 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('aberto') ? ' has-error' : '' }}">
+                            <label for="aberto" class="col-md-4 control-label">Evento aberto?</label>
+
+                            <div class="col-md-3">
+                                <select id="aberto" class="form-control" name="aberto" required autofocus>
+                                    <option value="" selected disabled hidden>Selecionar</option>
+                                    <option value="True">Sim</option>
+                                    <option value="False">Não</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
