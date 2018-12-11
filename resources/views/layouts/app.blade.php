@@ -88,10 +88,10 @@
                                         <a href="/gruposConsumo">Meus Grupos de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/unidadesVenda">Unidades de Venda</a>
+                                        <a href="/selecionarGrupo">Entrar em Grupo de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/selecionarGrupo">Selecionar Grupo de Consumo</a>
+                                        <a href="/unidadesVenda">Unidades de Venda</a>
                                     </li>
                                 </ul>
                             </li>
@@ -131,7 +131,7 @@
                             </li>
                         @endif
                     </ul>
-                    
+
                 </div>
                 <hr style="margin-top: 0px; padding-bottom: -10px">
                 <div name='navbar' style="padding-bottom: 22px" align:center>

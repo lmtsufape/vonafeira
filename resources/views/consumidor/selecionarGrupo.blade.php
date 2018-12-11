@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Selecionar Grupo de Consumo
+    <a href="/home">Painel</a> > Entrar em Grupo de Consumo
 @endsection
 
 @section('content')
@@ -9,15 +9,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Seleção de Grupo de Consumo</h1></div>
+                <div class="panel-heading"><h1>Grupos de Consumo</h1></div>
                 <div class="panel-body">
-                    <h3>Selecione o grupo que queira fazer parte</h3>
-                    </br>
+                    <h3>Selecione o grupo que queira fazer parte:</h3>
                     <form class="form-horizontal" method="POST" action="{{action('ConsumidorController@cadastrar')}}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">Grupo de Consumo</label>
                             <div class="col-md-6">
                                 <select name="grupoConsumo">
                                     <option value="" selected disabled hidden>Selecione</option>
@@ -31,7 +29,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Cadastrar
+                                    Entrar
                                 </button>
                             </div>
                         </div>
