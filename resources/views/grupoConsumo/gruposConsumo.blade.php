@@ -23,7 +23,7 @@
                     </div>
                     @else
                         <table class="table table-hover">
-                            
+
                             <tr>
                                 <th>Cod</th>
                                 <th>Nome</th>
@@ -33,7 +33,7 @@
                                 <th>Limite para pedidos</th>
                                 <th colspan="2">Ação</th>
                             </tr>
-                            
+
                             @forelse ($gruposConsumo as $grupoConsumo)
                             <tr>
                                 <td>{{ $grupoConsumo->id }}</td>
@@ -42,10 +42,24 @@
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td><a class="btn btn-success" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td> 
-                            </tr>   
+                                <td><a class="btn btn-success" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td>
+                            </tr>
                             @endforeach
-                        </table>    
+
+                            @forelse ($gruposConsumoParticipante as $grupoConsumo)
+                            <tr>
+                                <td>{{ $grupoConsumo->id }}</td>
+                                <td>{{ $grupoConsumo->name }}</td>
+                                <td>{{ $grupoConsumo->descricao }}</td>
+                                <td>{{ $grupoConsumo->periodo }}</td>
+                                <td>{{ $grupoConsumo->dia_semana }}</td>
+                                <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
+                                <td></td>
+                            </tr>
+                            @endforeach
+
+
+                        </table>
                     @endif
                 </div>
                 <div class="panel-footer">

@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class GrupoConsumoController extends Controller
 {
-    
+
     public function novo(){
-        return view("grupoConsumo.adicionarGrupoConsumo"); 
+        return view("grupoConsumo.adicionarGrupoConsumo");
     }
 
     public function cadastrar(Request $request){
@@ -20,7 +20,7 @@ class GrupoConsumoController extends Controller
             'name' => 'required|unique:grupo_consumos|min:8|max:191',
             'descricao' => 'min:8|max:191'
         ]);
-        
+
         if($validator->fails()){
             return redirect()->back()->withErrors($validator->errors());
         }
@@ -36,16 +36,16 @@ class GrupoConsumoController extends Controller
         // Redireciona para a listagem de grupo de Consumos, passando o nome do grupo que foi cadastrado
         return redirect()
                 ->action('GrupoConsumoController@listar')
-                ->withInput();        
+                ->withInput();
     }
 
     public function editar($id) {
-        $grupoConsumo = \projetoGCA\GrupoConsumo::find($id);  
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($id);
         return view("grupoConsumo.editarGrupoConsumo", ['grupoConsumo' => $grupoConsumo]);
-    } 
+    }
 
     public function atualizar(Request $request){
-        
+
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->id);
         if($grupoConsumo->nome == $request->nome){
             $grupoConsumo->name = $request->name;
@@ -75,7 +75,13 @@ class GrupoConsumoController extends Controller
     public function listar(){
         if(Auth::check()){
             $gruposConsumo = \projetoGCA\GrupoConsumo::where('coordenador_id', '=', Auth::user()->id)->get();
-            return view("grupoConsumo.gruposConsumo", ['gruposConsumo' => $gruposConsumo]);  
+
+            $gruposConsumoParticipante = \projetoGCA\GrupoConsumo::whereHas('consumidores', function($query){
+                $query->where('user_id', '=', Auth::user()->id);
+            })->get();
+
+            return view("grupoConsumo.gruposConsumo", ['gruposConsumo' => $gruposConsumo,
+                                                       'gruposConsumoParticipante' => $gruposConsumoParticipante]);
         }
         return view("/home");
     }
