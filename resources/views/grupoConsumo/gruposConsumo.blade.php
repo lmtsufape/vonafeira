@@ -16,6 +16,12 @@
                         O grupo foi adicionado.
                     </div>
                 @endif
+                @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <strong>Sucesso!</strong>
+                        {!! \Session::get('success') !!}
+                    </div>
+                @endif
                 <div class="panel-body">
                     @if(count($gruposConsumo) == 0)
                     <div class="alert alert-danger">
@@ -54,7 +60,7 @@
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td></td>
+                                <td><a class="btn btn-danger" href="/grupoconsumo/sair/{{$grupoConsumo->id}}">Sair</a></td>
                             </tr>
                             @endforeach
 

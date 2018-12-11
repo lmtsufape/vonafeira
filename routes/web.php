@@ -65,6 +65,7 @@ Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar');
 Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar");
 Route::post('/salvarGrupoConsumo',  'GrupoConsumoController@salvar');
 Route::get('/gruposConsumo', 'GrupoConsumoController@listar');
+Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair');
 
 // Rotas para Eventos
 Route::post('/cadastrarEvento', 'EventoController@cadastrar');
