@@ -75,6 +75,7 @@ Route::post('/salvarEvento',  'EventoController@salvar');
 Route::get('/eventos/{idGrupoConsumo}', 'EventoController@listar');
 Route::get('/evento/pedidos/{evento_id}', 'EventoController@pedidos');
 Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido');
+Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento');
 Auth::routes();
 
 // Rotas para Loja

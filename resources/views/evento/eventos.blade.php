@@ -28,6 +28,12 @@
                                 Não existem eventos cadastrados.
                         </div>
                     @else
+                    @if (\Session::has('success'))
+                        <div class="alert alert-success">
+                            <strong>Sucesso!</strong>
+                            {!! \Session::get('success') !!}
+                        </div>
+                    @endif
                     <table class="table table-hover">
 
                         <tr>
@@ -38,6 +44,7 @@
                             <th>Data Fim Pedidos</th>
                             <th>Aberto</th>
                             <th>Pedidos</th>
+                            <th>Ações</th>
 
                         </tr>
 
@@ -56,7 +63,12 @@
                                 Não
                               @endif
                             </td>
-                            <td><a class="btn btn-info" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+                            <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+                            @if($evento->estaAberto)
+                                <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>
+                            @else
+                                <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>

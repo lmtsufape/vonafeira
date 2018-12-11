@@ -154,4 +154,11 @@ class EventoController extends Controller
         return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
     }
 
+    public function fecharEvento($eventoId){
+        $evento = \projetoGCA\Evento::find($eventoId);
+        $evento->estaAberto = False;
+        $evento->update();
+        return back()->with('success','Evento '.$evento->id.' fechado.');
+    }
+
 }
