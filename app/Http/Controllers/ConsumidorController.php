@@ -38,9 +38,13 @@ class ConsumidorController extends Controller
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+            $grupoConsumo = GrupoConsumo::find($idGrupoConsumo);
             $consumidores = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->get();
-            #return var_dump($consumidores[0]->usuario->name);
-            return view("consumidor.consumidores", ['consumidores' => $consumidores]);
+            return view(
+                "consumidor.consumidores",
+                ['consumidores' => $consumidores,
+                'grupoConsumo' => $grupoConsumo]
+            );
         }
         return view("/home");
     }

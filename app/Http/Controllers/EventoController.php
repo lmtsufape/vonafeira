@@ -114,13 +114,16 @@ class EventoController extends Controller
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+            $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $idGrupoConsumo]);
+            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);  
         }
         return view("/home");
     }
 
     public function pedidos($evento_id){
+        $evento = \projetoGCA\Evento::find($evento_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$evento->grupoconsumo_id)->first();
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
         $totaisItens = array();
         $totaisPedidos = array();
@@ -132,9 +135,9 @@ class EventoController extends Controller
                 $total += $item->preco * $item->quantidades;
             }
             array_push($totaisPedidos, $total);
-
         }
-        return view("pedido.pedidos", ['pedidos' => $pedidos, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);
+
+        return view("pedido.pedidos", ['pedidos' => $pedidos, 'evento' => $evento, 'grupoConsumo' => $grupoConsumo, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);
     }
 
     public function itensPedido($pedido_id){
