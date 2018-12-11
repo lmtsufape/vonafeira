@@ -90,9 +90,6 @@
                                     <li>
                                         <a href="/selecionarGrupo">Entrar em Grupo de Consumo</a>
                                     </li>
-                                    <li>
-                                        <a href="/unidadesVenda">Unidades de Venda</a>
-                                    </li>
                                 </ul>
                             </li>
 

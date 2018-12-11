@@ -77,6 +77,14 @@ class EventoController extends Controller
 
         $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->orderBy('id', 'DESC')->first();
         // return var_dump(empty($ultimoEvento));
+
+        $dataEvento = new DateTime($request->data_evento);
+        $dataAtual = new DateTime();
+        //return gettype($dataAtual);
+        if($dataEvento < $dataAtual){
+            return back()->withErrors(['data_evento' => 'Data do envento não pode ser anterior à data atual']);
+        }
+
         if(!is_null($ultimoEvento)){
             $dataUltimoEvento = new DateTime($ultimoEvento->data_evento);
             if($dataHoje < $dataUltimoEvento){
@@ -144,6 +152,13 @@ class EventoController extends Controller
     public function itensPedido($pedido_id){
         $pedido = \projetoGCA\Pedido::find($pedido_id);
         return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
+    }
+
+    public function fecharEvento($eventoId){
+        $evento = \projetoGCA\Evento::find($eventoId);
+        $evento->estaAberto = False;
+        $evento->update();
+        return back()->with('success','Evento '.$evento->id.' fechado.');
     }
 
 }
