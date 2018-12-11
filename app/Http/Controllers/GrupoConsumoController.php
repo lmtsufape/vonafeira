@@ -17,12 +17,15 @@ class GrupoConsumoController extends Controller
     public function cadastrar(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:grupo_consumos|min:8|max:191',
-            'descricao' => 'min:8|max:191'
+            'name' => 'required|unique:grupo_consumos|min:3|max:50',
+            'descricao' => 'min:0',
+            'periodo' => 'required',
+            'dia_semana' => 'required',
+            'prazo_pedidos' => 'required',
         ]);
 
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $grupoConsumo = new \projetoGCA\GrupoConsumo();
