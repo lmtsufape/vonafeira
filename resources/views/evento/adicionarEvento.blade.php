@@ -14,7 +14,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{action('EventoController@cadastrar')}}">
                         {{ csrf_field() }}
-                        <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo }}">
+                        <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo->id }}">
 
 
                         <div class="form-group{{ $errors->has('data_evento') ? ' has-error' : '' }}">

@@ -10,7 +10,8 @@ class EventoController extends Controller
 {
 
     public function novo($idGrupoConsumo){
-        return view('evento.adicionarEvento', [ 'grupoConsumo' => $idGrupoConsumo ]);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+        return view('evento.adicionarEvento', [ 'grupoConsumo' => $grupoConsumo ]);
     }
     /**
      * @Deprecated
