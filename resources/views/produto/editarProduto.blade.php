@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar: {{$produto->nome}}    
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar: {{$produto->nome}}
 @endsection
 
 @section('content')
@@ -24,17 +24,26 @@
                                 <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="1">
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('nomeProdutor') ? ' has-error' : '' }}">
-                            <label for="nomeProdutor" class="col-md-4 control-label">Nome do Produtor</label>
+                        <div class="form-group{{ $errors->has('idProdutor') ? ' has-error' : '' }}">
+                            <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                                <input id="nomeProdutor" type="text" class="form-control" name="nomeProdutor" value="{{$produto->nome_produtor}}" required autofocus>
-
-                                @if ($errors->has('nomeProdutor'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('nomeProdutor') }}</strong>
-                                    </span>
+                            <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                              <option value="" selected disabled hidden>Escolha o Produtor</option>
+                              @foreach ($produtores as $produtor)
+                                @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->nome)
+                                    <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
+                                @else
+                                    <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
                                 @endif
+                              @endforeach
+                            </select>
+
+                            @if ($errors->has('idProdutor'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('idProdutor') }}</strong>
+                                </span>
+                            @endif
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
@@ -50,7 +59,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                             <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
@@ -87,7 +96,7 @@
                                         @if($produto->unidadeVenda->id == $unidadeVenda->id)
                                             <option value={{$unidadeVenda->id}} selected>{{$unidadeVenda->nome}}</option>
                                         @else
-                                            <option value={{$unidadeVenda->id}} selected>{{$unidadeVenda->nome}}</option>   
+                                            <option value={{$unidadeVenda->id}} selected>{{$unidadeVenda->nome}}</option>
                                         @endif
                                     @endforeach
                                 </select>

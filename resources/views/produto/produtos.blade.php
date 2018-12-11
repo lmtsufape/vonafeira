@@ -22,7 +22,7 @@
                             Não existem produtos cadastrados para este grupo de consumo.
                     </div>
                 @else
-                    <table class="table table-hover">         
+                    <table class="table table-hover">
                         <tr>
                             <th>Cod</th>
                             <th>Nome do Produtor</th>
@@ -32,15 +32,18 @@
                             <th>Unidade de Venda</th>
                             <th colspan="2">Ações</th>
                         </tr>
-                        
+
                         @foreach ($produtos as $produto)
                         <tr>
                             <td>{{ $produto->id }}</td>
-                            <td>{{ $produto->nome_produtor }}</td>
+                            <?php
+                              $produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first();
+                            ?>
+                            <td>{{ $produtor->nome}}</td>
                             <td>{{ $produto->nome }}</td>
                             <td>{{ $produto->descricao }}</td>
                             <td>{{ 'R$'.number_format($produto->preco, 2 )}}</td>
-                            <td>{{ $produto->unidadeVenda->nome }}</td>  
+                            <td>{{ $produto->unidadeVenda->nome }}</td>
                             <td><a class="btn btn-success"href="{{ action('ProdutoController@editar', $produto->id) }}">Editar</a></td>
                             <td><a class="btn btn-danger"href="{{ action('ProdutoController@remover',$produto->id) }}">Remover</a></td>
                         </tr>

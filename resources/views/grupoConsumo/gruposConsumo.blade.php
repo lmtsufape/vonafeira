@@ -23,7 +23,7 @@
                     </div>
                 @endif
                 <div class="panel-body">
-                    @if(count($gruposConsumo) == 0)
+                    @if(count($gruposConsumo) == 0 and count($gruposConsumoParticipante) == 0)
                     <div class="alert alert-danger">
                             Não existem grupos de consumo cadastrados.
                     </div>
@@ -40,7 +40,7 @@
                                 <th colspan="2">Ação</th>
                             </tr>
 
-                            @forelse ($gruposConsumo as $grupoConsumo)
+                            @foreach ($gruposConsumo as $grupoConsumo)
                             <tr>
                                 <td>{{ $grupoConsumo->id }}</td>
                                 <td>{{ $grupoConsumo->name }}</td>
@@ -52,7 +52,7 @@
                             </tr>
                             @endforeach
 
-                            @forelse ($gruposConsumoParticipante as $grupoConsumo)
+                            @foreach ($gruposConsumoParticipante as $grupoConsumo)
                             <tr>
                                 <td>{{ $grupoConsumo->id }}</td>
                                 <td>{{ $grupoConsumo->name }}</td>

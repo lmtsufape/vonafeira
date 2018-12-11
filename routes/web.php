@@ -46,9 +46,16 @@ Route::post('/cadastrarProduto', 'ProdutoController@cadastrar');
 Route::get('/editarProduto/{idGrupoConsumo}', 'ProdutoController@editar');
 Route::get('/removerProduto/{idGrupoConsumo}', 'ProdutoController@remover');
 Route::get('/adicionarProduto/{idGrupoConsumo}',  'ProdutoController@novo');
-Route::get('/removerProduto/{idGrupoConsumo}',  'ProdutoController@remover');
 Route::post('/atualizarProduto', "ProdutoController@atualizar");
 Route::get('/produtos/{idGrupoConsumo}', 'ProdutoController@listar');
+
+// Rotas para Produtores
+Route::post('/cadastrarProdutor', 'ProdutorController@cadastrar');
+Route::get('/editarProdutor/{idGrupoConsumo}', 'ProdutorController@editar');
+Route::get('/removerProdutor/{idGrupoConsumo}', 'ProdutorController@remover');
+Route::get('/adicionarProdutor/{idGrupoConsumo}',  'ProdutorController@novo');
+Route::post('/atualizarProdutor', "ProdutorController@atualizar");
+Route::get('/produtores/{idGrupoConsumo}', 'ProdutorController@listar');
 
 // Rotas para Consumidor
 Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar');
@@ -93,4 +100,3 @@ Route::get('/', function(){
 // Rotas para relatorios
 Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores');
 Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioComposicaoPedidos');
-

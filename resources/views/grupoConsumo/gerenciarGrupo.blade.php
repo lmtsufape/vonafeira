@@ -32,8 +32,11 @@
                 </br>
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
                     <a href="{{action('GrupoConsumoController@editar', $grupoConsumo->id)}}" class="btn btn-primary">Editar Grupo</a>
+
+                    <a href="{{action('ProdutorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Produtores</a>
                     <a href="{{action('ProdutoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Produtos</a>
                     <a href="/unidadesVenda/{{$grupoConsumo->id}}" class="btn btn-primary">Unidades de Venda</a>
+
                     <a href="{{action('EventoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Eventos</a>
                     <a href="{{action('ConsumidorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Consumidores</a>
                 </div>

@@ -125,7 +125,7 @@ class EventoController extends Controller
         if(Auth::check()){
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);  
+            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);
         }
         return view("/home");
     }

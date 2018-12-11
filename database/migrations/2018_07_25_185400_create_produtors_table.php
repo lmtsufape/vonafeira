@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProdutorsTable extends Migration 
+class CreateProdutorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,10 +15,11 @@ class CreateProdutorsTable extends Migration
     {
         Schema::create('produtors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('nome');
             $table->string('endereco');
-
+            $table->string('telefone',15);
+            $table->integer('grupoconsumo_id')->unsigned();
+            $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
             $table->timestamps();
         });
     }

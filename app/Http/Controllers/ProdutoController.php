@@ -10,27 +10,33 @@ use Illuminate\Support\Facades\Validator;
 
 class ProdutoController extends Controller
 {
-    
+
     public function novo($idGrupoConsumo){
         $unidadeVenda = \projetoGCA\UnidadeVenda::all();
         $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-        return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda], ['grupoConsumo' => $grupoConsumo]); 
+
+        $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+
+        return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda,
+                                                'grupoConsumo' => $grupoConsumo,
+                                                'produtores' => $produtores]
+                                              );
     }
 
     public function cadastrar(Request $request){
         $validator = Validator::make($request->all(), [
-            'nomeProdutor' => 'required|min:4|max:191',
             'nome' => 'required|min:4|max:191',
             'descricao' => 'max:191',
             'preco' => 'required|numeric',
+            'unidadeVenda' => 'required'
         ]);
-        
+
         if($validator->fails()){
             return redirect()->back()->withErrors($validator->errors());
         }
-        
+
         $produto = new \projetoGCA\Produto();
-        $produto->nome_produtor = $request->nomeProdutor;
+        $produto->produtor_id = $request->idProdutor;
         $produto->nome = $request->nome;
         $produto->preco = $request->preco;
         $produto->descricao = $request->descricao;
@@ -39,38 +45,38 @@ class ProdutoController extends Controller
         $produto->save();
         return redirect()
                 ->action('ProdutoController@listar', $request->grupoConsumo)
-                ->withInput(); 
-                        
+                ->withInput();
+
     }
 
     public function editar($id) {
         $produto = \projetoGCA\Produto::find($id);
         $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$produto->grupoconsumo_id)->first();
-        //dd($grupoConsumo);
-        $unidadeVenda = \projetoGCA\UnidadeVenda::all();   
+
+        $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$grupoConsumo->id)->get();
+        $unidadeVenda = \projetoGCA\UnidadeVenda::all();
         return view(
-            "produto.editarProduto",
-            ['grupoConsumo' => $grupoConsumo,
-            'unidadesVenda' => $unidadeVenda,
-            'produto' => $produto]
-        );
-    } 
+            "produto.editarProduto", ['grupoConsumo' => $grupoConsumo,
+                                      'unidadesVenda' => $unidadeVenda,
+                                      'produto' => $produto,
+                                      'produtores' => $produtores]);
+    }
 
     public function remover($id) {
-        $produto = \projetoGCA\Produto::find($id); 
+        $produto = \projetoGCA\Produto::find($id);
         // return var_dump($produto);
          $grupoConsumo = $produto->grupoconsumo_id;
         // return var_dump($produto);
-        $produto->delete();  
+        $produto->delete();
         return redirect()
                 ->action('ProdutoController@listar', $grupoConsumo)
                 ->withInput();
     }
-    
+
     public function atualizar(Request $request){
         $produto = \projetoGCA\Produto::find($request->id);
         if($produto->nome == $request->nome){
-            $produto->nome_produtor = $request->nomeProdutor;
+            $produto->produtor_id = $request->idProdutor;
             $produto->nome = $request->nome;
             $produto->preco = $request->preco;
             $produto->descricao = $request->descricao;
@@ -83,7 +89,7 @@ class ProdutoController extends Controller
                     ->withInput();
         }
         else if($this->verificarExistencia($request->nome) ){
-            $produto->nome_produtor = $request->nomeProdutor;
+            $produto->produtor_id = $request->idProdutor;
             $produto->nome = $request->nome;
             $produto->preco = $request->preco;
             $produto->descricao = $request->descricao;
@@ -102,8 +108,8 @@ class ProdutoController extends Controller
         if(Auth::check()){
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
 
-            $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();        
-            return view("produto.produtos", ['produtos' => $produtos], ['grupoConsumo' => $grupoConsumo]);  
+            $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+            return view("produto.produtos", ['produtos' => $produtos], ['grupoConsumo' => $grupoConsumo]);
         }
         return view("/home");
     }
