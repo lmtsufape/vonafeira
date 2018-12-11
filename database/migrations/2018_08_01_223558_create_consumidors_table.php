@@ -16,8 +16,11 @@ class CreateConsumidorsTable extends Migration
         Schema::create('consumidors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('grupo_consumo_id')->unsigned();
+
+            $table->unique(['user_id','grupo_consumo_id']);
+
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('grupo_consumo_id')->references('id')->on('grupo_consumos');
             $table->timestamps();
         });
