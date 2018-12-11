@@ -25,17 +25,18 @@
                         </div>
                     @else
                     <table class="table table-hover">
-                        
+
                         <tr>
                             <th>Cod</th>
                             <th>Data Evento</th>
                             <th>Hora Evento</th>
                             <th>Data Inicio Pedidos</th>
                             <th>Data Fim Pedidos</th>
+                            <th>Aberto</th>
                             <th>Pedidos</th>
-                            
+
                         </tr>
-                        
+
                         @foreach ($eventos as $evento)
                         <tr>
                             <td>{{ $evento->id }}</td>
@@ -43,6 +44,14 @@
                             <td>{{ $evento->hora_evento.' hrs' }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_inicio_pedidos, 'd/m/Y') }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td>
+
+                            <td>
+                              @if ($evento->estaAberto)
+                                Sim
+                              @else
+                                Não
+                              @endif
+                            </td>
                             <td><a class="btn btn-info" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
                         </tr>
                         @endforeach

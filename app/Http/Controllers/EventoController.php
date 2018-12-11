@@ -47,7 +47,6 @@ class EventoController extends Controller
             // adiciona a data limite de pedidos e salva
             // return var_dump($dataProximoEvento);
             $evento->data_fim_pedidos = $dataProximoEvento->format('Y-m-d');
-            $evento->save();
         }
         elseif($grupoConsumo->periodo == 'Mensal'){
             // incrementa a data em um mês
@@ -60,14 +59,18 @@ class EventoController extends Controller
             $dataProximoEvento->sub($intervalo);
             // adiciona a data limite de pedidos e salva;
             $evento->data_fim_pedidos = $dataProximoEvento;
-            $evento->save();
         }
+
+        $evento->estaAberto = False;
+
+        $evento->save();
+
         return redirect("/eventos".$grupoConsumo->id);
 
     }
 
     public function cadastrar(Request $request){
-        
+
         $dataHoje = new DateTime();
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->id_grupo_consumo);
 
@@ -92,23 +95,27 @@ class EventoController extends Controller
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
 
-        
+
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
         // calcula a data limite dos pedidos de venda
         $intervalo = new DateInterval("P{$grupoConsumo->prazo_pedidos}D");
         $dataFimPedidos = new DateTime($evento->data_evento);
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
+
+        $evento->estaAberto = $request->aberto;
+
         $evento->save();
+
         return redirect()
                 ->action('EventoController@listar', $request->id_grupo_consumo)
-                ->withInput(); 
+                ->withInput();
     }
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $idGrupoConsumo]);  
+            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $idGrupoConsumo]);
         }
         return view("/home");
     }
@@ -126,13 +133,13 @@ class EventoController extends Controller
             }
             array_push($totaisPedidos, $total);
 
-        }       
-        return view("pedido.pedidos", ['pedidos' => $pedidos, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);  
+        }
+        return view("pedido.pedidos", ['pedidos' => $pedidos, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);
     }
 
     public function itensPedido($pedido_id){
-        $pedido = \projetoGCA\Pedido::find($pedido_id);    
-        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);  
+        $pedido = \projetoGCA\Pedido::find($pedido_id);
+        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
     }
 
 }
