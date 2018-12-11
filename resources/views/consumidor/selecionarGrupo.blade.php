@@ -14,7 +14,7 @@
                     </br>
                     <form class="form-horizontal" method="POST" action="{{action('ConsumidorController@cadastrar')}}">
                         {{ csrf_field() }}
-                      
+
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <label class="col-md-4 control-label">Grupo de Consumo</label>
                             <div class="col-md-6">
