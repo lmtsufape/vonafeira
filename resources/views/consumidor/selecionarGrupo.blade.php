@@ -1,7 +1,8 @@
-
-
-
 @extends('layouts.app')
+
+@section('navbar')
+    <a href="/home">Painel</a> > Selecionar Grupo de Consumo
+@endsection
 
 @section('content')
 <div class="container">

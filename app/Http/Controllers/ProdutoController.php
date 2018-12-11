@@ -13,7 +13,8 @@ class ProdutoController extends Controller
     
     public function novo($idGrupoConsumo){
         $unidadeVenda = \projetoGCA\UnidadeVenda::all();
-        return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda], ['idGrupoConsumo' => $idGrupoConsumo]); 
+        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
+        return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda], ['grupoConsumo' => $grupoConsumo]); 
     }
 
     public function cadastrar(Request $request){
@@ -43,9 +44,16 @@ class ProdutoController extends Controller
     }
 
     public function editar($id) {
-        $produto = \projetoGCA\Produto::find($id); 
+        $produto = \projetoGCA\Produto::find($id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$produto->grupoconsumo_id)->first();
+        //dd($grupoConsumo);
         $unidadeVenda = \projetoGCA\UnidadeVenda::all();   
-        return view("produto.editarProduto", ['produto' => $produto], ['unidadesVenda' => $unidadeVenda]);
+        return view(
+            "produto.editarProduto",
+            ['grupoConsumo' => $grupoConsumo,
+            'unidadesVenda' => $unidadeVenda,
+            'produto' => $produto]
+        );
     } 
 
     public function remover($id) {
@@ -92,8 +100,10 @@ class ProdutoController extends Controller
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+            $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
+
             $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();        
-            return view("produto.produtos", ['produtos' => $produtos], ['idGrupoConsumo' => $idGrupoConsumo]);  
+            return view("produto.produtos", ['produtos' => $produtos], ['grupoConsumo' => $grupoConsumo]);  
         }
         return view("/home");
     }

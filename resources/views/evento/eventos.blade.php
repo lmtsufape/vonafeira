@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Eventos
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -61,7 +65,7 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo)}}">Novo</a>
+                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo->id)}}">Novo</a>
                 </div>
             </div>
         </div>

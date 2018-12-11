@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    Recuperação de Senha
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Produtos
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -46,7 +50,7 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('ProdutoController@novo', $idGrupoConsumo)}}">Novo</a>
+                    <a class="btn btn-success" href="{{action('ProdutoController@novo', $grupoConsumo->id)}}">Novo</a>
                 </div>
             </div>
         </div>

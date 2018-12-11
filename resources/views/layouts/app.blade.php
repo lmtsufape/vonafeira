@@ -13,7 +13,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    >
 
     <script type="text/javascript">
         /* Máscaras ER */
@@ -132,6 +131,11 @@
                             </li>
                         @endif
                     </ul>
+                    
+                </div>
+                <hr style="margin-top: 0px; padding-bottom: -10px">
+                <div name='navbar' style="padding-bottom: 22px" align:center>
+                    @yield('navbar')
                 </div>
             </div>
         </nav>
