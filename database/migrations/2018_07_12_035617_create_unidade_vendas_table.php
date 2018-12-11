@@ -16,9 +16,10 @@ class CreateUnidadeVendasTable extends Migration
         Schema::create('unidade_vendas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('descricao');
-            $table->boolean('is_fracionado')->default(false);;
-            $table->boolean('is_porcao')->default(false);;
+            $table->string('descricao')->nullable();
+            $table->boolean('is_fracionado')->default(false);
+            $table->boolean('is_porcao')->default(false);
+            $table->integer('grupoConsumoId');
             $table->timestamps();
         });
     }

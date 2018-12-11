@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Listar Unidade de Venda
+<a href="/home">Painel</a> > 
+    <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Unidades de Venda
 @endsection
 
 @section('content')
@@ -39,7 +40,7 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('UnidadeVendaController@adicionar')}}">Novo</a>
+                    <a class="btn btn-success" href="/adicionarUnidadeVenda/{{$grupoConsumo->id}}">Novo</a>
                 </div>
             </div>
         </div>
