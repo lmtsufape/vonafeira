@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/unidadesVenda">Listar Unidade de Venda</a> > Adicionar
+    <a href="/home">Painel</a> > 
+    <a href="/gruposConsumo">Grupos de Consumo</a> > 
+    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="/unidadesVenda/{{$grupoConsumo->id}}">Listar Unidade de Venda</a> > Adicionar
 @endsection
 
 @section('content')
@@ -14,11 +17,14 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="/cadastrarUnidadeVenda">
                         {{ csrf_field() }}
+
+                        <input id="grupoConsumoId" type="number" name="grupoConsumoId" value="{{$grupoConsumo->id}}" hidden>
+
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome</label>
 
                             <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
+                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" autofocus>
 
                                 @if ($errors->has('nome'))
                                     <span class="help-block">
@@ -44,7 +50,7 @@
                             <label for="is_fracionado" class="col-md-4 control-label">Permitir Francionamento</label>
 
                             <div class="col-md-6">
-                            <select id="is_fracionado" class="form-control" name="is_fracionado" required autofocus>
+                            <select id="is_fracionado" class="form-control" name="is_fracionado" autofocus>
                                     <option value="" selected disabled hidden>Selecionar</option>
 					                <option value="1">Sim</option>
                                     <option value="0">Não</option>
@@ -61,7 +67,7 @@
                             <label for="is_porcao" class="col-md-4 control-label">Permitir Porção</label>
 
                             <div class="col-md-6">
-                            <select id="is_porcao" class="form-control" name="is_porcao" required autofocus>
+                            <select id="is_porcao" class="form-control" name="is_porcao" autofocus>
                                     <option value="" selected disabled hidden>Selecionar</option>
 					                <option value="1">Sim</option>
                                     <option value="0">Não</option>

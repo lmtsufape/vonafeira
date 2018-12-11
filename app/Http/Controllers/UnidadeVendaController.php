@@ -3,33 +3,48 @@
 namespace projetoGCA\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UnidadeVendaController extends Controller
 {
-    public function adicionar(){
-        // chama view de adição de unidade de venda
-        return view("unidadeVenda.adicionarUnidadeVenda"); 
+    public function adicionar($grupoConsumoId){
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        return view("unidadeVenda.adicionarUnidadeVenda", ['grupoConsumo' => $grupoConsumo]); 
     }
 
     public function cadastrar(Request $request){
         
-        if($this->verificarExistencia($request->nome)){
-            $unidadeVenda = new \projetoGCA\UnidadeVenda();
-            $unidadeVenda->nome = $request->nome;
-            $unidadeVenda->descricao = $request->descricao;
-            $unidadeVenda->is_fracionado = $request->is_fracionado;
-            $unidadeVenda->is_porcao = $request->is_porcao;
-            $unidadeVenda->save();
-            return redirect("/unidadesVenda");
+        $validator = Validator::make($request->all(), [
+            'nome' => 'required|unique:unidade_vendas|min:3|max:50',
+            'descricao' => 'min:0',
+            'is_fracionado' => 'required',
+            'is_porcao' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        return redirect("/erroCadastroExiste");
+        $unidadeVenda = new \projetoGCA\UnidadeVenda();
+        $unidadeVenda->grupoConsumoId = $request->grupoConsumoId;
+        $unidadeVenda->nome = $request->nome;
+        $unidadeVenda->descricao = $request->descricao;
+        $unidadeVenda->is_fracionado = $request->is_fracionado;
+        $unidadeVenda->is_porcao = $request->is_porcao;
+        $unidadeVenda->save();
+
+        return redirect("/unidadesVenda/{$unidadeVenda->grupoConsumoId}");
                 
     }
 
-    public function listar () {
-        $unidadesVenda = \projetoGCA\UnidadeVenda::all();
-        return view("unidadeVenda.unidadesVenda", ['listaUnidades' => $unidadesVenda]);    	
+    public function listar ($grupoConsumoId) {
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        $unidadesVenda = \projetoGCA\UnidadeVenda::where("grupoConsumoId","=",$grupoConsumo->id)->get();
+        return view(
+            "unidadeVenda.unidadesVenda",
+            ['listaUnidades' => $unidadesVenda,
+            'grupoConsumo' => $grupoConsumo]
+        );    	
     }
 
     public function editar($id) {
@@ -39,25 +54,44 @@ class UnidadeVendaController extends Controller
 
     public function atualizar(Request $request){
         $unidadeVenda = \projetoGCA\UnidadeVenda::find($request->id);
-        if($unidadeVenda->nome == $request->nome){
+
+        if($request->nome == $unidadeVenda->nome){
+            $validator = Validator::make($request->all(), [
+                'descricao' => 'min:0',
+                'is_fracionado' => 'required',
+                'is_porcao' => 'required',
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+    
             $unidadeVenda->nome = $request->nome;
             $unidadeVenda->descricao = $request->descricao;
             $unidadeVenda->is_fracionado = $request->is_fracionado;
             $unidadeVenda->is_porcao = $request->is_porcao;
             $unidadeVenda->update();
 
-            return redirect("/unidadesVenda");
-        }
-        else if($this->verificarExistencia($request->nome) ){
+        }else{
+            $validator = Validator::make($request->all(), [
+                'nome' => 'required|unique:unidade_vendas|min:3|max:50',
+                'descricao' => 'min:0',
+                'is_fracionado' => 'required',
+                'is_porcao' => 'required',
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+    
             $unidadeVenda->nome = $request->nome;
             $unidadeVenda->descricao = $request->descricao;
             $unidadeVenda->is_fracionado = $request->is_fracionado;
             $unidadeVenda->is_porcao = $request->is_porcao;
             $unidadeVenda->update();
-
-            return redirect("/unidadesVenda");
         }
-        return redirect("/erroCadastroExiste");
+
+        return redirect("/unidadesVenda/{$unidadeVenda->grupoConsumoId}");
     }
 
     public function verificarExistencia($nome){
@@ -68,8 +102,7 @@ class UnidadeVendaController extends Controller
     public function remover($id) {
         $unidadeVenda = \projetoGCA\UnidadeVenda::find($id); 
         $unidadeVenda->delete();  
-        return redirect()
-                ->action('UnidadeVendaController@listar')
+        return back()
                 ->withInput();
     }
 }

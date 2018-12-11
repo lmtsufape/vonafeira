@@ -30,8 +30,8 @@ Route::post('/adicionarUsuario', 'UserController@adicionar');
 Route::post('/salvarUsuario', 'UserController@salvar');
 
 // Rotas para Unidade de Vendas
-Route::get('/unidadesVenda', "UnidadeVendaController@listar");
-Route::get('/adicionarUnidadeVenda', "UnidadeVendaController@adicionar");
+Route::get('/unidadesVenda/{grupoConsumoId}', "UnidadeVendaController@listar");
+Route::get('/adicionarUnidadeVenda/{grupoConsumoId}', "UnidadeVendaController@adicionar");
 Route::get('/editarUnidadeVenda/{id}', "UnidadeVendaController@editar");
 Route::get('/removerUnidadeVenda/{id}', "UnidadeVendaController@remover");
 Route::post('/cadastrarUnidadeVenda', "UnidadeVendaController@cadastrar");
