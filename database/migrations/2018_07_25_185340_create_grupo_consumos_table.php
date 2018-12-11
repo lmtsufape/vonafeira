@@ -16,7 +16,7 @@ class CreateGrupoConsumosTable extends Migration
         Schema::create('grupo_consumos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->string('periodo');
             $table->string('dia_semana');
             $table->integer('prazo_pedidos');
