@@ -41,8 +41,13 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioComposicaoPedidos', $evento_id)}}">Relatório Montagem Pedido</a>
-                    <a class="btn btn-warning" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento_id)}}">Relatório Produtor</a>
+                    @if($evento->estaAberto)
+                        <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
+                        <a class="btn btn-warning" disabled>Relatório Produtor</a>
+                    @else
+                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioComposicaoPedidos', $evento_id)}}">Relatório Montagem Pedido</a>
+                        <a class="btn btn-warning" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento_id)}}">Relatório Produtor</a>
+                    @endif
                 </div>
             </div>
         </div>
