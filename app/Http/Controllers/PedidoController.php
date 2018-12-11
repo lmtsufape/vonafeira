@@ -14,7 +14,8 @@ class PedidoController extends Controller
 {
 
     public function loja(){
-        $evento = Evento::where('grupoconsumo_id', '=', Auth::user()->consumidor->grupoConsumo->id)
+        try {
+            $evento = Evento::where('grupoconsumo_id', '=', Auth::user()->consumidor->grupoConsumo->id)
                                 ->where('data_evento', '>', new DateTime())
                                 ->where('data_fim_pedidos', '>=', new DateTime())
                                 ->orderBy('id', 'DESC')->first();
@@ -25,6 +26,11 @@ class PedidoController extends Controller
         else{
             return view("loja.loja", ['produtos' => array(), 'evento' =>$evento]);
         }
+        } catch (\Throwable $th) {
+            return view("loja.loja", ['produtos' => array(), 'evento' => "NotConsumidor"]);
+        }
+
+        
 
     }
     public function confirmar(Request $request) {
