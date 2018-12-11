@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > Meus Grupos de Consumo
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">

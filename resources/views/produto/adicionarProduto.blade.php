@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtos/{{$grupoConsumo->id}}">Listar Produtos</a> > Adicionar
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -17,7 +21,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">
-                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="{{$idGrupoConsumo}}">
+                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="{{$grupoConsumo->id}}">
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('nomeProdutor') ? ' has-error' : '' }}">

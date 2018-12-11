@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/unidadesVenda">Listar Unidade de Venda</a> > Editar: {{$unidadeVenda->nome}}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
