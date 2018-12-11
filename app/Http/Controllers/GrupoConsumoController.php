@@ -100,4 +100,12 @@ class GrupoConsumoController extends Controller
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
         return view("grupoConsumo.gerenciarGrupo", ['grupoConsumo' => $grupoConsumo]);
     }
+
+    public function sair($grupoConsumoId){
+        $userId = \Auth::User()->id;
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        $consumidor = \projetoGCA\Consumidor::where('user_id','=',$userId)->where('grupo_consumo_id','=',$grupoConsumo->id)->first();
+        $consumidor->delete();
+        return back()->with('success',('Você saiu do grupo: '.$grupoConsumo->name));
+    }
 }
