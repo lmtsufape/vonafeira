@@ -17,4 +17,8 @@ class GrupoConsumo extends Model
     public function produtos(){
         return $this->hasMany(Produto::class);
     }
+
+    public function produtores(){
+        return $this->hasMany(Produtor::class);
+    }
 }
