@@ -17,8 +17,6 @@
                         <div class="alert alert-danger">
                                 @if(is_null($evento))
                                     Não existem eventos no momento.
-                                @elseif($evento == "NotConsumidor")
-                                    Você não é consumidor em nenhum grupo de consumo.
                                 @else
                                     Não existem produtos disponíveis no momento.
                                 @endif
