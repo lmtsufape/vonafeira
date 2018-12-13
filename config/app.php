@@ -2,7 +2,7 @@
 
 return [
 
-    'faker_locale' => 'pt-BR',
+    'faker_locale' => 'pt_BR',
     /*
     |--------------------------------------------------------------------------
     | Application Name
