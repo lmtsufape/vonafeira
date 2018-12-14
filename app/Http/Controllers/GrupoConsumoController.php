@@ -48,30 +48,48 @@ class GrupoConsumoController extends Controller
     }
 
     public function atualizar(Request $request){
-
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->id);
-        if($grupoConsumo->nome == $request->nome){
+
+        if($grupoConsumo->name == $request->name){
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|min:3|max:50',
+                'descricao' => 'min:0',
+                'periodo' => 'required',
+                'dia_semana' => 'required',
+                'prazo_pedidos' => 'required',
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+            
+        }else{
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|unique:grupo_consumos|min:3|max:50',
+                'descricao' => 'min:0',
+                'periodo' => 'required',
+                'dia_semana' => 'required',
+                'prazo_pedidos' => 'required',
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+
             $grupoConsumo->name = $request->name;
-            $grupoConsumo->descricao = $request->descricao;
+
+        }
+
+        $grupoConsumo->descricao = $request->descricao;
             $grupoConsumo->periodo = $request->periodo;
             $grupoConsumo->dia_semana = $request->dia_semana;
             $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
             $grupoConsumo->update();
 
-            return redirect()
-                    ->action('GrupoConsumoController@listar');
-        }
-        else if($this->verificarExistencia($request->nome) ){
-            $grupoConsumo->name = $request->name;
-            $grupoConsumo->descricao = $request->descricao;
-            $grupoConsumo->periodo = $request->periodo;
-            $grupoConsumo->dia_semana = $request->dia_semana;
-            $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
-            $grupoConsumo->update();
+            return redirect("/gerenciar/$grupoConsumo->id");
 
-            return redirect()->action('GrupoConsumoController@listar');
-        }
-        return redirect("/erroCadastroExiste");
     }
 
 
