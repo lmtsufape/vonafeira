@@ -36,7 +36,6 @@ class UserController extends Controller
         $user = \projetoGCA\User::find($request->id);
         if (($request->email) == $user->email){
             $user->name = $request->name;
-            $user->telefone = $request->telefone;
             $user->email = $request->email;
             $user->password = $request->password;
             $user->update();
@@ -44,7 +43,6 @@ class UserController extends Controller
         } 
         else if ($this->verificarExistencia($request->email)){
             $user->name = $request->name;
-            $user->telefone = $request->telefone;
             $user->email = $request->email;
             $user->password = $request->password;
             $user->update();
