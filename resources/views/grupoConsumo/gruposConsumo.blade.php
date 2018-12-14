@@ -53,17 +53,18 @@
                             @endforeach
 
                             @foreach ($gruposConsumoParticipante as $grupoConsumo)
-                            <tr>
-                                <td>{{ $grupoConsumo->id }}</td>
-                                <td>{{ $grupoConsumo->name }}</td>
-                                <td>{{ $grupoConsumo->descricao }}</td>
-                                <td>{{ $grupoConsumo->periodo }}</td>
-                                <td>{{ $grupoConsumo->dia_semana }}</td>
-                                <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td><a class="btn btn-danger" href="/grupoconsumo/sair/{{$grupoConsumo->id}}">Sair</a></td>
-                            </tr>
+                              @if($grupoConsumo->coordenador_id != Auth::user()->id)
+                                <tr>
+                                    <td>{{ $grupoConsumo->id }}</td>
+                                    <td>{{ $grupoConsumo->name }}</td>
+                                    <td>{{ $grupoConsumo->descricao }}</td>
+                                    <td>{{ $grupoConsumo->periodo }}</td>
+                                    <td>{{ $grupoConsumo->dia_semana }}</td>
+                                    <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
+                                    <td><a class="btn btn-danger" href="/grupoconsumo/sair/{{$grupoConsumo->id}}">Sair</a></td>
+                                </tr>
+                              @endif
                             @endforeach
-
 
                         </table>
                     @endif

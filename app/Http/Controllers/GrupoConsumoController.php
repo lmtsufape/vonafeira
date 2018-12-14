@@ -36,6 +36,9 @@ class GrupoConsumoController extends Controller
         $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
         $grupoConsumo->coordenador_id = Auth::user()->id;
         $grupoConsumo->save();
+
+        ConsumidorController::cadastrarCoordenador($grupoConsumo->id, $grupoConsumo->coordenador_id);
+
         // Redireciona para a listagem de grupo de Consumos, passando o nome do grupo que foi cadastrado
         return redirect()
                 ->action('GrupoConsumoController@listar')
@@ -59,11 +62,11 @@ class GrupoConsumoController extends Controller
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-            
+
         }else{
 
             $validator = Validator::make($request->all(), [
@@ -73,7 +76,7 @@ class GrupoConsumoController extends Controller
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
