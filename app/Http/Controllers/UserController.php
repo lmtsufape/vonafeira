@@ -10,7 +10,7 @@ class UserController extends Controller
         if ($this->verificarExistencia($request->email)){
             $user = new \projetoGCA\User();
             $user->name = $request->name;
-            $user->telefone = $request->telefone;
+            $user->email = $request->email;
             $user->password = $request->password;
             $user->save();
             return redirect("/listarUsuarios");
@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function listar(){
         $user = \projetoGCA\User::all();
-        return view("ListarUsuario", ['listaUsuarios' => $user]);
+        return view("ListarUsuario", ['listaUsuarios' => $user]); 
     }
 
     public function cadastrar(){
@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     public function editar($id){
-		$user = \projetoGCA\User::find($id);
+		$user = \projetoGCA\User::find($id);   
     	return view("EditarUsuario", ['user' => $user]);
     }
 
@@ -40,7 +40,7 @@ class UserController extends Controller
             $user->password = $request->password;
             $user->update();
             return redirect("/listarUsuarios");
-        }
+        } 
         else if ($this->verificarExistencia($request->email)){
             $user->name = $request->name;
             $user->email = $request->email;

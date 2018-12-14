@@ -19,7 +19,10 @@
 Route::get('/erroUsuarioExistente', function () {
     return "<h1> Usuário Existente </h1>";
 });
-// Rotas para Usuarios
+// Rotas para Contatos
+Route::get('/adicionarContato', 'ContatoController@novo');
+Route::post('/cadastrarContato', 'ContatoController@cadastrar');
+
 Route::get('/listarUsuarios', 'UserController@listar');
 Route::get('/cadastrarUsuario', 'UserController@cadastrar');
 Route::get('/editarUsuario/{id}', 'UserController@editar');
