@@ -25,7 +25,7 @@ class ProdutoController extends Controller
 
     public function cadastrar(Request $request){
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|min:4|max:191',
+            'nome' => 'required|unique:produtos|min:2|max:191',
             'descricao' => 'max:191',
             'preco' => 'required|numeric',
             'unidadeVenda' => 'required',
@@ -33,7 +33,7 @@ class ProdutoController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $produto = new \projetoGCA\Produto();
@@ -76,7 +76,20 @@ class ProdutoController extends Controller
 
     public function atualizar(Request $request){
         $produto = \projetoGCA\Produto::find($request->id);
+
         if($produto->nome == $request->nome){
+            $validator = Validator::make($request->all(), [
+                'nome' => 'required|min:2|max:191',
+                'descricao' => 'max:191',
+                'preco' => 'required|numeric',
+                'unidadeVenda' => 'required',
+                'idProdutor' => 'required'
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+
             $produto->produtor_id = $request->idProdutor;
             $produto->nome = $request->nome;
             $produto->preco = $request->preco;
@@ -85,11 +98,20 @@ class ProdutoController extends Controller
             $produto->grupoconsumo_id = $request->grupoConsumo;
             $produto->update();
 
-            return redirect()
-                    ->action('ProdutoController@listar', $request->grupoConsumo)
-                    ->withInput();
         }
         else if($this->verificarExistencia($request->nome) ){
+            $validator = Validator::make($request->all(), [
+                'nome' => 'required|unique:produtos|min:2|max:191',
+                'descricao' => 'max:191',
+                'preco' => 'required|numeric',
+                'unidadeVenda' => 'required',
+                'idProdutor' => 'required'
+            ]);
+    
+            if($validator->fails()){
+                return redirect()->back()->withErrors($validator->errors())->withInput();
+            }
+
             $produto->produtor_id = $request->idProdutor;
             $produto->nome = $request->nome;
             $produto->preco = $request->preco;
@@ -97,12 +119,11 @@ class ProdutoController extends Controller
             $produto->unidadevenda_id = $request->unidadeVenda;
             $produto->grupoconsumo_id = $request->grupoConsumo;
             $produto->update();
-
-            return redirect()
+            
+        }
+        return redirect()
                     ->action('ProdutoController@listar', $request->grupoConsumo)
                     ->withInput();
-        }
-        return redirect("/erroCadastroExiste");
     }
 
     public function listar($idGrupoConsumo){
