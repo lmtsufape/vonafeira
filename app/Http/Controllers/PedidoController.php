@@ -72,7 +72,10 @@ class PedidoController extends Controller
                 $item = new ItemPedido();
                 $item->pedido_id = $pedido->id;
                 $item->nome_produto = $produto->nome;
-                $item->nome_produtor = $produto->nome_produtor;
+
+                $produtor = \projetoGCA\Produtor::find($produto->produtor_id);
+
+                $item->nome_produtor = $produtor->nome;
                 $item->unidade_venda = $produto->unidadeVenda->nome;
                 $item->is_fracionado = $produto->unidadeVenda->is_fracionado;
                 $item->is_porcao = $produto->unidadeVenda->is_porcao;
