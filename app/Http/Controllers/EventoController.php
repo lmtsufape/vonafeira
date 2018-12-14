@@ -2,6 +2,7 @@
 
 namespace projetoGCA\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use DateTime;
 use DateInterval;
 use Illuminate\Http\Request;
@@ -72,6 +73,15 @@ class EventoController extends Controller
 
     public function cadastrar(Request $request){
 
+        $validator = Validator::make($request->all(), [
+            'data_evento' => 'required',
+            'hora_evento' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
         $dataHoje = new DateTime();
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->id_grupo_consumo);
 
@@ -82,7 +92,7 @@ class EventoController extends Controller
         $dataAtual = new DateTime();
         //return gettype($dataAtual);
         if($dataEvento < $dataAtual){
-            return back()->withErrors(['data_evento' => 'Data do envento não pode ser anterior à data atual']);
+            return back()->withInput()->withErrors(['data_evento' => 'Data do envento não pode ser anterior à data atual']);
         }
 
         if(!is_null($ultimoEvento)){

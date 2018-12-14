@@ -100,7 +100,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="/loja">Carrinho</a>
+                                            <a href="/loja">Comprar</a>
                                         </li>
                                     </ul>
                                 </li>
