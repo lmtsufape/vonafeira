@@ -50,7 +50,7 @@
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
 
                             <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
+                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" autofocus>
 
                                 @if ($errors->has('nome'))
                                     <span class="help-block">
@@ -77,7 +77,7 @@
                             <label for="preco" class="col-md-4 control-label">Preço</label>
 
                             <div class="col-md-6">
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}" required autofocus>
+                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
 
                                 @if ($errors->has('preco'))
                                     <span class="help-block">

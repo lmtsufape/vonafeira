@@ -28,7 +28,8 @@ class ProdutoController extends Controller
             'nome' => 'required|min:4|max:191',
             'descricao' => 'max:191',
             'preco' => 'required|numeric',
-            'unidadeVenda' => 'required'
+            'unidadeVenda' => 'required',
+            'idProdutor' => 'required'
         ]);
 
         if($validator->fails()){

@@ -21,7 +21,7 @@ class CreateProdutosTable extends Migration
             $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
             $table->double('preco');
             $table->string('nome');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->integer('unidadevenda_id')->unsigned();
             $table->foreign('unidadevenda_id')->references('id')->on('unidade_vendas');
             $table->timestamps();
