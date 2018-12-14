@@ -17,7 +17,7 @@ class CreateProdutorsTable extends Migration
             $table->increments('id');
             $table->string('nome');
             $table->string('endereco');
-            $table->string('telefone',15);
+            $table->string('telefone',15)->nullable();
             $table->integer('grupoconsumo_id')->unsigned();
             $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
             $table->timestamps();
