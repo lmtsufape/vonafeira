@@ -28,23 +28,24 @@
                             <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                            <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
-                              <option value="" selected disabled hidden>Escolha o Produtor</option>
-                              @foreach ($produtores as $produtor)
-                                @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->nome)
-                                    <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
-                                @else
-                                    <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
-                                @endif
-                              @endforeach
-                            </select>
+                              <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                                <option value="" selected disabled hidden>Escolha o Produtor</option>
+                                @foreach ($produtores as $produtor)
+                                  @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->nome)
+                                      <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
+                                  @else
+                                      <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
+                                  @endif
+                                @endforeach
+                              </select>
 
-                            @if ($errors->has('idProdutor'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('idProdutor') }}</strong>
-                                </span>
-                            @endif
+                              @if ($errors->has('idProdutor'))
+                                  <span class="help-block">
+                                      <strong>{{ $errors->first('idProdutor') }}</strong>
+                                  </span>
+                              @endif
                             </div>
+                            <a href="{{action('ProdutorController@novo', $grupoConsumo->id)}}" class="btn btn-primary">Novo</a>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
@@ -90,7 +91,7 @@
                             <label for="unidadeVenda" class="col-md-4 control-label">Unidade de Venda</label>
 
                             <div class="col-md-6">
-                                <select name="unidadeVenda">
+                                <select class="form-control" name="unidadeVenda">
                                     <option value="" selected disabled hidden>Escolha uma unidade</option>
                                     @foreach ($unidadesVenda as $unidadeVenda)
                                         <option value={{$unidadeVenda->id}}>{{$unidadeVenda->nome}}</option>
@@ -104,6 +105,7 @@
                                     </span>
                                 @endif
                             </div>
+                            <a href="{{action('UnidadeVendaController@adicionar', $grupoConsumo->id)}}" class="btn btn-primary">Nova</a>
                         </div>
 
                         <div class="form-group">
