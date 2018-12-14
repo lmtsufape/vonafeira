@@ -9,13 +9,13 @@ class UnidadeVendaController extends Controller
 {
     public function adicionar($grupoConsumoId){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
-        return view("unidadeVenda.adicionarUnidadeVenda", ['grupoConsumo' => $grupoConsumo]); 
+        return view("unidadeVenda.adicionarUnidadeVenda", ['grupoConsumo' => $grupoConsumo]);
     }
 
     public function cadastrar(Request $request){
-        
+
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|unique:unidade_vendas|min:3|max:50',
+            'nome' => 'required|unique:unidade_vendas|min:2|max:50',
             'descricao' => 'min:0',
             'is_fracionado' => 'required',
             'is_porcao' => 'required',
@@ -34,7 +34,7 @@ class UnidadeVendaController extends Controller
         $unidadeVenda->save();
 
         return redirect("/unidadesVenda/{$unidadeVenda->grupoConsumoId}");
-                
+
     }
 
     public function listar ($grupoConsumoId) {
@@ -44,13 +44,14 @@ class UnidadeVendaController extends Controller
             "unidadeVenda.unidadesVenda",
             ['listaUnidades' => $unidadesVenda,
             'grupoConsumo' => $grupoConsumo]
-        );    	
+        );
     }
 
-    public function editar($id) {
-        $unidadeVenda = \projetoGCA\UnidadeVenda::find($id);   
-        return view("unidadeVenda.editarUnidadeVenda", ['unidadeVenda' => $unidadeVenda]);
-    } 
+    public function editar($grupoConsumoId, $id) {
+        $unidadeVenda = \projetoGCA\UnidadeVenda::find($id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        return view("unidadeVenda.editarUnidadeVenda", ['unidadeVenda' => $unidadeVenda, 'grupoConsumo' => $grupoConsumo]);
+    }
 
     public function atualizar(Request $request){
         $unidadeVenda = \projetoGCA\UnidadeVenda::find($request->id);
@@ -61,11 +62,11 @@ class UnidadeVendaController extends Controller
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-    
+
             $unidadeVenda->nome = $request->nome;
             $unidadeVenda->descricao = $request->descricao;
             $unidadeVenda->is_fracionado = $request->is_fracionado;
@@ -74,16 +75,16 @@ class UnidadeVendaController extends Controller
 
         }else{
             $validator = Validator::make($request->all(), [
-                'nome' => 'required|unique:unidade_vendas|min:3|max:50',
+                'nome' => 'required|unique:unidade_vendas|min:2|max:50',
                 'descricao' => 'min:0',
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-    
+
             $unidadeVenda->nome = $request->nome;
             $unidadeVenda->descricao = $request->descricao;
             $unidadeVenda->is_fracionado = $request->is_fracionado;
@@ -100,8 +101,8 @@ class UnidadeVendaController extends Controller
     }
 
     public function remover($id) {
-        $unidadeVenda = \projetoGCA\UnidadeVenda::find($id); 
-        $unidadeVenda->delete();  
+        $unidadeVenda = \projetoGCA\UnidadeVenda::find($id);
+        $unidadeVenda->delete();
         return back()
                 ->withInput();
     }
