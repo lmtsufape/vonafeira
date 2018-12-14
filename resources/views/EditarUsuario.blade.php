@@ -17,6 +17,9 @@
             Nome: <input type="text" name="name" value="{{ $user->name}}" required/>
         </div>
         <div>
+            Telefone: <input  type="text" name="telefone" id="telefone" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" placeholder="(87) 91111-1111" class="form-control"  maxlength="15" value="{{ $user->telefone}}" required >
+        </div>
+        <div>
             Email: <input type="email" name="email" value="{{ $user->email}}" required/>
         </div>
         <div>
