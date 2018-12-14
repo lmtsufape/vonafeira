@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/selecionarGrupo';
+    protected $redirectTo = '/adicionarContato';
 
     /**
      * Create a new controller instance.
@@ -50,7 +50,6 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'telefone' => ['required','regex:/\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$/'],
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -66,7 +65,6 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'telefone' => $data['telefone'],
             'password' => bcrypt($data['password']),
         ]);
     }
