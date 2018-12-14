@@ -31,7 +31,7 @@
                               <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
                                 <option value="" selected disabled hidden>Escolha o Produtor</option>
                                 @foreach ($produtores as $produtor)
-                                  @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->nome)
+                                  @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->id)
                                       <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
                                   @else
                                       <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
@@ -94,7 +94,11 @@
                                 <select class="form-control" name="unidadeVenda">
                                     <option value="" selected disabled hidden>Escolha uma unidade</option>
                                     @foreach ($unidadesVenda as $unidadeVenda)
-                                        <option value={{$unidadeVenda->id}}>{{$unidadeVenda->nome}}</option>
+                                        @if (Illuminate\Support\Facades\Input::old('unidadeVenda') == $unidadeVenda->id)
+                                            <option value="{{$unidadeVenda->id}}" selected>{{$unidadeVenda->nome}}</option>
+                                        @else
+                                            <option value="{{$unidadeVenda->id}}">{{$unidadeVenda->nome}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
 
