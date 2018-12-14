@@ -23,7 +23,7 @@
                             <label for="nome" class="col-md-4 control-label">Nome do Produtor</label>
 
                             <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" required autofocus>
+                                <input id="nome" type="text" class="form-control" name="nome" value="{{ old('nome') }}" autofocus>
 
                                 @if ($errors->has('nome'))
                                     <span class="help-block">
