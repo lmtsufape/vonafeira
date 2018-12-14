@@ -62,7 +62,7 @@ class EventoController extends Controller
             $evento->data_fim_pedidos = $dataProximoEvento;
         }
 
-        $evento->estaAberto = False;
+        $evento->estaAberto = True;
 
         $evento->save();
 
@@ -112,7 +112,7 @@ class EventoController extends Controller
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
 
-        $evento->estaAberto = $request->aberto;
+        $evento->estaAberto = True;
 
         $evento->save();
 
