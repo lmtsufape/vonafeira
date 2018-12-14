@@ -36,6 +36,21 @@ class ConsumidorController extends Controller
 
     }
 
+    public static function cadastrarCoordenador($idGrupoConsumo, $idCoordenador){
+
+        $query = Consumidor::where([
+                          ['grupo_consumo_id', '=', $idGrupoConsumo],
+                          ['user_id', '=', $idCoordenador]
+                        ])->first();
+
+        if(is_null($query)){
+          $consumidor = new Consumidor();
+          $consumidor->user_id = $idCoordenador;
+          $consumidor->grupo_consumo_id = $idGrupoConsumo;
+          $consumidor->save();
+        }
+    }
+
     public function listar($idGrupoConsumo){
         if(Auth::check()){
             $grupoConsumo = GrupoConsumo::find($idGrupoConsumo);
@@ -53,14 +68,11 @@ class ConsumidorController extends Controller
 
         $gruposConsumoTodos = GrupoConsumo::all();
 
-        $gruposConsumoCoordenador = GrupoConsumo::where('coordenador_id','=',Auth::user()->id)->get();
-
         $gruposConsumoParticipante = GrupoConsumo::whereHas('consumidores', function($query){
             $query->where('user_id', '=', Auth::user()->id);
         })->get();
 
-        $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoCoordenador);
-        $gruposConsumo = $gruposConsumo->diff($gruposConsumoParticipante);
+        $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoParticipante);
 
         return view('consumidor.selecionarGrupo',
                    ['gruposConsumo' => $gruposConsumo]);

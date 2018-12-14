@@ -12,12 +12,13 @@
                 <div class="panel-heading"><h1>Grupos de Consumo</h1></div>
                 <div class="panel-body">
                     <h3>Selecione o grupo que queira fazer parte:</h3>
+                    <br>
                     <form class="form-horizontal" method="POST" action="{{action('ConsumidorController@cadastrar')}}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">
-                                <select name="grupoConsumo">
+                                <select class="form-control" name="grupoConsumo">
                                     <option value="" selected disabled hidden>Selecione</option>
                                     @foreach($gruposConsumo as $grupoConsumo)
                                         <option value={{$grupoConsumo->id}}>{{$grupoConsumo->name}}</option>
