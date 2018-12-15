@@ -13,7 +13,7 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
 
 
-        return $pdf->stream('relatorio');
+        return $pdf->stream('relatorio.pdf');
     }
 
     public function criarRelatorioPedidosProdutores($evento_id){
@@ -26,7 +26,7 @@ class PdfController extends Controller
         $view = \View::make($view, compact('data', 'date',' produtores'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('relatorio');
+        return $pdf->stream('relatorio.pdf');
 
         //return view($view, ['data'=>$data, 'date'=>$date]);
     }
@@ -42,7 +42,7 @@ class PdfController extends Controller
         $view = \View::make($view, compact('data', 'date','evento'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        return $pdf->stream('relatorio');
+        return $pdf->stream('relatorio.pdf');
 
         //return view($view, ['data'=>$data, 'date'=>$date]);
     }
@@ -55,6 +55,6 @@ class PdfController extends Controller
       $view = \View::make($view, compact('data', 'date','evento'))->render();
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      return $pdf->stream('relatorio');
+      return $pdf->stream('relatorio.pdf');
     }
 }
