@@ -17,13 +17,9 @@ class CreateItemPedidosTable extends Migration
             $table->increments('id');
             $table->integer('pedido_id')->unsigned();
             $table->foreign('pedido_id')->references('id')->on('pedidos');
-            $table->string('nome_produtor');
-            $table->string('nome_produto');
-            $table->string('unidade_venda');
-            $table->boolean('is_fracionado');
-            $table->boolean('is_porcao');
-            $table->double('quantidades');
-            $table->double('preco');
+            $table->integer('produto_id')->unsigned();
+            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->double('quantidade');
             $table->timestamps();
         });
     }
