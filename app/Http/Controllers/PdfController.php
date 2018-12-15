@@ -43,12 +43,19 @@ class PdfController extends Controller
 
     public function criarRelatorioComposicaoPedidos($evento_id){
         $view = 'relatorios.composicaoPedidos';
-        $data = \projetoGCA\Pedido::where('evento_id', '=', $evento_id)->get();
-        $evento = \projetoGCA\Evento::find($evento_id);
-        //return var_dump($produtores[0]->nome_produtor);
+        
+        $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
+        
+        $consumidores = array();
+        foreach ($pedidos as $pedido) {
+            $consumidor = \projetoGCA\User::find($pedido->consumidor_id);
+            if(!(in_array($consumidor,$consumidores))){
+                array_push($consumidores,$consumidor);
+            }
+        }
 
-        $date = date('d/m/Y');
-        $view = \View::make($view, compact('data', 'date','evento'))->render();
+        $data = date('d/m/Y');
+        $view = \View::make($view, compact('data', 'consumidores','pedidos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('relatorio.pdf');
