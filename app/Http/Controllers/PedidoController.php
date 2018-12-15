@@ -18,9 +18,9 @@ class PedidoController extends Controller
                                 ->where('data_evento', '>', new DateTime())
                                 ->where('data_fim_pedidos', '>=', new DateTime())
                                 ->orderBy('id', 'DESC')->first();
-        $produtos = Produto::all();        
+        $produtos = Produto::all();
         if(!is_null($evento)){
-            return view("loja.loja", ['produtos' => $produtos, 'evento' =>$evento]); 
+            return view("loja.loja", ['produtos' => $produtos, 'evento' =>$evento]);
         }
         else{
             return view("loja.loja", ['produtos' => array(), 'evento' =>$evento]);
@@ -48,7 +48,7 @@ class PedidoController extends Controller
         }
         $produtos = array_values($produtos);
         $quantidades = array_values($quantidades);
-        return view("loja.carrinho", ['produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);  
+        return view("loja.carrinho", ['produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
     }
 
 
@@ -57,10 +57,10 @@ class PedidoController extends Controller
         $array_of_item_ids = $input['produto_id'];
 
         $quantidades = $input['quantidade'];
+
         $produtos = Produto::whereIn('id', $array_of_item_ids)->get();
         $pedido = new Pedido();
-        $pedido->consumidor_id = Auth::user()->consumidor->id;
-        
+        $pedido->consumidor_id = Auth::user()->id;
         $pedido->evento_id = $input['evento_id'];
         $pedido->data_pedido = new DateTime();
         $pedido->is_confirmado = false;
@@ -71,16 +71,8 @@ class PedidoController extends Controller
             if($quantidades[$i] > 0){
                 $item = new ItemPedido();
                 $item->pedido_id = $pedido->id;
-                $item->nome_produto = $produto->nome;
-
-                $produtor = \projetoGCA\Produtor::find($produto->produtor_id);
-
-                $item->nome_produtor = $produtor->nome;
-                $item->unidade_venda = $produto->unidadeVenda->nome;
-                $item->is_fracionado = $produto->unidadeVenda->is_fracionado;
-                $item->is_porcao = $produto->unidadeVenda->is_porcao;
-                $item->quantidades = $quantidades[$i];
-                $item->preco = $produto->preco;
+                $item->produto_id = $produto->id;
+                $item->quantidade = $quantidades[$i];
                 $item->save();
             }
             $i = $i + 1;
@@ -88,6 +80,6 @@ class PedidoController extends Controller
 
         return redirect()
                     ->action('ConsumidorController@pedidos')
-                    ->withInput();       
+                    ->withInput();
     }
 }

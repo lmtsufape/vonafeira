@@ -151,12 +151,18 @@ class EventoController extends Controller
             array_push($totaisItens, count($itens));
             $total = 0;
             foreach($itens as $item){
-                $total += $item->preco * $item->quantidades;
+                $produto = \projetoGCA\Produto::where('id','=',$item->produto_id)->first();
+                $total += $produto->preco * $item->quantidade;
             }
             array_push($totaisPedidos, $total);
         }
 
-        return view("pedido.pedidos", ['pedidos' => $pedidos, 'evento' => $evento, 'grupoConsumo' => $grupoConsumo, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);
+        return view("pedido.pedidos", ['pedidos' => $pedidos,
+                                       'evento' => $evento,
+                                       'grupoConsumo' => $grupoConsumo,
+                                       'totaisItens' => $totaisItens,
+                                       'totaisPedidos' => $totaisPedidos,
+                                       'evento_id'=>$evento_id]);
     }
 
     public function itensPedido($pedido_id){

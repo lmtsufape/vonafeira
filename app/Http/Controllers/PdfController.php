@@ -18,12 +18,21 @@ class PdfController extends Controller
 
     public function criarRelatorioPedidosProdutores($evento_id){
         $view = 'relatorios.pedidosProdutores';
-        $data = DB:: select("select * from item_pedidos where pedido_id in (select pedidos.id from pedidos where evento_id = ".$evento_id.")  order by nome_produtor");
-        $produtores = DB:: select("select nome_produtor from item_pedidos where pedido_id in (select pedidos.id from pedidos where evento_id = ".$evento_id.") group by nome_produtor order by nome_produtor");
-        //return var_dump($produtores[0]->nome_produtor);
+
+        $itensPedidos = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
+            $query->where('evento_id', '=', $evento_id);
+        })->get();
+
+        $produtores = array();
+        foreach ($itensPedidos as $itemPedido) {
+            $produtor = $itemPedido->produto->produtor;
+            if(!in_array($produtor,$produtores)){
+                array_push($produtores,$produtor);
+            }
+        }
 
         $date = date('d/m/Y');
-        $view = \View::make($view, compact('data', 'date',' produtores'))->render();
+        $view = \View::make($view, compact('date', 'itensPedidos', 'produtores'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('relatorio.pdf');

@@ -7,8 +7,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do Pedido</div>
                 <div class="panel-body">
-                    <table class="table table-hover"> 
-                        <thead>        
+                    <table class="table table-hover">
+                        <thead>
                             <tr>
                                 <th>Produto</th>
                                 <th>Quantidade</th>
@@ -20,14 +20,18 @@
                         @php($total = 0)
                         <tbody>
                         @foreach ($itensPedido as $itemPedido)
-                        <tr>
-                            <td>{{ $itemPedido->nome_produto }}</td>
-                            <td>{{ $itemPedido->quantidades }}</td>
-                            <td>{{ $itemPedido->unidade_venda }}</td>
-                            <td>{{ 'R$'.number_format($itemPedido->preco, 2) }}</td>
-                            <td>{{ 'R$'.number_format($itemPedido->preco * $itemPedido->quantidades, 2) }}</td>
-                            @php($total = $total + $itemPedido->preco * $itemPedido->quantidades)
-                        </tr>
+                          <?php
+                            $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
+                            $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
+                          ?>
+                          <tr>
+                              <td>{{ $produto->nome}}</td>
+                              <td>{{ $itemPedido->quantidade }}</td>
+                              <td>{{ $unidadeVenda->nome}}</td>
+                              <td>{{ 'R$'.number_format($produto->preco, 2) }}</td>
+                              <td>{{ 'R$'.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
+                              @php($total = $total + $produto->preco * $itemPedido->quantidade)
+                          </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
