@@ -18,7 +18,7 @@
           <thead>
             <tr>
                 <th><strong>Produtor:</strong></th>
-                <th colspan='4'><strong>{{$produtor->nome}}</strong></th>
+                <th colspan='3'><strong>{{$produtor->nome}}</strong></th>
             </tr>
             <tr>
               <th>PRODUTO</th>
