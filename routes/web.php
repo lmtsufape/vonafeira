@@ -19,10 +19,7 @@
 Route::get('/erroUsuarioExistente', function () {
     return "<h1> Usuário Existente </h1>";
 });
-// Rotas para Contatos
-Route::get('/adicionarContato', 'ContatoController@novo');
-Route::post('/cadastrarContato', 'ContatoController@cadastrar');
-
+// Rotas para Usuarios
 Route::get('/listarUsuarios', 'UserController@listar');
 Route::get('/cadastrarUsuario', 'UserController@cadastrar');
 Route::get('/editarUsuario/{id}', 'UserController@editar');
@@ -30,9 +27,9 @@ Route::post('/adicionarUsuario', 'UserController@adicionar');
 Route::post('/salvarUsuario', 'UserController@salvar');
 
 // Rotas para Unidade de Vendas
-Route::get('/unidadesVenda', "UnidadeVendaController@listar");
-Route::get('/adicionarUnidadeVenda', "UnidadeVendaController@adicionar");
-Route::get('/editarUnidadeVenda/{id}', "UnidadeVendaController@editar");
+Route::get('/unidadesVenda/{grupoConsumoId}', "UnidadeVendaController@listar");
+Route::get('/adicionarUnidadeVenda/{grupoConsumoId}', "UnidadeVendaController@adicionar");
+Route::get('/editarUnidadeVenda/{grupoConsumoId}/{id}', "UnidadeVendaController@editar");
 Route::get('/removerUnidadeVenda/{id}', "UnidadeVendaController@remover");
 Route::post('/cadastrarUnidadeVenda', "UnidadeVendaController@cadastrar");
 Route::post('/atualizarUnidadeVenda', "UnidadeVendaController@atualizar");
@@ -46,9 +43,16 @@ Route::post('/cadastrarProduto', 'ProdutoController@cadastrar');
 Route::get('/editarProduto/{idGrupoConsumo}', 'ProdutoController@editar');
 Route::get('/removerProduto/{idGrupoConsumo}', 'ProdutoController@remover');
 Route::get('/adicionarProduto/{idGrupoConsumo}',  'ProdutoController@novo');
-Route::get('/removerProduto/{idGrupoConsumo}',  'ProdutoController@remover');
 Route::post('/atualizarProduto', "ProdutoController@atualizar");
 Route::get('/produtos/{idGrupoConsumo}', 'ProdutoController@listar');
+
+// Rotas para Produtores
+Route::post('/cadastrarProdutor', 'ProdutorController@cadastrar');
+Route::get('/editarProdutor/{idGrupoConsumo}', 'ProdutorController@editar');
+Route::get('/removerProdutor/{idGrupoConsumo}', 'ProdutorController@remover');
+Route::get('/adicionarProdutor/{idGrupoConsumo}',  'ProdutorController@novo');
+Route::post('/atualizarProdutor', "ProdutorController@atualizar");
+Route::get('/produtores/{idGrupoConsumo}', 'ProdutorController@listar');
 
 // Rotas para Consumidor
 Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar');
@@ -65,6 +69,7 @@ Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar');
 Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar");
 Route::post('/salvarGrupoConsumo',  'GrupoConsumoController@salvar');
 Route::get('/gruposConsumo', 'GrupoConsumoController@listar');
+Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair');
 
 // Rotas para Eventos
 Route::post('/cadastrarEvento', 'EventoController@cadastrar');
@@ -74,6 +79,7 @@ Route::post('/salvarEvento',  'EventoController@salvar');
 Route::get('/eventos/{idGrupoConsumo}', 'EventoController@listar');
 Route::get('/evento/pedidos/{evento_id}', 'EventoController@pedidos');
 Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido');
+Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento');
 Auth::routes();
 
 // Rotas para Loja
@@ -91,4 +97,3 @@ Route::get('/', function(){
 // Rotas para relatorios
 Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores');
 Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioComposicaoPedidos');
-

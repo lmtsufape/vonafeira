@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar: {{$produto->nome}}
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -20,25 +24,48 @@
                                 <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="1">
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('nomeProdutor') ? ' has-error' : '' }}">
-                            <label for="nomeProdutor" class="col-md-4 control-label">Nome do Produtor</label>
+                        <div class="form-group{{ $errors->has('idProdutor') ? ' has-error' : '' }}">
+                            <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                                <input id="nomeProdutor" type="text" class="form-control" name="nomeProdutor" value="{{$produto->nome_produtor}}" required autofocus>
-
-                                @if ($errors->has('nomeProdutor'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('nomeProdutor') }}</strong>
-                                    </span>
+                            <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                                @if (old('idProdutor',NULL) != NULL)
+                                    @foreach ($produtores as $produtor)
+                                        @if (old('idProdutor') == $produtor->id)
+                                            <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
+                                        @else
+                                            <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @foreach ($produtores as $produtor)
+                                        @if ($produto->idProdutor == $produtor->id)
+                                            <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
+                                        @else
+                                            <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
+                                        @endif
+                                    @endforeach
                                 @endif
+                            </select>
+
+                            @if ($errors->has('idProdutor'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('idProdutor') }}</strong>
+                                </span>
+                            @endif
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
 
                             <div class="col-md-6">
-                                <input id="nome" type="text" class="form-control" name="nome" value="{{$produto->nome}}" required autofocus>
 
+                                @if(old('nome',NULL) != NULL)
+                                    <input id="nome" type="text" class="form-control" name="nome" value="{{old('nome')}}">
+                                @else
+                                    <input id="nome" type="text" class="form-control" name="nome" value="{{$produto->nome}}">
+                                @endif
+                                
                                 @if ($errors->has('nome'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('nome') }}</strong>
@@ -46,12 +73,17 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                             <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
                             <div class="col-md-6">
-                                <input id="descricao" type="text" class="form-control" name="descricao" value="{{$produto->descricao}}" autofocus>
+
+                                @if(old('descricao',NULL) != NULL)
+                                    <input id="descricao" type="text" class="form-control" name="descricao" value="{{old('descricao')}}">
+                                @else
+                                    <input id="descricao" type="text" class="form-control" name="descricao" value="{{$produto->descricao}}">
+                                @endif
 
                                 @if ($errors->has('descricao'))
                                     <span class="help-block">
@@ -64,7 +96,12 @@
                             <label for="preco" class="col-md-4 control-label">Preço</label>
 
                             <div class="col-md-6">
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{$produto->preco}}" required autofocus>
+
+                                @if(old() != NULL)
+                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{old('preco')}}">
+                                @else
+                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{$produto->preco}}">
+                                @endif
 
                                 @if ($errors->has('preco'))
                                     <span class="help-block">
@@ -77,15 +114,24 @@
                             <label for="unidadeVenda" class="col-md-4 control-label">Unidade de Venda</label>
 
                             <div class="col-md-6">
-                                <select name="unidadeVenda" required autofocus>
-                                    <option value="" selected disabled hidden>Escolha uma unidade</option>
-                                    @foreach ($unidadesVenda as $unidadeVenda)
-                                        @if($produto->unidadeVenda->id == $unidadeVenda->id)
-                                            <option value={{$unidadeVenda->id}} selected>{{$unidadeVenda->nome}}</option>
-                                        @else
-                                            <option value={{$unidadeVenda->id}} selected>{{$unidadeVenda->nome}}</option>   
-                                        @endif
-                                    @endforeach
+                                <select name="unidadeVenda">
+                                    @if (old('unidadeVenda',NULL) != NULL)
+                                        @foreach ($unidadesVenda as $unidadeVenda)
+                                            @if (old('unidadeVenda') == $unidadeVenda->id)
+                                                <option value="{{$unidadeVenda->id}}" selected>{{$unidadeVenda->nome}}</option>
+                                            @else
+                                                <option value="{{$unidadeVenda->id}}">{{$unidadeVenda->nome}}</option>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach ($unidadesVenda as $unidadeVenda)
+                                            @if ($produto->unidadevenda_id == $unidadeVenda->id)
+                                                <option value="{{$unidadeVenda->id}}" selected>{{$unidadeVenda->nome}}</option>
+                                            @else
+                                                <option value="{{$unidadeVenda->id}}">{{$unidadeVenda->nome}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
 
 

@@ -2,6 +2,7 @@
 
 namespace projetoGCA\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use DateTime;
 use DateInterval;
 use Illuminate\Http\Request;
@@ -10,7 +11,8 @@ class EventoController extends Controller
 {
 
     public function novo($idGrupoConsumo){
-        return view('evento.adicionarEvento', [ 'grupoConsumo' => $idGrupoConsumo ]);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+        return view('evento.adicionarEvento', [ 'grupoConsumo' => $grupoConsumo ]);
     }
     /**
      * @Deprecated
@@ -47,7 +49,6 @@ class EventoController extends Controller
             // adiciona a data limite de pedidos e salva
             // return var_dump($dataProximoEvento);
             $evento->data_fim_pedidos = $dataProximoEvento->format('Y-m-d');
-            $evento->save();
         }
         elseif($grupoConsumo->periodo == 'Mensal'){
             // incrementa a data em um mês
@@ -60,19 +61,40 @@ class EventoController extends Controller
             $dataProximoEvento->sub($intervalo);
             // adiciona a data limite de pedidos e salva;
             $evento->data_fim_pedidos = $dataProximoEvento;
-            $evento->save();
         }
+
+        $evento->estaAberto = True;
+
+        $evento->save();
+
         return redirect("/eventos".$grupoConsumo->id);
 
     }
 
     public function cadastrar(Request $request){
-        
+
+        $validator = Validator::make($request->all(), [
+            'data_evento' => 'required',
+            'hora_evento' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
         $dataHoje = new DateTime();
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->id_grupo_consumo);
 
         $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->orderBy('id', 'DESC')->first();
         // return var_dump(empty($ultimoEvento));
+
+        $dataEvento = new DateTime($request->data_evento);
+        $dataAtual = new DateTime();
+        //return gettype($dataAtual);
+        if($dataEvento < $dataAtual){
+            return back()->withInput()->withErrors(['data_evento' => 'Data do envento não pode ser anterior à data atual']);
+        }
+
         if(!is_null($ultimoEvento)){
             $dataUltimoEvento = new DateTime($ultimoEvento->data_evento);
             if($dataHoje < $dataUltimoEvento){
@@ -92,28 +114,35 @@ class EventoController extends Controller
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
 
-        
+
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
         // calcula a data limite dos pedidos de venda
         $intervalo = new DateInterval("P{$grupoConsumo->prazo_pedidos}D");
         $dataFimPedidos = new DateTime($evento->data_evento);
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
+
+        $evento->estaAberto = True;
+
         $evento->save();
+
         return redirect()
                 ->action('EventoController@listar', $request->id_grupo_consumo)
-                ->withInput(); 
+                ->withInput();
     }
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+            $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $idGrupoConsumo]);  
+            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);
         }
         return view("/home");
     }
 
     public function pedidos($evento_id){
+        $evento = \projetoGCA\Evento::find($evento_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$evento->grupoconsumo_id)->first();
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
         $totaisItens = array();
         $totaisPedidos = array();
@@ -122,17 +151,30 @@ class EventoController extends Controller
             array_push($totaisItens, count($itens));
             $total = 0;
             foreach($itens as $item){
-                $total += $item->preco * $item->quantidades;
+                $produto = \projetoGCA\Produto::where('id','=',$item->produto_id)->first();
+                $total += $produto->preco * $item->quantidade;
             }
             array_push($totaisPedidos, $total);
+        }
 
-        }       
-        return view("pedido.pedidos", ['pedidos' => $pedidos, 'totaisItens' => $totaisItens, 'totaisPedidos' => $totaisPedidos, 'evento_id'=>$evento_id]);  
+        return view("pedido.pedidos", ['pedidos' => $pedidos,
+                                       'evento' => $evento,
+                                       'grupoConsumo' => $grupoConsumo,
+                                       'totaisItens' => $totaisItens,
+                                       'totaisPedidos' => $totaisPedidos,
+                                       'evento_id'=>$evento_id]);
     }
 
     public function itensPedido($pedido_id){
-        $pedido = \projetoGCA\Pedido::find($pedido_id);    
-        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);  
+        $pedido = \projetoGCA\Pedido::find($pedido_id);
+        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
+    }
+
+    public function fecharEvento($eventoId){
+        $evento = \projetoGCA\Evento::find($eventoId);
+        $evento->estaAberto = False;
+        $evento->update();
+        return back()->with('success','Evento '.$evento->id.' fechado.');
     }
 
 }

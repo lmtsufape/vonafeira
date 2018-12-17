@@ -13,4 +13,8 @@ class Produto extends Model
     public function grupoConsumo(){
         return $this->belongsTo(GrupoConsumo::class, 'grupoconsumo_id');
     }
+
+    public function produtor(){
+        return $this->belongsTo(Produtor::class, 'produtor_id');
+    }
 }

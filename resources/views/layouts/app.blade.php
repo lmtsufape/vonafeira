@@ -13,7 +13,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    >
 
     <script type="text/javascript">
         /* Máscaras ER */
@@ -89,10 +88,7 @@
                                         <a href="/gruposConsumo">Meus Grupos de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/unidadesVenda">Unidades de Venda</a>
-                                    </li>
-                                    <li>
-                                        <a href="/selecionarGrupo">Selecionar Grupo de Consumo</a>
+                                        <a href="/selecionarGrupo">Entrar em Grupo de Consumo</a>
                                     </li>
                                 </ul>
                             </li>
@@ -104,7 +100,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a href="/loja">Carrinho</a>
+                                            <a href="/loja">Comprar</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -132,6 +128,11 @@
                             </li>
                         @endif
                     </ul>
+
+                </div>
+                <hr style="margin-top: 0px; padding-bottom: -10px">
+                <div name='navbar' style="padding-bottom: 22px" align:center>
+                    @yield('navbar')
                 </div>
             </div>
         </nav>

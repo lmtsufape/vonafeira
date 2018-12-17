@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar')
+    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Eventos
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -24,18 +28,26 @@
                                 Não existem eventos cadastrados.
                         </div>
                     @else
+                    @if (\Session::has('success'))
+                        <div class="alert alert-success">
+                            <strong>Sucesso!</strong>
+                            {!! \Session::get('success') !!}
+                        </div>
+                    @endif
                     <table class="table table-hover">
-                        
+
                         <tr>
                             <th>Cod</th>
                             <th>Data Evento</th>
                             <th>Hora Evento</th>
                             <th>Data Inicio Pedidos</th>
                             <th>Data Fim Pedidos</th>
+                            <th>Aberto</th>
                             <th>Pedidos</th>
-                            
+                            <th>Ações</th>
+
                         </tr>
-                        
+
                         @foreach ($eventos as $evento)
                         <tr>
                             <td>{{ $evento->id }}</td>
@@ -43,7 +55,20 @@
                             <td>{{ $evento->hora_evento.' hrs' }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_inicio_pedidos, 'd/m/Y') }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td>
-                            <td><a class="btn btn-info" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+
+                            <td>
+                              @if ($evento->estaAberto)
+                                Sim
+                              @else
+                                Não
+                              @endif
+                            </td>
+                            <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+                            @if($evento->estaAberto)
+                                <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>
+                            @else
+                                <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>
@@ -52,7 +77,7 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo)}}">Novo</a>
+                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo->id)}}">Novo</a>
                 </div>
             </div>
         </div>

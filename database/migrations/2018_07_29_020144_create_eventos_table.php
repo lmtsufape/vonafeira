@@ -23,6 +23,7 @@ class CreateEventosTable extends Migration
             $table->date('data_fim_pedidos');
             $table->date('data_evento');
             $table->string('hora_evento');
+            $table->boolean('estaAberto');
             $table->timestamps();
         });
     }
