@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Adicionar Evento')
+
 @section('navbar')
     <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Listar Eventos</a> > Adicionar
 @endsection

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('titulo','Registrar')
+
 @section('navbar')
-    Registro
+    Registrar
 @endsection
 
 @section('content')
