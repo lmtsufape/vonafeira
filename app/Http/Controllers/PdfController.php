@@ -73,4 +73,13 @@ class PdfController extends Controller
       $pdf->loadHTML($view);
       return $pdf->stream('relatorio.pdf');
     }
+
+    public function termosDeUso(){
+        $view = 'termosDeUso';
+
+        $view = \View::make($view, compact('data', 'date','evento'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('termosDeUso.pdf');
+    }
 }

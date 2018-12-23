@@ -97,3 +97,6 @@ Route::get('/', function(){
 // Rotas para relatorios
 Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores');
 Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioComposicaoPedidos');
+
+//Rota para termo de uso
+Route::get('/termos','PdfController@termosDeUso');
