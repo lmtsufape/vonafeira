@@ -59,6 +59,43 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('estado') ? ' has-error' : '' }}">
+                            <label for="estado" class="col-md-4 control-label">Estado</label>
+
+                            <div class="col-md-6">
+                                @if(old('estado',NULL) != NULL)
+                                    <input id="estado" type="text" class="form-control" name="estado" value="{{old('estado')}}">
+                                @else
+                                    <input id="estado" type="text" class="form-control" name="estado" value="{{$grupoConsumo->estado}}">
+                                @endif
+
+                                @if ($errors->has('estado'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('estado') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('localidade') ? ' has-error' : '' }}">
+                            <label for="localidade" class="col-md-4 control-label">Localidade</label>
+
+                            <div class="col-md-6">
+                                @if(old('localidade',NULL) != NULL)
+                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{old('localidade')}}">
+                                @else
+                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{$grupoConsumo->localidade}}">
+                                @endif
+
+                                @if ($errors->has('localidade'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('localidade') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('periodo') ? ' has-error' : '' }}">
                             <label for="periodo" class="col-md-4 control-label">Período</label>
 
