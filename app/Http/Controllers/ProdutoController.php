@@ -12,9 +12,8 @@ class ProdutoController extends Controller
 {
 
     public function novo($idGrupoConsumo){
-        $unidadeVenda = \projetoGCA\UnidadeVenda::all();
-        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo)->first();
+        $unidadeVenda = \projetoGCA\UnidadeVenda::where('grupoConsumoId','=',$grupoConsumo->id)->get();
         $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
 
         return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda,
@@ -50,12 +49,12 @@ class ProdutoController extends Controller
 
     }
 
-    public function editar($id) {
-        $produto = \projetoGCA\Produto::find($id);
-        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$produto->grupoconsumo_id)->first();
-
+    public function editar($produto_id) {
+        $produto = \projetoGCA\Produto::find($produto_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($produto->grupoconsumo_id)->first();
+        $unidadeVenda = \projetoGCA\UnidadeVenda::where('grupoConsumoId','=',$grupoConsumo->id)->get();
         $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$grupoConsumo->id)->get();
-        $unidadeVenda = \projetoGCA\UnidadeVenda::all();
+
         return view(
             "produto.editarProduto", ['grupoConsumo' => $grupoConsumo,
                                       'unidadesVenda' => $unidadeVenda,
