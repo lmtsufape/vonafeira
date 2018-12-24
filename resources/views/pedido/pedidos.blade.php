@@ -49,10 +49,12 @@
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
                     @if($evento->estaAberto)
                         <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
-                        <a class="btn btn-warning" disabled>Relatório Produtor</a>
+                        <a class="btn btn-primary" disabled>Relatório Produtor</a>
+                        <a class="btn btn-primary" disabled>Relatório Consumidor</a>
                     @else
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioComposicaoPedidos', $evento_id)}}">Relatório Montagem Pedido</a>
-                        <a class="btn btn-warning" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento_id)}}">Relatório Produtor</a>
+                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioComposicaoPedidos', $evento->id)}}">Relatório Montagem Pedido</a>
+                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento->id)}}">Relatório Produtores</a>
+                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosConsumidores', $evento->id)}}">Relatório Consumidores</a>
                     @endif
                 </div>
             </div>

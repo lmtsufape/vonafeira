@@ -62,6 +62,29 @@ class PdfController extends Controller
 
         //return view($view, ['data'=>$data, 'date'=>$date]);
     }
+
+    public function criarRelatorioPedidosConsumidores($evento_id){
+        $view = 'relatorios.pedidosConsumidores';
+        
+        $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
+        
+        $consumidores = array();
+        foreach ($pedidos as $pedido) {
+            $consumidor = \projetoGCA\User::find($pedido->consumidor_id);
+            if(!(in_array($consumidor,$consumidores))){
+                array_push($consumidores,$consumidor);
+            }
+        }
+
+        $data = date('d/m/Y');
+        $view = \View::make($view, compact('data', 'consumidores','pedidos'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('relatorio.pdf');
+
+        //return view($view, ['data'=>$data, 'date'=>$date]);
+    }
+
     public function criarRelatorioPedidoCliente($evento_id){
       $view = 'relatorio.pedidoCliente';
       $data = \projetoGCA\Pedido::where('evento_id', '=', $evento_id)->get();
