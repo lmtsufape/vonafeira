@@ -45,6 +45,7 @@
                             <th>Data Inicio Pedidos</th>
                             <th>Data Fim Pedidos</th>
                             <th>Aberto</th>
+                            <th>Local de Retirada</th>
                             <th>Pedidos</th>
                             <th>Ações</th>
 
@@ -65,12 +66,14 @@
                                 Não
                               @endif
                             </td>
+                            <td>{{$evento->local_retirada}}</td>
                             <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
                             @if($evento->estaAberto)
                                 <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>
                             @else
                                 <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
                             @endif
+                            
                         </tr>
                         @endforeach
                         </tbody>
