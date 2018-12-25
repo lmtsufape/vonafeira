@@ -3,6 +3,7 @@
 @section('navbar')
     <a href="/home">Painel</a> > Loja
 @endsection
+@section('titulo','Loja')
 
 @section('content')
 <div class="container">

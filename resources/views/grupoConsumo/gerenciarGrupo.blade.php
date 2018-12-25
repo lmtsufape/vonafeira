@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Gerenciar Grupo de Consumo')
+
 @section('navbar')
     <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > Gerenciar Grupo: {{$grupoConsumo->name}}
 @endsection

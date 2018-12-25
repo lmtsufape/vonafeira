@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--<title>{{ config('app.name', 'Laravel') }}</title> -->
-    <title>Grupo de Consumo Agrícola</title>
+    <title>@yield('titulo') | Grupo de Consumo Agrícola</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

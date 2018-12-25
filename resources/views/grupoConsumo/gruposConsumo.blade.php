@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Meus Grupos de Consumo')
+
 @section('navbar')
     <a href="/home">Painel</a> > Meus Grupos de Consumo
 @endsection

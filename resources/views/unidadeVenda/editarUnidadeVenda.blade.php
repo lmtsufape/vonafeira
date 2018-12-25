@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Editar Unidade de Venda')
+
 @section('navbar')
     <a href="/">Painel</a> >
     <a href="/gruposConsumo">Grupos de Consumo</a> >

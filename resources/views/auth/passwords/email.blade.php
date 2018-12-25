@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Recuperação de Senha')
+
 @section('navbar')
     Recuperação de Senha
 @endsection

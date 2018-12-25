@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Cadastrar Grupo de Consumo')
+
 @section('navbar')
     <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > Adicionar Grupo de Consumo
 @endsection
