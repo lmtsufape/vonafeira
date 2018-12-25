@@ -67,6 +67,8 @@ class PedidoController extends Controller
         $pedido->save();
         $itens = array();
         $i = 0;
+
+        $itens_pedido = array();
         foreach ($produtos as $produto){
             if($quantidades[$i] > 0){
                 $item = new ItemPedido();
@@ -74,12 +76,21 @@ class PedidoController extends Controller
                 $item->produto_id = $produto->id;
                 $item->quantidade = $quantidades[$i];
                 $item->save();
+                array_push($itens_pedido,$item);
             }
             $i = $i + 1;
         }
 
-        return redirect()
-                    ->action('ConsumidorController@pedidos')
-                    ->withInput();
+        return redirect("/visualizarPedido/$pedido->id");
+    }
+
+    public function visualizar($id){
+        $pedido = \projetoGCA\Pedido::find($id);
+        $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
+
+        return view("loja.pedido", [
+            'pedido' => $pedido,
+            'itens_pedido' => $itens_pedido]
+        );
     }
 }
