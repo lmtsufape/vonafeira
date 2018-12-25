@@ -89,6 +89,8 @@ Route::get('/loja', 'PedidoController@loja');
 Route::post('/carrinho', 'PedidoController@confirmar');
 Route::post('/pedidoFinalizado', 'PedidoController@finalizar');
 
+Route::get('/visualizarPedido/{id}','PedidoController@visualizar');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function(){
     return redirect()->action('HomeController@index');
