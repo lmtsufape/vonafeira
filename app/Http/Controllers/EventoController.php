@@ -76,6 +76,7 @@ class EventoController extends Controller
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
+            'local_retirada' => 'required'
         ]);
 
         if($validator->fails()){
@@ -113,6 +114,7 @@ class EventoController extends Controller
         $evento->grupoconsumo_id = $grupoConsumo->id;
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
+        $evento->local_retirada = $request->local_retirada;
 
 
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
