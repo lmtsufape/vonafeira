@@ -30,7 +30,7 @@
                             Não há eventos disponíveis no momento.
                           </div>
                         @else
-                          <h3> Evento de: {{$grupoConsumo->name}} </h3>
+                          <h3> Evento em: {{$grupoConsumo->name}} </h3>
 
                           @foreach($eventos as $evento)
                             <table class="table table-hover">

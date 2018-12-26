@@ -38,10 +38,13 @@ class LojaController extends Controller
   public function produtosEvento($idEvento){
 
       $evento = Evento::find($idEvento);
-
+      $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
       $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)->get();
 
-      return view("loja.lojaProdutos", ['evento' => $evento, 'produtos' => $produtos]);
+      return view("loja.lojaProdutos", ['grupoConsumo' => $grupoConsumo,
+                                        'evento' => $evento,
+                                        'produtos' => $produtos,
+                                        ]);
   }
 
 

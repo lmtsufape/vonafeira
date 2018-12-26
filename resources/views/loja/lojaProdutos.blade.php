@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Loja
+  <a href="/home">Painel</a> >
+  <a href="/loja">Loja</a> > Evento em: {{$grupoConsumo->name}}
 @endsection
+
 @section('titulo','Loja')
 
 @section('content')
