@@ -7,26 +7,13 @@ use DateInterval;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use \projetoGCA\Produto;
+use \projetoGCA\GrupoConsumo;
 use \projetoGCA\Pedido;
 use \projetoGCA\ItemPedido;
 use \projetoGCA\Evento;
 class PedidoController extends Controller
 {
 
-    public function loja(){
-        $evento = Evento::where('grupoconsumo_id', '=', Auth::user()->consumidor->grupoConsumo->id)
-                                ->where('data_evento', '>', new DateTime())
-                                ->where('data_fim_pedidos', '>=', new DateTime())
-                                ->orderBy('id', 'DESC')->first();
-        $produtos = Produto::all();
-        if(!is_null($evento)){
-            return view("loja.loja", ['produtos' => $produtos, 'evento' =>$evento]);
-        }
-        else{
-            return view("loja.loja", ['produtos' => array(), 'evento' =>$evento]);
-        }
-
-    }
     public function confirmar(Request $request) {
         $input = $request->input();
 

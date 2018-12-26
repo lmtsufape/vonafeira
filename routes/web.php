@@ -83,7 +83,8 @@ Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento');
 Auth::routes();
 
 // Rotas para Loja
-Route::get('/loja', 'PedidoController@loja');
+Route::get('/loja', 'LojaController@gruposConsumoUsuario');
+Route::get('/loja/evento/{id}','LojaController@produtosEvento');
 
 // Rotas para Carrinho
 Route::post('/carrinho', 'PedidoController@confirmar');

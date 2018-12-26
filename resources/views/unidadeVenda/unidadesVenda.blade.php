@@ -13,32 +13,37 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Unidades de Venda</div>
-
                 <div class="panel-body">
-                <table class="table table-hover">
+                  @if(count($listaUnidades) == 0)
+                      <div class="alert alert-danger">
+                              Não existem unidade de venda cadastradas neste grupo de consumo.
+                      </div>
+                  @else
+                    <table class="table table-hover">
 
-                    <tr>
-                        <th>Cod</th>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Fracionado</th>
-                        <th>Porção</th>
-                        <th colspan="2">Ação</th>
-                    </tr>
+                        <tr>
+                            <th>Cod</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Fracionado</th>
+                            <th>Porção</th>
+                            <th colspan="2">Ação</th>
+                        </tr>
 
-                    @foreach ($listaUnidades as $unidadesVenda)
-                    <tr>
-                        <td>{{ $unidadesVenda->id }}</td>
-                        <td>{{ $unidadesVenda->nome }}</td>
-                        <td>{{ $unidadesVenda->descricao }}</td>
-                        <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
-                        <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
-                        <td><a class="btn btn-success"href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
-                        <td><a class="btn btn-danger"href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">Remover</a></td>
-                    </tr>
+                        @foreach ($listaUnidades as $unidadesVenda)
+                        <tr>
+                            <td>{{ $unidadesVenda->id }}</td>
+                            <td>{{ $unidadesVenda->nome }}</td>
+                            <td>{{ $unidadesVenda->descricao }}</td>
+                            <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
+                            <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
+                            <td><a class="btn btn-success"href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
+                            <td><a class="btn btn-danger"href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">Remover</a></td>
+                        </tr>
 
-                    @endforeach
-                </table>
+                        @endforeach
+                    </table>
+                  @endif
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
