@@ -153,8 +153,14 @@ class EventoController extends Controller
     }
 
     public function itensPedido($pedido_id){
+
         $pedido = \projetoGCA\Pedido::find($pedido_id);
-        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
+        $evento = \projetoGCA\Evento::find($pedido->evento_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
+
+        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens,
+                                           'evento' => $evento,
+                                           'grupoConsumo' => $grupoConsumo]);
     }
 
     public function fecharEvento($eventoId){
