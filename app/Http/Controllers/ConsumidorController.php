@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use \projetoGCA\Consumidor;
+use \projetoGCA\Pedido;
 use \projetoGCA\User;
 use \projetoGCA\GrupoConsumo;
 class ConsumidorController extends Controller
@@ -79,8 +80,26 @@ class ConsumidorController extends Controller
     }
 
     public function pedidos(){
-        $pedidos = Auth::user()->consumidor->pedidos;
-        return view('consumidor.meuspedidos', ['pedidos'=>$pedidos]);
+      $consumidores = Auth::user()->consumidores;
+
+      $subset = $consumidores->map(function ($consumidor) {
+          return collect($consumidor->toArray())
+               ->only(['id'])
+               ->all();
+      });
+
+      $pedidos = Pedido::whereIn('consumidor_id', $subset)
+                       ->orderBy('data_pedido', 'ASC')->get();
+
+      return view('consumidor.meusPedidos', ['pedidos'=>$pedidos]);
+    }
+
+    public function itensPedido($pedido_id){
+
+        $pedido = \projetoGCA\Pedido::find($pedido_id);
+        $itens = $pedido->itens;
+
+        return view('consumidor.meusItensPedido', ['itensPedido' => $itens]);
     }
 
 }

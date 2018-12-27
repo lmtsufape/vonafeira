@@ -60,6 +60,7 @@ Route::get('/adicionarConsumidor',  'ConsumidorController@adicionar');
 Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar');
 Route::get('/selecionarGrupo', 'ConsumidorController@selecionarGrupo');
 Route::get('/meusPedidos', 'ConsumidorController@pedidos');
+Route::get('/meusPedidos/{pedido_id}', 'ConsumidorController@itensPedido');
 
 // Rotas para Grupo de Consumo
 Route::post('/cadastrarGrupoConsumo', 'GrupoConsumoController@cadastrar');
