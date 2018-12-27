@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Loja
+  <a href="/home">Painel</a> >
+  <a href="/loja">Loja</a> > Evento em: {{$grupoConsumo->name}}
 @endsection
+
 @section('titulo','Loja')
 
 @section('content')
@@ -15,13 +17,9 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="panel-body">
                         @if(count($produtos) == 0)
-                        <div class="alert alert-danger">
-                                @if(is_null($evento))
-                                    Não existem eventos no momento.
-                                @else
-                                    Não existem produtos disponíveis no momento.
-                                @endif
-                        </div>
+                          <div class="alert alert-danger">
+                            Não existem produtos disponíveis no momento.
+                          </div>
                         @else
                           <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento->id }}" >
 
