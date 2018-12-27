@@ -107,4 +107,8 @@ Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criar
 Route::get('/evento/pedidos/relatorioConsumidor/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores');
 Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos');
 
+//Rota para termo de uso
+Route::get('/termos','PdfController@termosDeUso');
+
+//Rotas para emails
 Route::post('/share/mail','MyMailController@emailCompartilhar');
