@@ -17,6 +17,8 @@ class PedidoController extends Controller
     public function confirmar(Request $request) {
         $input = $request->input();
 
+        $grupoConsumo = GrupoConsumo::find($input['grupo_consumo_id']);
+
         $array_of_item_ids = $input['item_id'];
         $quantidades = $input['quantidade'];
         $produtos = Produto::whereIn('id', $array_of_item_ids)->get()->toArray();
@@ -35,7 +37,7 @@ class PedidoController extends Controller
         }
         $produtos = array_values($produtos);
         $quantidades = array_values($quantidades);
-        return view("loja.carrinho", ['produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
+        return view("loja.carrinho", ['grupoConsumo' => $grupoConsumo, 'produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
     }
 
 
@@ -72,8 +74,8 @@ class PedidoController extends Controller
     }
 
     public function visualizar($id){
-        $pedido = \projetoGCA\Pedido::find($id);
-        $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
+        $pedido = Pedido::find($id);
+        $itens_pedido = ItemPedido::where('pedido_id','=',$pedido->id)->get();
 
         return view("loja.pedido", [
             'pedido' => $pedido,

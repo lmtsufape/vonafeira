@@ -49,7 +49,7 @@
     </table>
 
     <a href="/" class='btn btn-primary'>Início</a>
-    <a class='btn btn-primary'>Editar Pedido</a>
+    <a href="/editarPedido/{{$pedido->id}}" class='btn btn-primary'>Editar Pedido</a>
     <a href="/meusPedidos" class='btn btn-primary'>Meus Pedidos</a>
 </div>
 

@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="panel-body">
+                    @php($exibirMensagem = true)
                     @if(count($gruposConsumo) == 0)
                       <div class="alert alert-danger">
                         Você não está cadastrado em nenhum Grupo de Consumo no momento.
@@ -25,36 +26,39 @@
                         <?php
                           $eventos = \projetoGCA\Http\Controllers\LojaController::buscarEventosDeGrupodeConsumo($grupoConsumo->id);
                         ?>
-                        @if(count($eventos) == 0)
-                          <div class="alert alert-danger">
-                            Não há eventos disponíveis no momento.
-                          </div>
-                        @else
+
+                        @if (count($eventos) != 0)
                           <h3> Evento em: {{$grupoConsumo->name}} </h3>
-
-                          @foreach($eventos as $evento)
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>Data do Evento</th>
-                                    <th>Data Fim Pedidos</th>
-                                    <th>Local de Retirada</th>
-
-                                </tr>
-
-                                <tr>
-                                  <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td></td>
-                                  <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td></td>
-                                  <td>{{$evento->local_retirada}}</td>
-                                  <td><a class="btn btn-success" href="/loja/evento/{{$evento->id}}">Comprar</a></td>
-
-                                </tr>
-
-                            </table>
-                          @endforeach
-
+                          @php($exibirMensagem = $exibirMensagem && false)
                         @endif
 
+                        @foreach($eventos as $evento)
+                          <table class="table table-hover">
+                              <tr>
+                                  <th>Data do Evento</th>
+                                  <th>Data Fim Pedidos</th>
+                                  <th>Local de Retirada</th>
+
+                              </tr>
+
+                              <tr>
+                                <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td></td>
+                                <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td></td>
+                                <td>{{$evento->local_retirada}}</td>
+                                <td><a class="btn btn-success" href="/loja/evento/{{$evento->id}}">Comprar</a></td>
+
+                              </tr>
+
+                          </table>
+                        @endforeach
+
                       @endforeach
+                    @endif
+
+                    @if($exibirMensagem)
+                      <div class="alert alert-danger">
+                        Não há eventos disponíveis no momento.
+                      </div>
                     @endif
                 </div>
 
