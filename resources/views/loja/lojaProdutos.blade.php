@@ -22,6 +22,7 @@
                           </div>
                         @else
                           <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento->id }}" >
+                          <input id="grupo_consumo_id" type="hidden" class="form-control" name="grupo_consumo_id" value="{{ $grupoConsumo->id }}" >
 
                             <table class="table table-hover">
                                 <tr>
