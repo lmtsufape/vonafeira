@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Adicionar Evento')
+
 @section('navbar')
     <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Listar Eventos</a> > Adicionar
 @endsection
@@ -18,6 +20,19 @@
                         {{ csrf_field() }}
                         <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo->id }}">
 
+                        <div class="form-group{{ $errors->has('local_retirada') ? ' has-error' : '' }}">
+                            <label for="local_retirada" class="col-md-4 control-label">Local de Retirada</label>
+                            <div class="col-md-6">
+
+                                <input id="local_retirada" type="text" class="form-control" name="local_retirada" value="{{ old('local_retirada') }}">
+                                
+                                @if ($errors->has('local_retirada'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('local_retirada') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('data_evento') ? ' has-error' : '' }}">
                             <label for="data_evento" class="col-md-4 control-label">Data do Evento</label>

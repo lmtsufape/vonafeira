@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('titulo','Redefinição de Senha')
+
 @section('navbar')
-    Login
+    Redefinição de Senha
 @endsection
 
 @section('content')

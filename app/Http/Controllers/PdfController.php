@@ -41,8 +41,35 @@ class PdfController extends Controller
     }
 
 
-    public function criarRelatorioComposicaoPedidos($evento_id){
+    public function criarRelatorioMontagemPedidos($evento_id){
         $view = 'relatorios.composicaoPedidos';
+
+        $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
+
+        $itensPedido = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
+            $query->where('evento_id', '=', $evento_id);
+        })->get();
+
+        $produtos = array();
+        foreach ($itensPedido as $itemPedido) {
+            $produto = $itemPedido->produto;
+            if(!in_array($produto,$produtos)){
+                array_push($produtos,$produto);
+            }
+        }
+
+
+        $data = date('d/m/Y');
+        $view = \View::make($view, compact('data', 'produtos','pedidos','itensPedido'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('relatorio.pdf');
+
+        //return view($view, ['data'=>$data, 'date'=>$date]);
+    }
+
+    public function criarRelatorioPedidosConsumidores($evento_id){
+        $view = 'relatorios.pedidosConsumidores';
         
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
         
@@ -62,6 +89,7 @@ class PdfController extends Controller
 
         //return view($view, ['data'=>$data, 'date'=>$date]);
     }
+
     public function criarRelatorioPedidoCliente($evento_id){
       $view = 'relatorio.pedidoCliente';
       $data = \projetoGCA\Pedido::where('evento_id', '=', $evento_id)->get();

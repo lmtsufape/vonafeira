@@ -12,9 +12,8 @@ class ProdutoController extends Controller
 {
 
     public function novo($idGrupoConsumo){
-        $unidadeVenda = \projetoGCA\UnidadeVenda::all();
-        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+        $unidadeVenda = \projetoGCA\UnidadeVenda::where('grupoConsumoId','=',$idGrupoConsumo)->get();
         $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
 
         return view("produto.adicionarProduto", ['unidadesVenda' => $unidadeVenda,
@@ -50,12 +49,12 @@ class ProdutoController extends Controller
 
     }
 
-    public function editar($id) {
-        $produto = \projetoGCA\Produto::find($id);
-        $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$produto->grupoconsumo_id)->first();
-
+    public function editar($produto_id) {
+        $produto = \projetoGCA\Produto::find($produto_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($produto->grupoconsumo->id);
+        $unidadeVenda = \projetoGCA\UnidadeVenda::where('grupoConsumoId','=',$grupoConsumo->id)->get();
         $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$grupoConsumo->id)->get();
-        $unidadeVenda = \projetoGCA\UnidadeVenda::all();
+
         return view(
             "produto.editarProduto", ['grupoConsumo' => $grupoConsumo,
                                       'unidadesVenda' => $unidadeVenda,
@@ -85,7 +84,7 @@ class ProdutoController extends Controller
                 'unidadeVenda' => 'required',
                 'idProdutor' => 'required'
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
@@ -95,7 +94,7 @@ class ProdutoController extends Controller
             $produto->preco = $request->preco;
             $produto->descricao = $request->descricao;
             $produto->unidadevenda_id = $request->unidadeVenda;
-            $produto->grupoconsumo_id = $request->grupoConsumo;
+            $produto->grupoconsumo_id = $request->grupoConsumoId;
             $produto->update();
 
         }
@@ -107,7 +106,7 @@ class ProdutoController extends Controller
                 'unidadeVenda' => 'required',
                 'idProdutor' => 'required'
             ]);
-    
+
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
@@ -117,12 +116,12 @@ class ProdutoController extends Controller
             $produto->preco = $request->preco;
             $produto->descricao = $request->descricao;
             $produto->unidadevenda_id = $request->unidadeVenda;
-            $produto->grupoconsumo_id = $request->grupoConsumo;
+            $produto->grupoconsumo_id = $request->grupoConsumoId;
             $produto->update();
-            
+
         }
         return redirect()
-                    ->action('ProdutoController@listar', $request->grupoConsumo)
+                    ->action('ProdutoController@listar', $request->grupoConsumoId)
                     ->withInput();
     }
 

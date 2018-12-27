@@ -1,6 +1,7 @@
 @extends('layouts.app')
+@section('titulo','Entrar')
 @section('navbar')
-    Login
+    Entrar
 @endsection
 @section('content')
 

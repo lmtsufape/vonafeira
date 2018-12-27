@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Cadastrar Grupo de Consumo')
+
 @section('navbar')
     <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > Adicionar Grupo de Consumo
 @endsection
@@ -41,6 +43,35 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('estado') ? ' has-error' : '' }}">
+                            <label for="estado" class="col-md-4 control-label">Estado</label>
+
+                            <div class="col-md-6">
+                                <input id="estado" type="text" class="form-control" name="estado" value="{{ old('estado') }}">
+
+                                @if ($errors->has('estado'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('estado') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('localidade') ? ' has-error' : '' }}">
+                            <label for="localidade" class="col-md-4 control-label">Localidade</label>
+
+                            <div class="col-md-6">
+                                <input id="localidade" type="text" class="form-control" name="localidade" value="{{ old('localidade') }}">
+
+                                @if ($errors->has('localidade'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('localidade') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('periodo') ? ' has-error' : '' }}">
                             <label for="periodo" class="col-md-4 control-label">Período</label>
 

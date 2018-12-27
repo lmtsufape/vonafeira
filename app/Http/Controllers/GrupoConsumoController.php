@@ -22,6 +22,8 @@ class GrupoConsumoController extends Controller
             'periodo' => 'required',
             'dia_semana' => 'required',
             'prazo_pedidos' => 'required',
+            'estado' => 'required|min:2',
+            'localidade'=>'required|min:2',
         ]);
 
         if($validator->fails()){
@@ -35,6 +37,8 @@ class GrupoConsumoController extends Controller
         $grupoConsumo->dia_semana = $request->dia_semana;
         $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
         $grupoConsumo->coordenador_id = Auth::user()->id;
+        $grupoConsumo->estado = $request->estado;
+        $grupoConsumo->localidade = $request->localidade;
         $grupoConsumo->save();
 
         ConsumidorController::cadastrarCoordenador($grupoConsumo->id, $grupoConsumo->coordenador_id);
@@ -61,6 +65,8 @@ class GrupoConsumoController extends Controller
                 'periodo' => 'required',
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
+                'estado' => 'required|min:2',
+                'localidade'=>'required|min:2',
             ]);
 
             if($validator->fails()){
@@ -75,6 +81,8 @@ class GrupoConsumoController extends Controller
                 'periodo' => 'required',
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
+                'estado' => 'required|min:2',
+                'localidade'=>'required|min:2',
             ]);
 
             if($validator->fails()){
@@ -89,6 +97,8 @@ class GrupoConsumoController extends Controller
             $grupoConsumo->periodo = $request->periodo;
             $grupoConsumo->dia_semana = $request->dia_semana;
             $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
+            $grupoConsumo->estado = $request->estado;
+            $grupoConsumo->localidade = $request->localidade;
             $grupoConsumo->update();
 
             return redirect("/gerenciar/$grupoConsumo->id");
@@ -128,5 +138,28 @@ class GrupoConsumoController extends Controller
         $consumidor = \projetoGCA\Consumidor::where('user_id','=',$userId)->where('grupo_consumo_id','=',$grupoConsumo->id)->first();
         $consumidor->delete();
         return back()->with('success',('Você saiu do grupo: '.$grupoConsumo->name));
+    }
+
+    public function compartilhar($grupoConsumoId){
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        $coordenador = \projetoGCA\User::find($grupoConsumo->coordenador_id);
+        
+        $user = \Auth::user();
+        $user_already_in = 0; //false
+        if($user->id == $coordenador->id){
+            $user_already_in = 1; //true, coordenador
+        }else{
+            foreach($grupoConsumo->consumidores as $consumidor){
+                if($user->id == $consumidor->id){
+                    $user_already_in = 2; //true, consumidor
+                }
+            }
+        }
+
+        return view("grupoConsumo.compartilhar", [
+            'user_in' => $user_already_in,
+            'grupoConsumo' => $grupoConsumo,
+            'coordenador' => $coordenador,]
+        );
     }
 }

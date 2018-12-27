@@ -76,6 +76,7 @@ class EventoController extends Controller
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
+            'local_retirada' => 'required'
         ]);
 
         if($validator->fails()){
@@ -113,6 +114,7 @@ class EventoController extends Controller
         $evento->grupoconsumo_id = $grupoConsumo->id;
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
+        $evento->local_retirada = $request->local_retirada;
 
 
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
@@ -143,31 +145,22 @@ class EventoController extends Controller
     public function pedidos($evento_id){
         $evento = \projetoGCA\Evento::find($evento_id);
         $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$evento->grupoconsumo_id)->first();
-        $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
-        $totaisItens = array();
-        $totaisPedidos = array();
-        foreach($pedidos as $pedido){
-            $itens = $pedido->itens;
-            array_push($totaisItens, count($itens));
-            $total = 0;
-            foreach($itens as $item){
-                $produto = \projetoGCA\Produto::where('id','=',$item->produto_id)->first();
-                $total += $produto->preco * $item->quantidade;
-            }
-            array_push($totaisPedidos, $total);
-        }
+        $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento->id)->get();
 
         return view("pedido.pedidos", ['pedidos' => $pedidos,
                                        'evento' => $evento,
-                                       'grupoConsumo' => $grupoConsumo,
-                                       'totaisItens' => $totaisItens,
-                                       'totaisPedidos' => $totaisPedidos,
-                                       'evento_id'=>$evento_id]);
+                                       'grupoConsumo' => $grupoConsumo]);
     }
 
     public function itensPedido($pedido_id){
+
         $pedido = \projetoGCA\Pedido::find($pedido_id);
-        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens]);
+        $evento = \projetoGCA\Evento::find($pedido->evento_id);
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
+
+        return view("pedido.itensPedido", ['itensPedido' => $pedido->itens,
+                                           'evento' => $evento,
+                                           'grupoConsumo' => $grupoConsumo]);
     }
 
     public function fecharEvento($eventoId){

@@ -31,7 +31,7 @@ class User extends Authenticatable
         return $this->hasOne('projetoGCA\Contato');
     }
 
-    public function consumidor(){
-        return $this->hasOne(Consumidor::class, 'user_id');
+    public function consumidores(){
+        return $this->hasMany(Consumidor::class, 'user_id', 'id');
     }
 }

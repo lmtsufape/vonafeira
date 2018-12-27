@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('titulo','Meus Grupos de Consumo')
+
 @section('navbar')
     <a href="/home">Painel</a> > Meus Grupos de Consumo
 @endsection
@@ -34,6 +36,8 @@
                                 <th>Cod</th>
                                 <th>Nome</th>
                                 <th>Descrição</th>
+                                <th>Localidade</th>                                
+                                <th>Estado</th>
                                 <th>Período</th>
                                 <th>Dia da Semana</th>
                                 <th>Limite para pedidos</th>
@@ -45,6 +49,8 @@
                                 <td>{{ $grupoConsumo->id }}</td>
                                 <td>{{ $grupoConsumo->name }}</td>
                                 <td>{{ $grupoConsumo->descricao }}</td>
+                                <td>{{ $grupoConsumo->localidade }}</td>
+                                <td>{{ $grupoConsumo->estado }}</td>
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
@@ -58,6 +64,8 @@
                                     <td>{{ $grupoConsumo->id }}</td>
                                     <td>{{ $grupoConsumo->name }}</td>
                                     <td>{{ $grupoConsumo->descricao }}</td>
+                                    <td>{{ $grupoConsumo->localidade }}</td>
+                                    <td>{{ $grupoConsumo->estado }}</td>
                                     <td>{{ $grupoConsumo->periodo }}</td>
                                     <td>{{ $grupoConsumo->dia_semana }}</td>
                                     <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
