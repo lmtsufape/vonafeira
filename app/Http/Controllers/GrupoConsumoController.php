@@ -139,4 +139,27 @@ class GrupoConsumoController extends Controller
         $consumidor->delete();
         return back()->with('success',('Você saiu do grupo: '.$grupoConsumo->name));
     }
+
+    public function compartilhar($grupoConsumoId){
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        $coordenador = \projetoGCA\User::find($grupoConsumo->coordenador_id);
+        
+        $user = \Auth::user();
+        $user_already_in = 0; //false
+        if($user->id == $coordenador->id){
+            $user_already_in = 1; //true, coordenador
+        }else{
+            foreach($grupoConsumo->consumidores as $consumidor){
+                if($user->id == $consumidor->id){
+                    $user_already_in = 2; //true, consumidor
+                }
+            }
+        }
+
+        return view("grupoConsumo.compartilhar", [
+            'user_in' => $user_already_in,
+            'grupoConsumo' => $grupoConsumo,
+            'coordenador' => $coordenador,]
+        );
+    }
 }

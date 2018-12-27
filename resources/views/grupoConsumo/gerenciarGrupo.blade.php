@@ -38,6 +38,7 @@
 
                     <a href="{{action('EventoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Eventos</a>
                     <a href="{{action('ConsumidorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Consumidores</a>
+                    <a href="/compartilhar/{{$grupoConsumo->id}}" class="btn btn-primary">Compartilhar</a>
                 </div>
             </div>
         </div>
