@@ -5,19 +5,6 @@
 @endsection
 @section('content')
 
-<script type="text/javascript">
-Enable = function(val)
-{
-    var sbmt = document.getElementById("submit");
-
-    if(val.checked == true){
-        sbmt.disabled = false;
-    }else{
-        sbmt.disabled = true;
-    }
-}    
-</script>
-
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -67,18 +54,8 @@ Enable = function(val)
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" onchange="Enable(this)" id="termos">Li e aceito os <a href="/termos" target="_blank">termos de uso.</a></input>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" id="submit" class="btn btn-primary" disabled>
+                                <button type="submit" class="btn btn-primary">
                                     Entrar
                                 </button>
 
