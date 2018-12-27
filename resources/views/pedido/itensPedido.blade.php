@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@section('titulo','Listagem de Pedidos')
+
+@section('navbar')
+    <a href="/home">Painel</a> >
+    <a href="/gruposConsumo">Grupos de Consumo</a> >
+    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> >
+    <a href="{{action('EventoController@pedidos', $evento->id)}}"> Pedidos do evento {{$evento->id}}</a> >
+    Itens do Pedido
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row">
