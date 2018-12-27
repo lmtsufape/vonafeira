@@ -6,6 +6,21 @@
     Registrar
 @endsection
 
+<script type="text/javascript">
+
+Enable = function(val)
+{
+    var sbmt = document.getElementById("submit");
+
+    if(val.checked == true){
+        sbmt.disabled = false;
+    }else{
+        sbmt.disabled = true;
+    }
+}    
+
+</script>
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -74,15 +89,26 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Repita a Senha</label>
+                            <label for="password-confirm" class="col-md-4 control-label">Confirme a Senha</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" onchange="Enable(this)" id="termos">Li e aceito os <a href="/termos" target="_blank">termos de uso.</a></input>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button id="submit" type="submit" class="btn btn-primary" disabled>
                                     Cadastrar
                                 </button>
                             </div>
