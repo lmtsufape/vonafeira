@@ -25,6 +25,32 @@
                                     <div style="text-align: center">
                                         <input type="text" style="text-align: center" size="40" value="{{$app->make('url')->to('/compartilhar/')}}/{{$grupoConsumo->id}}" readonly></input>
                                     </div>
+                                    <br>
+                                    
+                                    <div class=panel-body>
+                                        <div class="panel-heading"><h1>Envie por e-mail</h1></div>
+                                        <div class="panel-body">
+                                            @if (\Session::has('success'))
+                                                <div class="alert alert-success">
+                                                    <strong>Sucesso!</strong>
+                                                    {!! \Session::get('success') !!}
+                                                </div>
+                                            @elseif (\Session::has('fail'))
+                                                <div class="alert alert-danger">
+                                                    <strong>Falha!</strong>
+                                                    {!! \Session::get('fail') !!}
+                                                </div>
+                                            @endif
+
+                                            <form action="/share/mail" method="POST">
+                                                {{csrf_field()}}
+                                                <input type="text" name="grupoConsumoId" value="{{$grupoConsumo->id}}" hidden>
+                                                <input type="email" name="email" value="{{old('email')}}">
+                                                <button type="submit" class="btn btn-primary">Enviar</button>                                    
+                                            </form>
+
+                                        </div>
+                                    </div>
                                     
                                 @elseif($user_in == 2)
 
