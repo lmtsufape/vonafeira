@@ -60,6 +60,10 @@ Route::get('/adicionarConsumidor',  'ConsumidorController@adicionar');
 Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar');
 Route::get('/selecionarGrupo', 'ConsumidorController@selecionarGrupo');
 Route::get('/meusPedidos', 'ConsumidorController@pedidos');
+Route::get('/meusPedidos/{pedido_id}', 'ConsumidorController@itensPedido');
+Route::get('/editarPedido/{id}','ConsumidorController@editarPedido');
+Route::post('/atualizarPedido', "ConsumidorController@atualizarPedido");
+Route::get('/removerProdutoPedido/{idItemPedido}','ConsumidorController@removerPedido');
 
 // Rotas para Grupo de Consumo
 Route::post('/cadastrarGrupoConsumo', 'GrupoConsumoController@cadastrar');
@@ -70,6 +74,7 @@ Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar");
 Route::post('/salvarGrupoConsumo',  'GrupoConsumoController@salvar');
 Route::get('/gruposConsumo', 'GrupoConsumoController@listar');
 Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair');
+Route::get('/compartilhar/{grupoConsumoId}', 'GrupoConsumoController@compartilhar');
 
 // Rotas para Eventos
 Route::post('/cadastrarEvento', 'EventoController@cadastrar');
@@ -83,11 +88,14 @@ Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento');
 Auth::routes();
 
 // Rotas para Loja
-Route::get('/loja', 'PedidoController@loja');
+Route::get('/loja', 'LojaController@gruposConsumoUsuario');
+Route::get('/loja/evento/{id}','LojaController@produtosEvento');
 
 // Rotas para Carrinho
 Route::post('/carrinho', 'PedidoController@confirmar');
 Route::post('/pedidoFinalizado', 'PedidoController@finalizar');
+
+Route::get('/visualizarPedido/{id}','PedidoController@visualizar');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', function(){
@@ -96,4 +104,11 @@ Route::get('/', function(){
 
 // Rotas para relatorios
 Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores');
-Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioComposicaoPedidos');
+Route::get('/evento/pedidos/relatorioConsumidor/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores');
+Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos');
+
+//Rota para termo de uso
+Route::get('/termos','PdfController@termosDeUso');
+
+//Rotas para emails
+Route::post('/share/mail','MyMailController@emailCompartilhar');

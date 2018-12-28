@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--<title>{{ config('app.name', 'Laravel') }}</title> -->
-    <title>Grupo de Consumo Agrícola</title>
+    <title>@yield('titulo') | Grupo de Consumo Agrícola</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -114,6 +114,10 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
+                                        <a href="/meusPedidos">Meus Pedidos</a>
+                                    </li>
+
+                                    <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -124,6 +128,7 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         @endif
