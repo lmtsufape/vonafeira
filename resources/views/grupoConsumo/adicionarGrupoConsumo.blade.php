@@ -7,6 +7,7 @@
 @endsection
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -48,8 +49,21 @@
                             <label for="estado" class="col-md-4 control-label">Estado</label>
 
                             <div class="col-md-6">
-                                <input id="estado" type="text" class="form-control" name="estado" value="{{ old('estado') }}">
+                                <select id="estado" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
+                                    
+                                    @if (old('estado') == null)
+                                        <option value="" selected disabled hidden>Selecionar</option>
+                                    @endif
 
+                                    @foreach($estados as $estado)
+                                        @if(old('estado') == $estado)
+                                            <option value={{$estado}} selected>{{$estado}}</option>
+                                        @else
+                                            <option value={{$estado}}>{{$estado}}</option>
+                                        @endif
+                                    @endforeach
+                                    
+                                </select>                                
                                 @if ($errors->has('estado'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('estado') }}</strong>
