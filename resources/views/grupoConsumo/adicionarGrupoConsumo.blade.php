@@ -95,29 +95,13 @@
                                         <option value="" selected disabled hidden>Selecionar</option>
                                     @endif
 
-                                    @if (old('periodo') == "Semanal")
-                                        <option value="Semanal" selected>Semanal</option>
-                                    @else
-                                        <option value="Semanal">Semanal</option>
-                                    @endif
-
-                                    @if (old('periodo') == "Quinzenal")
-                                        <option value="Quinzenal" selected>Quinzenal</option>
-                                    @else
-                                        <option value="Quinzenal">Quinzenal</option>
-                                    @endif
-
-                                    @if (old('periodo') == "Mensal")
-                                        <option value="Mensal" selected>Mensal</option>
-                                    @else
-                                        <option value="Mensal">Mensal</option>
-                                    @endif
-
-                                    @if (old('periodo') == "Bimestral")
-                                        <option value="Bimestral" selected>Bimestral</option>
-                                    @else
-                                        <option value="Bimestral">Bimestral</option>
-                                    @endif
+                                    @foreach($periodos as $periodo)
+                                        @if(old('periodo') == $periodo)
+                                            <option value={{$periodo}} selected>{{$periodo}}</option>
+                                        @else
+                                            <option value={{$periodo}}>{{$periodo}}</option>
+                                        @endif
+                                    @endforeach
                                     
                                 </select>
                                 @if ($errors->has('periodo'))
@@ -137,47 +121,14 @@
                                         <option value="" selected disabled hidden>Selecionar</option>
                                     @endif
 
-                                    @if (old('dia_semana') == "Domingo")
-                                        <option value="Domingo" selected>Domingo</option>
-                                    @else
-                                        <option value="Domingo">Domingo</option>
-                                    @endif
+                                    @foreach($dias as $dia)
+                                        @if(old('dia_semana') == $dia)
+                                            <option value={{$dia}} selected>{{$dia}}</option>
+                                        @else
+                                            <option value={{$dia}}>{{$dia}}</option>
+                                        @endif
+                                    @endforeach
 
-                                    @if (old('dia_semana') == "Segunda-feira")
-                                        <option value="Segunda-feira" selected>Segunda-feira</option>
-                                    @else
-                                        <option value="Segunda-feira">Segunda-feira</option>
-                                    @endif
-
-                                    @if (old('dia_semana') == "Terça-feira")
-                                        <option value="Terça-feira" selected>Terça-feira</option>
-                                    @else
-                                        <option value="Terça-feira">Terça-feira</option>
-                                    @endif
-
-                                    @if (old('dia_semana') == "Quarta-feira")
-                                        <option value="Quarta-feira" selected>Quarta-feira</option>
-                                    @else
-                                        <option value="Quarta-feira">Quarta-feira</option>
-                                    @endif
-
-                                    @if (old('dia_semana') == "Quinta-feira")
-                                        <option value="Quinta-feira" selected>Quinta-feira</option>
-                                    @else
-                                        <option value="Quinta-feira">Quinta-feira</option>
-                                    @endif
-
-                                    @if (old('dia_semana') == "Sexta-feira")
-                                        <option value="Sexta-feira" selected>Sexta-feira</option>
-                                    @else
-                                        <option value="Sexta-feira">Sexta-feira</option>
-                                    @endif
-
-                                    @if (old('dia_semana') == "Sábado")
-                                        <option value="Sábado" selected>Sábado</option>
-                                    @else
-                                        <option value="Sábado">Sábado</option>
-                                    @endif
                                 </select>                                
                                 @if ($errors->has('dia_semana'))
                                     <span class="help-block">
@@ -196,41 +147,14 @@
                                         <option value="" selected disabled hidden>Selecionar</option>
                                     @endif
 
-                                    @if (old('prazo_pedidos') == "1")
-                                        <option value="1" selected>1 dia antes</option>
-                                    @else
-                                        <option value="1">1 dia antes</option>
-                                    @endif
+                                    @foreach($prazos_pedido as $prazo)
+                                        @if(old('dia_semana') == $prazo)
+                                            <option value={{$prazo}} selected>{{$prazo}} dia(s) antes</option>
+                                        @else
+                                            <option value={{$prazo}}>{{$prazo}} dia(s) antes</option>
+                                        @endif
+                                    @endforeach
 
-                                    @if (old('prazo_pedidos') == "2")
-                                        <option value="2" selected>2 dias antes</option>
-                                    @else
-                                        <option value="2">2 dias antes</option>
-                                    @endif
-
-                                    @if (old('prazo_pedidos') == "3")
-                                        <option value="3" selected>3 dias antes</option>
-                                    @else
-                                        <option value="3">3 dias antes</option>
-                                    @endif
-
-                                    @if (old('prazo_pedidos') == "4")
-                                        <option value="4" selected>4 dias antes</option>
-                                    @else
-                                        <option value="4">4 dias antes</option>
-                                    @endif
-
-                                    @if (old('prazo_pedidos') == "5")
-                                        <option value="5" selected>5 dias antes</option>
-                                    @else
-                                        <option value="5">5 dias antes</option>
-                                    @endif
-
-                                    @if (old('prazo_pedidos') == "6")
-                                        <option value="6" selected>6 dias antes</option>
-                                    @else
-                                        <option value="6">6 dias antes</option>
-                                    @endif
                                 </select>
                                 @if ($errors->has('prazo_pedidos'))
                                     <span class="help-block">
