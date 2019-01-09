@@ -150,7 +150,7 @@ class GrupoConsumoController extends Controller
             $user_already_in = 1; //true, coordenador
         }else{
             foreach($grupoConsumo->consumidores as $consumidor){
-                if($user->id == $consumidor->id){
+                if($user->id == $consumidor->user_id){
                     $user_already_in = 2; //true, consumidor
                 }
             }
