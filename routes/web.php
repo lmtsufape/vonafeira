@@ -28,6 +28,11 @@ Route::post('/salvarUsuario', 'UserController@salvar');
 
 Auth::routes();
 
+//Rota para termo de uso
+Route::get('/termos','PdfController@termosDeUso');
+
+Route::get('/compartilhar/{grupoConsumoId}', 'GrupoConsumoController@compartilhar')->middleware('auth');
+
 Route::middleware('autorizacao')->group(function() {
 
     // Rotas para Unidade de Vendas
@@ -73,12 +78,11 @@ Route::middleware('autorizacao')->group(function() {
     Route::post('/cadastrarGrupoConsumo', 'GrupoConsumoController@cadastrar');
     Route::get('/editarGrupoConsumo/{id}', 'GrupoConsumoController@editar');
     Route::get('/adicionarGrupoConsumo',  'GrupoConsumoController@novo');
-    Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar')->name("gerenciarGrupoConsumo");
+    Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar');
     Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar");
     Route::post('/salvarGrupoConsumo',  'GrupoConsumoController@salvar');
     Route::get('/gruposConsumo', 'GrupoConsumoController@listar');
     Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair');
-    Route::get('/compartilhar/{grupoConsumoId}', 'GrupoConsumoController@compartilhar');
 
     // Rotas para Eventos
     Route::post('/cadastrarEvento', 'EventoController@cadastrar');
@@ -109,9 +113,6 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores');
     Route::get('/evento/pedidos/relatorioConsumidor/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores');
     Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos');
-
-    //Rota para termo de uso
-    Route::get('/termos','PdfController@termosDeUso');
 
     //Rotas para emails
     Route::post('/share/mail','MyMailController@emailCompartilhar');
