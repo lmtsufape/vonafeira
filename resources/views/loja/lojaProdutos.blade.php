@@ -16,6 +16,12 @@
                 <form class="form-horizontal" method="POST" action="{{action('PedidoController@confirmar')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="panel-body">
+                        @if (\Session::has('fail'))
+                            <div class="alert alert-danger">
+                                <strong>Erro!</strong>
+                                {!! \Session::get('fail') !!}
+                            </div>
+                        @endif
                         @if(count($produtos) == 0)
                           <div class="alert alert-danger">
                             Não existem produtos disponíveis no momento.
