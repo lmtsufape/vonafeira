@@ -21,6 +21,20 @@ class PedidoController extends Controller
 
         $array_of_item_ids = $input['item_id'];
         $quantidades = $input['quantidade'];
+
+        $thereAre_itens = false;
+
+        foreach ($quantidades as $quantidade) {
+            //dd($quantidade);
+            if($quantidade != 0 && $quantidade != null){
+                $thereAre_itens = true;
+            }
+        }
+
+        if(!$thereAre_itens){
+            return redirect()->back()->with('fail','Necessário que a quantidade de itens seja superior à 0.');
+        }
+
         $produtos = Produto::whereIn('id', $array_of_item_ids)->get()->toArray();
         $itens = array();
         $i = 0;
@@ -35,6 +49,11 @@ class PedidoController extends Controller
             }
             $i = $i + 1;
         }
+
+        /*if(!$is_produtos){
+            return back()->withInput();
+        }*/
+
         $produtos = array_values($produtos);
         $quantidades = array_values($quantidades);
         return view("loja.carrinho", ['grupoConsumo' => $grupoConsumo, 'produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
