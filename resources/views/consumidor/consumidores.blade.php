@@ -19,7 +19,8 @@
                             Não existem Consumidores cadastrados.
                     </div>
                 @else
-                    <table class="table table-hover"> 
+                  <div class="table-responsive">
+                    <table class="table table-hover">
                         <tr>
                             <th>Cod</th>
                             <th>Usuário</th>
@@ -30,10 +31,11 @@
                         <tr>
                             <td>{{ $consumidor->id }}</td>
                             <td>{{ $consumidor->usuario->name }}</td>
-                            <td>{{ $consumidor->grupoConsumo->name}}</td> 
+                            <td>{{ $consumidor->grupoConsumo->name}}</td>
                         </tr>
                         @endforeach
                     </table>
+                  </div>
                 @endif
                 </div>
                 <div class="panel-footer">

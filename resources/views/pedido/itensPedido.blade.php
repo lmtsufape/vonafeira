@@ -18,6 +18,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do Pedido</div>
                 <div class="panel-body">
+                  <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -56,6 +57,7 @@
                             </tr>
                         </tfoot>
                     </table>
+                  </div>
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>

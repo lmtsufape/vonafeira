@@ -19,7 +19,8 @@
                               Nenhum pedido realizado.
                       </div>
                       @else
-                        <table class="table table-hover">
+                        <div class="table-responsive">
+                          <table class="table table-hover">
                             <tr>
                                 <th>Cod</th>
                                 <th>Número de Itens</th>
@@ -58,8 +59,12 @@
                                 </tr>
                             @endforeach
                         </table>
+                        </div>
                       @endif
                   </div>
+              </div>
+              <div class="panel-footer">
+                  <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
               </div>
           </div>
       </div>

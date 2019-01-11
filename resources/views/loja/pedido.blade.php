@@ -5,7 +5,8 @@
 @section('content')
 
 <div class="container">
-    <table class="table table-bordered">
+    <div class="table-responsive">
+      <table class="table table-bordered">
         <thead>
             <tr>
                 <th colspan="6">{{'Pedido #'.$pedido->id}}</th>
@@ -46,7 +47,8 @@
                 <th colspan="6" style="text-align: right">Total: {{'R$'.number_format($total,2)}}</th>
             </tr>
         </tfoot>
-    </table>
+      </table>
+    </div>
 
     <a href="/" class='btn btn-primary'>Início</a>
     <a href="/editarPedido/{{$pedido->id}}" class='btn btn-primary'>Editar Pedido</a>

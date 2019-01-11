@@ -19,6 +19,7 @@
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >
 
                 <div class="panel-body">
+                  <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
 
@@ -47,6 +48,7 @@
                             </tr>
                             @endfor
                     </table>
+                  </div>
                 </div>
                     <div class="panel-footer">
                         <div class="form-group">
