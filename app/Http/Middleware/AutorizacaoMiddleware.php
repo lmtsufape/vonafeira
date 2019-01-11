@@ -28,13 +28,9 @@ class AutorizacaoMiddleware
                 'adicionarUnidadeVenda/{grupoConsumoId}',
                 'editarUnidadeVenda/{grupoConsumoId}/{id}',
                 //Produto
-                'editarProduto/{idGrupoConsumo}',
-                'removerProduto/{idGrupoConsumo}',
                 'adicionarProduto/{idGrupoConsumo}',
                 'produtos/{idGrupoConsumo}',
                 //Produtor
-                'editarProdutor/{idGrupoConsumo}',
-                'removerProdutor/{idGrupoConsumo}',
                 'adicionarProdutor/{idGrupoConsumo}',
                 'produtores/{idGrupoConsumo}',
                 //Consumidor
@@ -60,6 +56,17 @@ class AutorizacaoMiddleware
                 'evento/pedidos/relatorioProdutor/{evento_id}',
                 'evento/pedidos/relatorioConsumidor/{evento_id}',
                 'evento/pedidos/relatorioComposicao/{evento_id}'
+
+            ];
+
+            $rotas_produto_coordenador = [
+                'editarProduto/{idProduto}',
+                'removerProduto/{idProduto}',
+            ];
+
+            $rotas_produtor_coordenador = [
+                'editarProdutor/{idProdutor}',
+                'removerProdutor/{idProdutor}',
             ];
 
             if(in_array($request->route()->uri,$rotas_coordenador)){
@@ -95,7 +102,7 @@ class AutorizacaoMiddleware
                 }
 
             }elseif(in_array($request->route()->uri,$rotas_evento_coordenador)){
-                
+
                 $eventoIdNomes = ['evento_id','eventoId'];
                 $evento = NULL;
                 foreach($eventoIdNomes as $id){
@@ -171,7 +178,7 @@ class AutorizacaoMiddleware
                 $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
                 if($grupoConsumo == NULL){
                     dd('Redirect');
-                    
+
                     return redirect('/home');
                 }
                 $consumidores = \projetoGCA\Consumidor::where('user_id','=',\Auth::user()->id)->get();
@@ -183,6 +190,29 @@ class AutorizacaoMiddleware
                 }
                 if($is_consumidor == false){
                     dd('redirect');
+                    return redirect("/home");
+                }
+
+            }elseif(in_array($request->route()->uri,$rotas_produto_coordenador)){
+
+                $produto = NULL;
+
+                if(\projetoGCA\Produto::find($request->route('idProduto')) != NULL){
+                    $produto = \projetoGCA\Produto::find($request->route('idProduto'));
+                }
+
+                if(\Auth::user()->id != $produto->grupoConsumo->coordenador_id){
+                    return redirect("/home");
+                }
+            }elseif(in_array($request->route()->uri,$rotas_produtor_coordenador)){
+
+                $produtor = NULL;
+
+                if(\projetoGCA\Produtor::find($request->route('idProdutor')) != NULL){
+                    $produtor = \projetoGCA\Produtor::find($request->route('idProdutor'));
+                }
+
+                if(\Auth::user()->id != $produtor->grupoConsumo->coordenador_id){
                     return redirect("/home");
                 }
 

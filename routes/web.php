@@ -49,16 +49,16 @@ Route::middleware('autorizacao')->group(function() {
 
     // Rotas para Produtos
     Route::post('/cadastrarProduto', 'ProdutoController@cadastrar');
-    Route::get('/editarProduto/{idGrupoConsumo}', 'ProdutoController@editar');
-    Route::get('/removerProduto/{idGrupoConsumo}', 'ProdutoController@remover');
+    Route::get('/editarProduto/{idProduto}', 'ProdutoController@editar');  //todo
+    Route::get('/removerProduto/{idProduto}', 'ProdutoController@remover');
     Route::get('/adicionarProduto/{idGrupoConsumo}',  'ProdutoController@novo');
     Route::post('/atualizarProduto', "ProdutoController@atualizar");
     Route::get('/produtos/{idGrupoConsumo}', 'ProdutoController@listar');
 
     // Rotas para Produtores
     Route::post('/cadastrarProdutor', 'ProdutorController@cadastrar');
-    Route::get('/editarProdutor/{idGrupoConsumo}', 'ProdutorController@editar');
-    Route::get('/removerProdutor/{idGrupoConsumo}', 'ProdutorController@remover');
+    Route::get('/editarProdutor/{idProdutor}', 'ProdutorController@editar');
+    Route::get('/removerProdutor/{idProdutor}', 'ProdutorController@remover');
     Route::get('/adicionarProdutor/{idGrupoConsumo}',  'ProdutorController@novo');
     Route::post('/atualizarProdutor', "ProdutorController@atualizar");
     Route::get('/produtores/{idGrupoConsumo}', 'ProdutorController@listar');
