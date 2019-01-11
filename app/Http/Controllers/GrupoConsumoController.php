@@ -12,8 +12,17 @@ class GrupoConsumoController extends Controller
 
     public function novo(){
         $estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+        $periodos = ['Semanal','Quinzenal','Mensal','Bimestral'];
+        $dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+        $prazos_pedido = [1,2,3,4,5,6];
 
-        return view("grupoConsumo.adicionarGrupoConsumo",['estados' => $estados]);
+        return view(
+            "grupoConsumo.adicionarGrupoConsumo",
+            ['estados' => $estados,
+            'periodos' => $periodos,
+            'dias' => $dias,
+            'prazos_pedido' => $prazos_pedido]
+        );
     }
 
     public function cadastrar(Request $request){
