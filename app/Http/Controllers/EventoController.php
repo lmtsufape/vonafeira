@@ -93,22 +93,18 @@ class EventoController extends Controller
         $dataAtual = new DateTime();
         //return gettype($dataAtual);
         if($dataEvento < $dataAtual){
-            return back()->withInput()->withErrors(['data_evento' => 'Data do envento não pode ser anterior à data atual']);
+            return back()->withInput()->withErrors(['data_evento' => 'Data do evento não pode ser anterior à data atual']);
         }
 
         if(!is_null($ultimoEvento)){
-            $dataUltimoEvento = new DateTime($ultimoEvento->data_evento);
-            if($dataHoje < $dataUltimoEvento){
+            $eventoAberto = $ultimoEvento->estaAberto;
+            if($eventoAberto == True){
                 return redirect()
                         ->action('EventoController@listar', $grupoConsumo->id)
-                        ->with('warning', 'Existem eventos ainda não realizados.');
-            }
-            if($dataAtual > new DateTime($evento->data_evento)){
-                return redirect()
-                        ->action('EventoController@listar', $grupoConsumo->id)
-                        ->with('warning', 'A data do evento não pode ser anterior a data atual.');
+                        ->with('warning', 'Existe um evento ainda não fechado.');
             }
         }
+
         $evento = new \projetoGCA\Evento();
         $evento->coordenador_id = $grupoConsumo->coordenador_id;
         $evento->grupoconsumo_id = $grupoConsumo->id;
