@@ -60,7 +60,6 @@
                             @foreach ($gruposConsumoParticipante as $grupoConsumo)
                               @if($grupoConsumo->coordenador_id != Auth::user()->id)
                                 <tr>
-                                    <td>{{ $grupoConsumo->id }}</td>
                                     <td>{{ $grupoConsumo->name }}</td>
                                     <td>{{ $grupoConsumo->descricao }}</td>
                                     <td>{{ $grupoConsumo->localidade }}</td>
