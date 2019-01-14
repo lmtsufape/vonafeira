@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">
-                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="1">
+                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="{{$grupoConsumo->id}}">
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
