@@ -41,9 +41,10 @@
     </script>
 
     <style type="text/css">
-        hr {
-            color: #7F7F7F;
-            height: 1px;
+        .panel-default > .panel-heading {
+            color: #fff;
+            background-color: #1B2E4F;
+            border-color: #d3e0e9;
         }
     </style>
 
@@ -93,7 +94,7 @@
 
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
-                            <li><a style="color: #ffffff" class="main-menu" href="/home">Início</a></li>
+                            <li><a style="color: #909090" class="main-menu" href="/home">Início</a></li>
                         @endif
                     </ul>
 
@@ -103,7 +104,7 @@
                         @if(Auth::check())
 
                         <li class="dropdown">
-                                <a style="color: #fff" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a style="color: #909090" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
     
@@ -118,7 +119,7 @@
                             </li>
 
                         <li class="dropdown">
-                            <a style="color: #ffffff" href="/loja" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a style="color: #909090" href="/loja" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Loja <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -128,7 +129,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                                <a style="color: #ffffff" href="#" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a style="color: #909090" href="#" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul style="" class="dropdown-menu" role="menu">

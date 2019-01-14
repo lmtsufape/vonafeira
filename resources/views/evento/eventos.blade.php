@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Eventos</h1></div>
+                <div class="panel-heading">Eventos</div>
                     @if(old('data_evento'))
                         <div class="alert alert-success">
                             <strong>Sucesso!</strong>
@@ -40,13 +40,12 @@
                         <table class="table table-hover">
 
                           <tr>
-                              <th>Cod</th>
-                              <th>Data Evento</th>
-                              <th>Hora Evento</th>
-                              <th>Data Inicio Pedidos</th>
-                              <th>Data Fim Pedidos</th>
+                              <th>Data do evento</th>
+                              <th>Hora do evento</th>
+                              <th>Data de início dos pedidos</th>
+                              <th>Data de fim dos pedidos</th>
                               <th>Aberto</th>
-                              <th>Local de Retirada</th>
+                              <th>Local de retirada</th>
                               <th>Pedidos</th>
                               <th>Ações</th>
 
@@ -54,9 +53,8 @@
 
                           @foreach ($eventos as $evento)
                           <tr>
-                              <td>{{ $evento->id }}</td>
                               <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td>
-                              <td>{{ $evento->hora_evento.' hrs' }}</td>
+                              <td>{{ $evento->hora_evento }}</td>
                               <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_inicio_pedidos, 'd/m/Y') }}</td>
                               <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td>
 

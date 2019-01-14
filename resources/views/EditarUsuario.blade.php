@@ -9,7 +9,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <h1> Editar Usuário</h1>
+    <strong> Editar Usuário</strong>
     <form action="/salvarUsuario" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token()}}" />
         <input type="hidden" name="id" value="{{ $user->id}}" />

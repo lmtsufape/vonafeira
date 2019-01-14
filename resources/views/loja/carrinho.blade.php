@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Finalizar Pedido</h1></div>
+                <div class="panel-heading"><strong>Finalizar Pedido</strong></div>
                 <form class="form-horizontal" method="POST" action="{{action('PedidoController@finalizar')}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >

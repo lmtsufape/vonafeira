@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Editar Grupo de Consumo</div>
+                <div class="panel-heading">Editar grupo de consumo: <strong>{{$grupoConsumo->name}}</strong></div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{action('GrupoConsumoController@atualizar')}}">
@@ -64,12 +64,28 @@
                             <label for="estado" class="col-md-4 control-label">Estado</label>
 
                             <div class="col-md-6">
-                                @if(old('estado',NULL) != NULL)
-                                    <input id="estado" type="text" class="form-control" name="estado" value="{{old('estado')}}">
-                                @else
-                                    <input id="estado" type="text" class="form-control" name="estado" value="{{$grupoConsumo->estado}}">
-                                @endif
+                                <select id="estado" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
 
+                                    @if(old('estado') == NULL)
+                                        @foreach($estados as $estado)
+                                            @if($grupoConsumo->estado == $estado)
+                                                <option value={{$estado}} selected>{{$estado}}</option>
+                                            @else
+                                                <option value={{$estado}}>{{$estado}}</option>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        @foreach($estados as $estado)
+                                            @if(old('estado') == $estado)
+                                                <option value={{$estado}} selected>{{$estado}}</option>
+                                            @else
+                                                <option value={{$estado}}>{{$estado}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+                                </select>
+                                
                                 @if ($errors->has('estado'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('estado') }}</strong>
@@ -369,9 +385,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                                <button type="submit" class="btn btn-primary">
-                                    Atualizar
-                                </button>
+                                <button type="submit" class="btn btn-success">Atualizar</button>
                             </div>
                         </div>
                     </form>
