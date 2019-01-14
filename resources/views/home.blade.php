@@ -19,9 +19,7 @@
                           {{ session('status') }}
                         </div>
                     @endif
-                    Usuário
-                    {{ Auth::user()->name }}
-                    Logado!<br>
+
                     <div class="panel-footer">
                         <div class="form-group">
                                 <a href="/loja" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Comprar</a>

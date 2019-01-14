@@ -33,7 +33,8 @@
                         @endif
 
                         @foreach($eventos as $evento)
-                          <table class="table table-hover">
+                          <div class="table-responsive">
+                            <table class="table table-hover">
                               <tr>
                                   <th>Data do Evento</th>
                                   <th>Data Fim Pedidos</th>
@@ -49,7 +50,8 @@
 
                               </tr>
 
-                          </table>
+                            </table>
+                          </div>  
                         @endforeach
 
                       @endforeach

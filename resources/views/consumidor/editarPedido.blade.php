@@ -21,7 +21,8 @@
 
                             <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento->id }}" >
 
-                            <table class="table table-hover">
+                            <div class="table-responsive">
+                              <table class="table table-hover">
                                 <tr>
                                     <th>Produto</th>
                                     <th>Descrição</th>
@@ -60,7 +61,8 @@
                                     </tr>
                                   @php($i++)
                                 @endforeach
-                            </table>
+                              </table>
+                            </div>
 
                       </div>
                       <div class="panel-footer">

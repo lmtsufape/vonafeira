@@ -24,6 +24,7 @@
                             Não existem produtos cadastrados para este grupo de consumo.
                     </div>
                 @else
+                  <div class="table-responsive">
                     <table class="table table-hover">
                         <tr>
                             <th>Cod</th>
@@ -51,6 +52,7 @@
                         </tr>
                         @endforeach
                     </table>
+                  </div>
                 @endif
                 </div>
                 <div class="panel-footer">

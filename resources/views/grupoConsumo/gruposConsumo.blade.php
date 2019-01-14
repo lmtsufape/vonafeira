@@ -30,13 +30,14 @@
                             Não existem grupos de consumo cadastrados.
                     </div>
                     @else
+                      <div class="table-responsive">
                         <table class="table table-hover">
 
                             <tr>
                                 <th>Cod</th>
                                 <th>Nome</th>
                                 <th>Descrição</th>
-                                <th>Localidade</th>                                
+                                <th>Localidade</th>
                                 <th>Estado</th>
                                 <th>Período</th>
                                 <th>Dia da Semana</th>
@@ -75,6 +76,7 @@
                             @endforeach
 
                         </table>
+                      </div>
                     @endif
                 </div>
                 <div class="panel-footer">
