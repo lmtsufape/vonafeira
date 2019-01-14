@@ -3,6 +3,7 @@
 namespace projetoGCA\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class UnidadeVendaController extends Controller
@@ -15,12 +16,13 @@ class UnidadeVendaController extends Controller
     public function cadastrar(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|unique:unidade_vendas|min:2|max:50',
+            'nome' => ['required','min:2','max:50',Rule::unique('unidade_vendas')
+                          ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId); })
+                      ],
             'descricao' => 'min:0',
             'is_fracionado' => 'required',
             'is_porcao' => 'required',
         ]);
-
         if($validator->fails()){
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
