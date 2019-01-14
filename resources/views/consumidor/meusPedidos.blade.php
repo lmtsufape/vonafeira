@@ -23,9 +23,9 @@
                           <table class="table table-hover">
                             <tr>
                                 <th>Cod</th>
-                                <th>Número de Itens</th>
-                                <th>Total</th>
+                                <th>Número de itens</th>
                                 <th>Data</th>
+                                <th>Total</th>
                                 <th colspan="2">Ações</th>
                             </tr>
                             @foreach($pedidos as $pedido)
@@ -40,21 +40,20 @@
                                     }
                                 ?>
                                 <tr>
-                                    <td>{{ $pedido->id }}</td>
+                                    <td>#{{ $pedido->id }}</td>
                                     <td>{{ $quantidade }}</td>
-                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
                                     <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
+                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
 
-                                    <?php
-                                      $evento = \projetoGCA\Evento::find($pedido->evento_id);
-                                    ?>
+                                    @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
+                                    <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
                                     @if($evento->estaAberto)
-                                      <td><a class="btn btn-info" href="/editarPedido/{{$pedido->id}}">Editar</a></td>
+                                      <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a>
                                     @else
-                                      <td><button type="button" class="btn btn-info" disabled>Editar</button></td>
+                                      <button type="button" class="btn btn-warning" disabled>Editar</button>
                                     @endif
+                                </td>
 
-                                    <td><a class="btn btn-success" href="/meusPedidos/{{$pedido->id}}">Itens</a></td>
 
                                 </tr>
                             @endforeach

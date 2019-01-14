@@ -61,8 +61,12 @@ class GrupoConsumoController extends Controller
     }
 
     public function editar($id) {
+        $estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($id);
-        return view("grupoConsumo.editarGrupoConsumo", ['grupoConsumo' => $grupoConsumo]);
+        return view("grupoConsumo.editarGrupoConsumo", [
+            'grupoConsumo' => $grupoConsumo,
+            'estados' => $estados]
+        );
     }
 
     public function atualizar(Request $request){

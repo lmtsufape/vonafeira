@@ -9,7 +9,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-    <h1> Cadastrar Usuário</h1>
+    <strong> Cadastrar Usuário</strong>
     <form action="/adicionarUsuario" method="post">
         <input type="hidden" name="_token" value="{{ csrf_token()}}" />
         <div>

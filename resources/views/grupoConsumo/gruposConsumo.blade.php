@@ -34,7 +34,6 @@
                         <table class="table table-hover">
 
                             <tr>
-                                <th>Cod</th>
                                 <th>Nome</th>
                                 <th>Descrição</th>
                                 <th>Localidade</th>
@@ -47,7 +46,6 @@
 
                             @foreach ($gruposConsumo as $grupoConsumo)
                             <tr>
-                                <td>{{ $grupoConsumo->id }}</td>
                                 <td>{{ $grupoConsumo->name }}</td>
                                 <td>{{ $grupoConsumo->descricao }}</td>
                                 <td>{{ $grupoConsumo->localidade }}</td>
@@ -55,7 +53,7 @@
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td><a class="btn btn-success" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td>
+                                <td><a class="btn btn-primary" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td>
                             </tr>
                             @endforeach
 
