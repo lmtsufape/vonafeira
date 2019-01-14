@@ -28,9 +28,9 @@ class LojaController extends Controller
 
       $eventos = Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)
                               ->where('data_evento', '>', new DateTime())
-                              ->where('data_fim_pedidos', '>=', new DateTime())
-                              ->where('estaAberto','=','true')
-                              ->orderBy('data_evento', 'ASC')->get();
+                              // ->where('data_fim_pedidos', '>=', new DateTime())
+                              ->where('estaAberto','=','true')->get();
+                              // ->orderBy('data_evento', 'ASC')
 
       return $eventos;
   }
