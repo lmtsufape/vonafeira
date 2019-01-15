@@ -48,7 +48,7 @@
                   </div>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                    <a class="btn btn-danger" href="/eventos/{{$grupoConsumo->id}}">Voltar</a>
                     @if($evento->estaAberto)
                         <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
                         <a class="btn btn-primary" disabled>Relatório Produtor</a>
