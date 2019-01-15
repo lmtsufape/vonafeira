@@ -129,7 +129,7 @@ class ProdutoController extends Controller
         if(Auth::check()){
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
 
-            $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+            $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('id')->get();
             return view("produto.produtos", ['produtos' => $produtos], ['grupoConsumo' => $grupoConsumo]);
         }
         return view("/home");

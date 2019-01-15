@@ -95,8 +95,8 @@ class AutorizacaoMiddleware
                 if($pedido == NULL){
                     return redirect("/home");
                 }else{
-                    $consumidor = \projetoGCA\Consumidor::find($pedido->consumidor_id);
-                    if($consumidor->user_id != \Auth::user()->id){
+                    $user = \projetoGCA\User::find($pedido->consumidor->user_id);
+                    if($user->id != \Auth::user()->id){
                         return redirect("/home");
                     }
                 }

@@ -48,7 +48,7 @@ class PdfController extends Controller
 
         $itensPedido = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
             $query->where('evento_id', '=', $evento_id);
-        })->get();
+        })->orderBy('produto_id')->get();
 
         $produtos = array();
         foreach ($itensPedido as $itemPedido) {
@@ -70,9 +70,9 @@ class PdfController extends Controller
 
     public function criarRelatorioPedidosConsumidores($evento_id){
         $view = 'relatorios.pedidosConsumidores';
-        
+
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
-        
+
         $consumidores = array();
         foreach ($pedidos as $pedido) {
             $consumidor = \projetoGCA\User::find($pedido->consumidor_id);
