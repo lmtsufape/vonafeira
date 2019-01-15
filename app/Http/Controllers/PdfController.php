@@ -44,20 +44,23 @@ class PdfController extends Controller
     public function criarRelatorioMontagemPedidos($evento_id){
         $view = 'relatorios.composicaoPedidos';
 
+        $produtos = \projetoGCA\Produto::all()->sortBy('nome');
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
 
         $itensPedido = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
             $query->where('evento_id', '=', $evento_id);
         })->orderBy('produto_id')->get();
 
-        $produtos = array();
-        foreach ($itensPedido as $itemPedido) {
-            $produto = $itemPedido->produto;
-            if(!in_array($produto,$produtos)){
-                array_push($produtos,$produto);
+        $produtos_array = array();
+        foreach($produtos as $produto){
+            foreach ($itensPedido as $itemPedido) {
+                if($itemPedido->produto->id == $produto->id){
+                    if(!in_array($produto,$produtos_array)){
+                        array_push($produtos_array,$produto);
+                    }
+                }
             }
         }
-
 
         $data = date('d/m/Y');
         $view = \View::make($view, compact('data', 'produtos','pedidos','itensPedido'))->render();
