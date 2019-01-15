@@ -17,7 +17,7 @@
                 <form class="form-horizontal" method="POST" action="{{action('PedidoController@finalizar')}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >
-
+                    <input id="grupo_id" type="hidden" class="form-control" name="grupo_id" value="{{ $grupoConsumo->id }}" >
                 <div class="panel-body">
                   <div class="table-responsive">
                     <table class="table table-hover">

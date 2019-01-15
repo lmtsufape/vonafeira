@@ -39,21 +39,21 @@
                                     <th>Unidade</th>
                                 </tr>
 
-                                @for ($i = 0; $i < count($produtos); $i++)
-                                <input id="item_id" type="hidden" class="form-control" name="item_id[{{$i}}]" value="{{ $produtos[$i]->id }}" >
+                                @foreach($produtos as $produto)
+                                <input id="item_id" type="hidden" class="form-control" name="item_id[{{$produto->id}}]" value="{{ $produto->id }}" >
                                 <tr>
-                                    <td>{{ $produtos[$i]->nome }}</td>
-                                    <td>{{ $produtos[$i]->descricao }}</td>
-                                    <td>{{ $produtos[$i]->preco }}</td>
-                                    @if(($produtos[$i]->unidadeVenda->is_fracionado) == 1)
-                                        <td><input id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
+                                    <td>{{ $produto->nome }}</td>
+                                    <td>{{ $produto->descricao }}</td>
+                                    <td>{{ $produto->preco }}</td>
+                                    @if(($produto->unidadeVenda->is_fracionado) == 1)
+                                        <td><input id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @else
-                                        <td><input id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
+                                        <td><input id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @endif
-                                    <td>{{ $produtos[$i]->unidadeVenda->nome }}</td>
+                                    <td>{{ $produto->unidadeVenda->nome }}</td>
                                 </tr>
 
-                                @endfor
+                                @endforeach
                             </table>
                           <div class="table-responsive">
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use \projetoGCA\Produto;
 use \projetoGCA\GrupoConsumo;
 use \projetoGCA\Pedido;
+use \projetoGCA\Consumidor;
 use \projetoGCA\ItemPedido;
 use \projetoGCA\Evento;
 class PedidoController extends Controller
@@ -16,8 +17,8 @@ class PedidoController extends Controller
 
     public function confirmar(Request $request) {
         $input = $request->input();
-
         $grupoConsumo = GrupoConsumo::find($input['grupo_consumo_id']);
+
 
         $array_of_item_ids = $input['item_id'];
         $quantidades = $input['quantidade'];
@@ -35,26 +36,33 @@ class PedidoController extends Controller
             return redirect()->back()->with('fail','Necessário que a quantidade de itens seja superior à 0.');
         }
 
-        $produtos = Produto::whereIn('id', $array_of_item_ids)->get()->toArray();
+
+
+        $produtos = Produto::whereIn('id', $array_of_item_ids)->orderBy('nome')->get();
         $itens = array();
-        $i = 0;
+
+
+
         $total = 0;
-        foreach ($produtos as $produto){
-            if($quantidades[$i] <= 0){
-                unset($quantidades[$i]);
-                unset($produtos[$i]);
-            }
-            else{
-                $total += $produtos[$i]['preco']*$quantidades[$i];
-            }
-            $i = $i + 1;
+        $produtos_comprados = [];
+
+        foreach($produtos as $produto){
+          if($quantidades[$produto->id] <= 0){
+            unset($quantidades[$produto->id]);
+          }else{
+            array_push($produtos_comprados,$produto);
+
+              $total += $produto->preco*$quantidades[$produto->id];
+          }
         }
 
+
+        $produtos_array = $produtos->toArray();
         /*if(!$is_produtos){
             return back()->withInput();
         }*/
 
-        $produtos = array_values($produtos);
+        $produtos = array_values($produtos_comprados);
         $quantidades = array_values($quantidades);
         return view("loja.carrinho", ['grupoConsumo' => $grupoConsumo, 'produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
     }
@@ -66,9 +74,11 @@ class PedidoController extends Controller
 
         $quantidades = $input['quantidade'];
 
-        $produtos = Produto::whereIn('id', $array_of_item_ids)->get();
+        $produtos = Produto::whereIn('id', $array_of_item_ids)->orderBy('nome')->get();
         $pedido = new Pedido();
-        $pedido->consumidor_id = Auth::user()->id;
+
+        $consumidor = Consumidor::where('user_id','=',Auth::user()->id)->where('grupo_consumo_id','=',$input['grupo_id'])->first();
+        $pedido->consumidor_id = $consumidor->id;
         $pedido->evento_id = $input['evento_id'];
         $pedido->data_pedido = new DateTime();
         $pedido->is_confirmado = false;
@@ -77,16 +87,16 @@ class PedidoController extends Controller
         $i = 0;
 
         $itens_pedido = array();
-        foreach ($produtos as $produto){
-            if($quantidades[$i] > 0){
-                $item = new ItemPedido();
-                $item->pedido_id = $pedido->id;
-                $item->produto_id = $produto->id;
-                $item->quantidade = $quantidades[$i];
-                $item->save();
-                array_push($itens_pedido,$item);
-            }
-            $i = $i + 1;
+
+        for ($i=0; $i < count($produtos); $i++) {
+          if($quantidades[$i] > 0){
+              $item = new ItemPedido();
+              $item->pedido_id = $pedido->id;
+              $item->produto_id = $produtos[$i]->id;
+              $item->quantidade = $quantidades[$i];
+              $item->save();
+              array_push($itens_pedido,$item);
+          }
         }
 
         return redirect("/visualizarPedido/$pedido->id");

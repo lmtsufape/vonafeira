@@ -35,8 +35,8 @@
                                     $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
                                     foreach($itens_pedido as $item_pedido){
                                         $produto = \projetoGCA\Produto::find($item_pedido->produto_id);
-                                        $valor_pedido = $item_pedido->quantidade * $produto->preco;
-                                        $quantidade = $quantidade + $item_pedido->quantidade;
+                                        $valor_pedido = $valor_pedido + $item_pedido->quantidade * $produto->preco;
+                                        $quantidade = $quantidade + 1;
                                     }
                                 ?>
                                 <tr>
@@ -46,7 +46,7 @@
                                     <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
 
                                     @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
-                                    <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
+                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
                                     @if($evento->estaAberto)
                                       <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a>
                                     @else
