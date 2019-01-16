@@ -53,9 +53,6 @@
                         <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
                         <a class="btn btn-primary" disabled>Relatório Produtor</a>
                         <a class="btn btn-primary" disabled>Relatório Consumidor</a>
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioMontagemPedidos', $evento->id)}}">Relatório Montagem Pedido</a>
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento->id)}}">Relatório Produtores</a>
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosConsumidores', $evento->id)}}">Relatório Consumidores</a>
                     @else
                         <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioMontagemPedidos', $evento->id)}}">Relatório Montagem Pedido</a>
                         <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento->id)}}">Relatório Produtores</a>
