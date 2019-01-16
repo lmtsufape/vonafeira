@@ -31,8 +31,18 @@ class PdfController extends Controller
             }
         }
 
+        $produtos = array();
+        foreach ($itensPedidos as $itemPedido) {
+            $produto = $itemPedido->produto;
+            if(!in_array($produto,$produtos)){
+                array_push($produtos,$produto);
+            }
+        }
+
+        // dd($itensPedidos);
+
         $date = date('d/m/Y');
-        $view = \View::make($view, compact('date', 'itensPedidos', 'produtores'))->render();
+        $view = \View::make($view, compact('date', 'itensPedidos', 'produtores', 'produtos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('relatorio.pdf');
