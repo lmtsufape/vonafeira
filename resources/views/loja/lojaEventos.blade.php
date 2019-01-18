@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Loja
+    <a href="/home">Início</a> > Loja
 @endsection
 @section('titulo','Loja')
 

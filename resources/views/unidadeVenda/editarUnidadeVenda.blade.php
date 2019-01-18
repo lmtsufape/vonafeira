@@ -3,7 +3,7 @@
 @section('titulo','Editar Unidade de Venda')
 
 @section('navbar')
-    <a href="/">Painel</a> >
+    <a href="/">Início</a> >
     <a href="/gruposConsumo">Grupos de Consumo</a> >
     <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
     <a href="/unidadesVenda/{{$grupoConsumo->id}}">Listar Unidade de Venda</a> >

@@ -162,6 +162,12 @@
         </div>
     </div>
 
+    @php($url = str_replace(URL::to('/'),'',URL::current()))
+
+    @if(!($url == '/home'))
+    @if(!($url == '/login'))
+    @if(!($url == '/register'))
+
     <div style="margin-top: -30px" class="container">
         <hr>
             <div class="row">
@@ -175,6 +181,10 @@
             </div>
         <hr>
     </div>
+
+    @endif
+    @endif
+    @endif
 
     </div>
 

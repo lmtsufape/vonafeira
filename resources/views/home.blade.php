@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo','Painel')
+@section('titulo','Início')
 
 @section('navbar')
     Painel

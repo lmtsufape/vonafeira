@@ -3,7 +3,7 @@
 @section('titulo','Meus Pedidos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Meus Pedidos
+    <a href="/home">Início</a> > Meus Pedidos
 @endsection
 
 @section('content')
