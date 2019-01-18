@@ -33,12 +33,12 @@
                                             <strong>Envie por e-mail</strong>
                                             <div class="panel-body">
                                                 @if (\Session::has('success'))
-                                                <div class="alert alert-success">
+                                                <br><div class="alert alert-success">
                                                     <strong>Sucesso!</strong>
                                                     {!! \Session::get('success') !!}
                                                 </div>
                                                 @elseif (\Session::has('fail'))
-                                                <div class="alert alert-danger">
+                                                <br><div class="alert alert-danger">
                                                     <strong>Falha!</strong>
                                                     {!! \Session::get('fail') !!}
                                                 </div>

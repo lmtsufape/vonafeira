@@ -13,11 +13,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Eventos</div>
                     @if(old('data_evento'))
+                    <br>
                         <div class="alert alert-success">
                             <strong>Sucesso!</strong>
                             O evento o foi adicionado.
                         </div>
                     @endif
+                    <br>
                     @if(session('warning'))
                         <div class="alert alert-danger">
                             <strong>Aviso!</strong>
@@ -31,6 +33,7 @@
                         </div>
                     @else
                     @if (\Session::has('success'))
+                    <br>
                         <div class="alert alert-success">
                             <strong>Sucesso!</strong>
                             {!! \Session::get('success') !!}
