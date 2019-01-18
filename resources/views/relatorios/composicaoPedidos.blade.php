@@ -15,12 +15,12 @@
             <tr>
                 <th>Produto</th>
                 <th>Produtor</th>
-                <th>Quantidade</th>
+                <th>Qtd.</th>
                 <th>Unidade</th>
-                <th>Valor Un.</th>
-                <th>Valor Total</th>
-                <th>Nome Consumidor</th>
-                <th>Local Retirada</th>
+                <th>Valor Unt.</th>
+                <th>Total</th>
+                <th>Consumidor</th>
+                <th>Retirada</th>
             </tr>
         </thead>
         <tbody>
