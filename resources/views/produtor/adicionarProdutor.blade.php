@@ -3,7 +3,7 @@
 @section('titulo','Cadastrar Produtor')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtores/{{$grupoConsumo->id}}">Listar Produtores</a> > Adicionar
+    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtores/{{$grupoConsumo->id}}">Listar Produtores</a> > Adicionar
 @endsection
 
 @section('content')

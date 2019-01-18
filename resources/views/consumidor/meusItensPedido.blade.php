@@ -3,7 +3,7 @@
 @section('titulo','Listagem de Pedido')
 
 @section('navbar')
-    <a href="/home">Painel</a> >
+    <a href="/home">Início</a> >
     <a href="/meusPedidos">Meus Pedidos</a> >
     Itens do Pedido
 @endsection

@@ -3,7 +3,7 @@
 @section('titulo','Gerenciar Grupo de Consumo')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Entrar em Grupo: {{$grupoConsumo->name}}
+    <a href="/home">Início</a> > Entrar em Grupo: {{$grupoConsumo->name}}
 @endsection
 
 <!--/gerenciar/2-->

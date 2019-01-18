@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-  <a href="/home">Painel</a> >
+  <a href="/home">Início</a> >
   <a href="/loja">Loja</a> > Evento em: {{$grupoConsumo->name}}
 @endsection
 

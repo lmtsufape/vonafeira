@@ -3,7 +3,7 @@
 @section('titulo','Listagem de Pedidos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> > Pedidos do Evento {{$evento->id}}
+    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> > Pedidos do Evento {{$evento->id}}
 @endsection
 
 @section('content')
