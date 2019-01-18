@@ -66,18 +66,18 @@
         <ul id="logos" style="list-style:none;">
             <li style="margin-right:140px; margin-left:110px; border-right:1px">
                 <a href="/home">Vô Na Feira</a>
-                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts2.png')}}" style = "margin-left: 15px; margin-top:10px " height="70" width="60"align = "right" ></a>
-          
+                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:10px " height="70" align = "right" ></a>
+
                 <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
                 <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px" height="80" width="70" align = "right" ></a>
-          
+
                 <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
                 <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px " height="80" width="70" align = "right"></a>
             </li>
         </ul>
     </div>
 
-    
+
 <!-- barra de menu -->
 <div id="app">
     <div class="navbar navbar-default" style="background-color: #1B2E4F; border-color: #d3e0e9" role="navigation">
@@ -98,7 +98,7 @@
                         @endif
                     </ul>
 
-                    
+
 
                     <ul class="nav navbar-nav navbar-right">
                         @if(Auth::check())
@@ -107,7 +107,7 @@
                                 <a style="color: #909090" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
-    
+
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="/gruposConsumo">Meus Grupos de Consumo</a>
@@ -157,7 +157,7 @@
                     </ul>
 
                 </ul>
-                            
+
             </div>
         </div>
     </div>
@@ -175,7 +175,7 @@
             </div>
         <hr>
     </div>
-        
+
     </div>
 
         @yield('content')
