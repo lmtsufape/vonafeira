@@ -17,6 +17,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="panel-body">
                         @if (\Session::has('fail'))
+                        <br>
                             <div class="alert alert-danger">
                                 <strong>Erro!</strong>
                                 {!! \Session::get('fail') !!}

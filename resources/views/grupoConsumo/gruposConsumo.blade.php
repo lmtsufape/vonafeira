@@ -13,14 +13,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Grupos de Consumo</div>
                 @if(old('name'))
+                <br>
                     <div class="alert alert-success">
                         <strong>Sucesso!</strong>
                         O grupo foi adicionado.
                     </div>
                 @endif
                 @if (\Session::has('success'))
+                <br>
                     <div class="alert alert-success">
-                        <strong>Sucesso!</strong>
+                        <strong>Sucessos!</strong>
                         {!! \Session::get('success') !!}
                     </div>
                 @endif
