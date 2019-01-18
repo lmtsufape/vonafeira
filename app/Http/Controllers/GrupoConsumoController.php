@@ -11,7 +11,18 @@ class GrupoConsumoController extends Controller
 {
 
     public function novo(){
-        return view("grupoConsumo.adicionarGrupoConsumo");
+        $estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+        $periodos = ['Semanal','Quinzenal','Mensal','Bimestral'];
+        $dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+        $prazos_pedido = [1,2,3,4,5,6];
+
+        return view(
+            "grupoConsumo.adicionarGrupoConsumo",
+            ['estados' => $estados,
+            'periodos' => $periodos,
+            'dias' => $dias,
+            'prazos_pedido' => $prazos_pedido]
+        );
     }
 
     public function cadastrar(Request $request){
@@ -50,8 +61,12 @@ class GrupoConsumoController extends Controller
     }
 
     public function editar($id) {
+        $estados = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($id);
-        return view("grupoConsumo.editarGrupoConsumo", ['grupoConsumo' => $grupoConsumo]);
+        return view("grupoConsumo.editarGrupoConsumo", [
+            'grupoConsumo' => $grupoConsumo,
+            'estados' => $estados]
+        );
     }
 
     public function atualizar(Request $request){
@@ -150,7 +165,7 @@ class GrupoConsumoController extends Controller
             $user_already_in = 1; //true, coordenador
         }else{
             foreach($grupoConsumo->consumidores as $consumidor){
-                if($user->id == $consumidor->id){
+                if($user->id == $consumidor->user_id){
                     $user_already_in = 2; //true, consumidor
                 }
             }

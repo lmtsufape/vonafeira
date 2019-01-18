@@ -19,14 +19,12 @@
                           {{ session('status') }}
                         </div>
                     @endif
-                    Usuário
-                    {{ Auth::user()->name }}
-                    Logado!<br>
+
                     <div class="panel-footer">
                         <div class="form-group">
-                                <a href="/loja" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Comprar</a>
-                                <a href="/selecionarGrupo" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Selecionar Grupo De Consumo</a>
-                                <a href="/gruposConsumo" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Meus Grupos de Consumo</a>
+                            <a href="/gruposConsumo" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>
+                            <a href="/selecionarGrupo" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
+                                <a href="/loja" class="btn btn-primary" role="button" aria-pressed="true">Comprar</a>
                         </div>
                     </div>
                 </div>

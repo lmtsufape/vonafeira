@@ -13,7 +13,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Pedidos</div>
                 <div class="panel-body">
-                <table class="table table-hover">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
                     <tr>
                         <th>Cod</th>
                         <th>Consumidor</th>
@@ -44,9 +45,10 @@
                         </tr>
                     @endforeach
                 </table>
+                  </div>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                    <a class="btn btn-danger" href="/eventos/{{$grupoConsumo->id}}">Voltar</a>
                     @if($evento->estaAberto)
                         <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
                         <a class="btn btn-primary" disabled>Relatório Produtor</a>

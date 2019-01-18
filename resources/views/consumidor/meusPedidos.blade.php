@@ -19,12 +19,13 @@
                               Nenhum pedido realizado.
                       </div>
                       @else
-                        <table class="table table-hover">
+                        <div class="table-responsive">
+                          <table class="table table-hover">
                             <tr>
                                 <th>Cod</th>
-                                <th>Número de Itens</th>
-                                <th>Total</th>
+                                <th>Número de itens</th>
                                 <th>Data</th>
+                                <th>Total</th>
                                 <th colspan="2">Ações</th>
                             </tr>
                             @foreach($pedidos as $pedido)
@@ -34,32 +35,35 @@
                                     $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
                                     foreach($itens_pedido as $item_pedido){
                                         $produto = \projetoGCA\Produto::find($item_pedido->produto_id);
-                                        $valor_pedido = $item_pedido->quantidade * $produto->preco;
-                                        $quantidade = $quantidade + $item_pedido->quantidade;
+                                        $valor_pedido = $valor_pedido + $item_pedido->quantidade * $produto->preco;
+                                        $quantidade = $quantidade + 1;
                                     }
                                 ?>
                                 <tr>
-                                    <td>{{ $pedido->id }}</td>
+                                    <td>#{{ $pedido->id }}</td>
                                     <td>{{ $quantidade }}</td>
-                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
                                     <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
+                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
 
-                                    <?php
-                                      $evento = \projetoGCA\Evento::find($pedido->evento_id);
-                                    ?>
+                                    @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
+                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
                                     @if($evento->estaAberto)
-                                      <td><a class="btn btn-info" href="/editarPedido/{{$pedido->id}}">Editar</a></td>
+                                      <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a>
                                     @else
-                                      <td><button type="button" class="btn btn-info" disabled>Editar</button></td>
+                                      <button type="button" class="btn btn-warning" disabled>Editar</button>
                                     @endif
+                                </td>
 
-                                    <td><a class="btn btn-success" href="/meusPedidos/{{$pedido->id}}">Itens</a></td>
 
                                 </tr>
                             @endforeach
                         </table>
+                        </div>
                       @endif
                   </div>
+              </div>
+              <div class="panel-footer">
+                  <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
               </div>
           </div>
       </div>

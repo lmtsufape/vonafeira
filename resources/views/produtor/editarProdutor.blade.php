@@ -23,7 +23,7 @@
                         </div>
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">
-                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="1">
+                                <input id="grupoConsumo" type="hidden" class="form-control" name="grupoConsumo" value="{{$grupoConsumo->id}}">
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
@@ -70,7 +70,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     Atualizar
                                 </button>
                             </div>

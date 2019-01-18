@@ -13,12 +13,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>Finalizar Pedido</h1></div>
+                <div class="panel-heading"><strong>Finalizar Pedido</strong></div>
                 <form class="form-horizontal" method="POST" action="{{action('PedidoController@finalizar')}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >
-
+                    <input id="grupo_id" type="hidden" class="form-control" name="grupo_id" value="{{ $grupoConsumo->id }}" >
                 <div class="panel-body">
+                  <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
 
@@ -47,6 +48,7 @@
                             </tr>
                             @endfor
                     </table>
+                  </div>
                 </div>
                     <div class="panel-footer">
                         <div class="form-group">

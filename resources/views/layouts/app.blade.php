@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--<title>{{ config('app.name', 'Laravel') }}</title> -->
-    <title>@yield('titulo') | Grupo de Consumo Agrícola</title>
+    <title>@yield('titulo') | Vô na Feira</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -40,46 +40,71 @@
         }
     </script>
 
+    <style type="text/css">
+        .panel-default > .panel-heading {
+            color: #fff;
+            background-color: #1B2E4F;
+            border-color: #d3e0e9;
+        }
+    </style>
+
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+    <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
+    <ul id="menu-barra-temp" style="list-style:none;">
+        <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
+            <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
+        </li>
+        <li>
+        <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
+        </li>
+    </ul>
+    </div>
 
-            <div class="container">
-                <div class="navbar-header">
+    <!-- Barra de Logos -->
+    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 100px; padding: 10px 0 10px 0">
+        <ul id="logos" style="list-style:none;">
+            <li style="margin-right:140px; margin-left:110px; border-right:1px">
+                <a href="/home">Vô Na Feira</a>
+                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:10px " height="70" align = "right" ></a>
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
+                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px" height="80" width="70" align = "right" ></a>
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        <!--{{ config('app.name', 'Laravel') }}-->
-                        Grupo de Consumo Agrícola
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
+                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px " height="80" width="70" align = "right"></a>
+            </li>
+        </ul>
+    </div>
 
-                    </a>
-                </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
+<!-- barra de menu -->
+<div id="app">
+    <div class="navbar navbar-default" style="background-color: #1B2E4F; border-color: #d3e0e9" role="navigation">
+        <div class="container col-md-10 col-md-offset-1" >
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" >
+
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if(Auth::check())
+                            <li><a style="color: #909090" class="main-menu" href="/home">Início</a></li>
+                        @endif
                     </ul>
 
-                    <!-- Right Side Of Navbar -->
+
+
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Registro</a></li>
-                        @else
+                        @if(Auth::check())
 
                         <li class="dropdown">
-                                <a href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a style="color: #909090" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
 
@@ -93,54 +118,65 @@
                                 </ul>
                             </li>
 
-                            <li class="dropdown">
-                                    <a href="/loja" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        Loja <span class="caret"></span>
-                                    </a>
-
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="/loja">Comprar</a>
-                                        </li>
-                                    </ul>
+                        <li class="dropdown">
+                            <a style="color: #909090" href="/loja" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Loja <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/loja">Comprar</a>
                                 </li>
-                                <li >
-                                </li>
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                                <a style="color: #909090" href="#" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="/meusPedidos">Meus Pedidos</a>
-                                    </li>
-
+                                <ul style="" class="dropdown-menu" role="menu">
+                                    <li><a href="/meusPedidos">Meus Pedidos</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Sair
                                         </a>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
-
                                 </ul>
                             </li>
+                        @else
+
+                        <li><a style="color: #fff" href="{{ route('login') }}">Entrar</a></li>
+                        |
+                        <li><a style="color: #fff" href="{{ route('register') }}">Cadastrar</a></li>
+
                         @endif
+
                     </ul>
 
-                </div>
-                <hr style="margin-top: 0px; padding-bottom: -10px">
-                <div name='navbar' style="padding-bottom: 22px" align:center>
-                    @yield('navbar')
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: -30px" class="container">
+        <hr>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="collapse navbar-collapse" >
+                        <ul class="nav navbar-nav">
+                            @yield('navbar')
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </nav>
+        <hr>
+    </div>
+
+    </div>
 
         @yield('content')
     </div>
@@ -148,4 +184,5 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+<script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 </html>

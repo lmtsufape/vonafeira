@@ -91,7 +91,7 @@ class ConsumidorController extends Controller
       });
 
       $pedidos = Pedido::whereIn('consumidor_id', $subset)
-                       ->orderBy('data_pedido', 'ASC')->get();
+                       ->orderBy('id', 'DESC')->get();
 
       return view('consumidor.meusPedidos', ['pedidos'=>$pedidos]);
     }

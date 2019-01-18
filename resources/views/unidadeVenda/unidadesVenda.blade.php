@@ -19,7 +19,8 @@
                               Não existem unidade de venda cadastradas neste grupo de consumo.
                       </div>
                   @else
-                    <table class="table table-hover">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
 
                         <tr>
                             <th>Cod</th>
@@ -43,6 +44,7 @@
 
                         @endforeach
                     </table>
+                    </div>
                   @endif
                 </div>
                 <div class="panel-footer">

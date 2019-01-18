@@ -28,9 +28,9 @@ class LojaController extends Controller
 
       $eventos = Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)
                               ->where('data_evento', '>', new DateTime())
-                              ->where('data_fim_pedidos', '>=', new DateTime())
-                              ->where('estaAberto','=','true')
-                              ->orderBy('data_evento', 'ASC')->get();
+                              // ->where('data_fim_pedidos', '>=', new DateTime())
+                              ->where('estaAberto','=','true')->get();
+                              // ->orderBy('data_evento', 'ASC')
 
       return $eventos;
   }
@@ -39,7 +39,7 @@ class LojaController extends Controller
 
       $evento = Evento::find($idEvento);
       $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
-      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)->get();
+      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)->orderBy('nome')->get();
 
       return view("loja.lojaProdutos", ['grupoConsumo' => $grupoConsumo,
                                         'evento' => $evento,

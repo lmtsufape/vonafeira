@@ -14,9 +14,8 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
+                        <div class="panel-heading">Grupo de consumo: <strong>{{$grupoConsumo->name}}</strong></div>
                         <div class="panel-body">
-                            <div class="panel-heading"><h1>Grupo de Consumo {{$grupoConsumo->name}}</h1></div>
-                            <div class="panel-body">
 
                                 @if($user_in == 1)
 
@@ -26,29 +25,33 @@
                                         <input type="text" style="text-align: center" size="40" value="{{$app->make('url')->to('/compartilhar/')}}/{{$grupoConsumo->id}}" readonly></input>
                                     </div>
                                     <br>
-                                    
-                                    <div class=panel-body>
-                                        <div class="panel-heading"><h1>Envie por e-mail</h1></div>
-                                        <div class="panel-body">
-                                            @if (\Session::has('success'))
+
+                                    <hr>
+
+                                    <div style="text-align: center">
+                                            
+                                            <strong>Envie por e-mail</strong>
+                                            <div class="panel-body">
+                                                @if (\Session::has('success'))
                                                 <div class="alert alert-success">
                                                     <strong>Sucesso!</strong>
                                                     {!! \Session::get('success') !!}
                                                 </div>
-                                            @elseif (\Session::has('fail'))
+                                                @elseif (\Session::has('fail'))
                                                 <div class="alert alert-danger">
                                                     <strong>Falha!</strong>
                                                     {!! \Session::get('fail') !!}
                                                 </div>
-                                            @endif
-
-                                            <form action="/share/mail" method="POST">
+                                                @endif
+                                                
+                                                
+                                                <form action="/share/mail" method="POST">
                                                 {{csrf_field()}}
                                                 <input type="text" name="grupoConsumoId" value="{{$grupoConsumo->id}}" hidden>
                                                 <input type="email" name="email" value="{{old('email')}}">
-                                                <button type="submit" class="btn btn-primary">Enviar</button>                                    
+                                                <button type="submit" class="btn btn-success">Enviar</button>                                    
                                             </form>
-
+                                            
                                         </div>
                                     </div>
                                     
@@ -62,7 +65,7 @@
                                     a participar do grupo de consumo dele.</h4>
                                     <form class="form-horizontal" method="POST" action="{{action('ConsumidorController@cadastrar')}}">
                                         {{ csrf_field() }}
-                                        <input name="grupoConsumo" value="{{$grupoConsumo->id}}" hidden></input>
+                                        <input name="grupoConsumo" value="{{$grupoConsumo->id}}" hidden>
                                         <button type="submit" class="btn btn-success">Entrar</button>
                                         <a href="/" class="btn btn-danger">Início</a>
                                     </form>

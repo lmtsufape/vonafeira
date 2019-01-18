@@ -13,32 +13,44 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading"><h1>{{$grupoConsumo->name}}</h1></div>
+                <div class="panel-heading">
+                  Grupo de Consumo: <strong>{{$grupoConsumo->name}}</strong>
+
+                  <a href="{{action('GrupoConsumoController@editar', $grupoConsumo->id)}}">
+                    <img src="{{asset('images/edit.png')}}" style = "margin-left: 15px; margin-right: -10px " height="25" width="25" align = "right">
+                  </a>
+                </div>
 
                 <div class="panel-body">
-                    <h3>Descrição</h3>
-                    @if($grupoConsumo->descricao == NULL)
-                    <p>Não há descrição.</p>
-                    @endif
-                    <p>{{$grupoConsumo->descricao}}</p>
-                    <h3>Localidade/Estado</h3>
-                    <p>{{$grupoConsumo->localidade}}/{{$grupoConsumo->estado}}</p>
-                    <h3>Dia de ocorrência</h3>
-                    <p>{{$grupoConsumo->dia_semana}}</p>
-                    <h3>Periodicidade</h3>
-                    <p>{{$grupoConsumo->periodo}}</p>
-                    <h3>Dia limite para pedidos </h3>
-                    <p>{{($grupoConsumo->prazo_pedidos == 1 ? $grupoConsumo->prazo_pedidos.' dia antes do evento.': $grupoConsumo->prazo_pedidos.' dias antes do evento.')}}</p>
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a href="{{action('GrupoConsumoController@editar', $grupoConsumo->id)}}" class="btn btn-primary">Editar Grupo</a>
+                    <div style="width: 100%; margin-left: 0%" class="row">
+                        <div style="width: 50%; float: left" class="column col-md-8">
+                            <strong>Descrição</strong>
+                            @if($grupoConsumo->descricao == NULL)
+                            <p>Não há descrição.</p>
+                            @endif
+                            <p>{{$grupoConsumo->descricao}}</p>
+                        </div>
+                        <div style="width: 50%; float: left" class="column col-md-8">
+                            <strong>Localidade/Estado</strong>
+                            <p>{{$grupoConsumo->localidade}}/{{$grupoConsumo->estado}}</p>
+                            <strong>Dia de ocorrência</strong>
+                            <p>{{$grupoConsumo->dia_semana}}</p>
+                            <strong>Periodicidade</strong>
+                            <p>{{$grupoConsumo->periodo}}</p>
+                            <strong>Dia limite para pedidos </strong>
+                            <p>{{($grupoConsumo->prazo_pedidos == 1 ? $grupoConsumo->prazo_pedidos.' dia antes do evento.': $grupoConsumo->prazo_pedidos.' dias antes do evento.')}}</p>
+                        </div>
+                    </div>
+                    <hr>
 
+
+                    <a href="{{action('EventoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Eventos</a>
                     <a href="{{action('ProdutorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Produtores</a>
                     <a href="{{action('ProdutoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Produtos</a>
                     <a href="/unidadesVenda/{{$grupoConsumo->id}}" class="btn btn-primary">Unidades de Venda</a>
-
-                    <a href="{{action('EventoController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Eventos</a>
                     <a href="{{action('ConsumidorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Consumidores</a>
                     <a href="/compartilhar/{{$grupoConsumo->id}}" class="btn btn-primary">Compartilhar</a>
+
                 </div>
             </div>
         </div>
