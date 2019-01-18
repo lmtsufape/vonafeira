@@ -22,10 +22,10 @@
                 <th colspan="6" style="text-align:center"><strong>Produdor: {{$produtor->nome}}</strong></th>
             </tr>
             <tr>
-              <th>Quantidade</th>
-              <th>Un.</th>
+              <th>Qtd.</th>
+              <th>Und.Venda</th>
               <th>Produto</th>
-              <th>Preço Unitário</th>
+              <th>Preço Unt.</th>
               <th>Porção</th>
               <th>Subtotal</th>
             </tr>

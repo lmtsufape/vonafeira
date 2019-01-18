@@ -24,11 +24,11 @@
                         @if($pedido->consumidor_id == $consumidor->id)
                             <tr><th colspan="6">Pedido #{{$pedido->id}}</th></tr>
                             <tr>
-                                <th>Quantidade</th>
+                                <th>Qtd.</th>
                                 <th>Und. Venda</th>
                                 <th>Produto</th>
                                 <th>Produtor</th>
-                                <th>Preço Unitário</th>
+                                <th>Preço Unt.</th>
                                 <th>Subtotal</th>
                             </tr>
                             @php($subtotal=0)
