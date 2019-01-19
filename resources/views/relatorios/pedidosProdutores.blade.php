@@ -25,7 +25,7 @@
               <th>Qtd.</th>
               <th>Produto</th>
               <th>Und. Venda</th>
-              <th>Preço Unitário</th>
+              <th>Preço Unt.</th>
               <th>Subtotal</th>
             </tr>
           </thead>
