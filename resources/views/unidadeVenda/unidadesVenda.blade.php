@@ -23,7 +23,6 @@
                       <table class="table table-hover">
 
                         <tr>
-                            <th>Cod</th>
                             <th>Nome</th>
                             <th>Descrição</th>
                             <th>Fracionado</th>
@@ -33,7 +32,6 @@
 
                         @foreach ($listaUnidades as $unidadesVenda)
                         <tr>
-                            <td>{{ $unidadesVenda->id }}</td>
                             <td>{{ $unidadesVenda->nome }}</td>
                             <td>{{ $unidadesVenda->descricao }}</td>
                             <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>

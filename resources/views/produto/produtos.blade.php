@@ -27,7 +27,6 @@
                   <div class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th>Cod</th>
                             <th>Nome do Produtor</th>
                             <th>Nome</th>
                             <th>Descrição</th>
@@ -38,10 +37,7 @@
 
                         @foreach ($produtos as $produto)
                         <tr>
-                            <td>{{ $produto->id }}</td>
-                            <?php
-                              $produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first();
-                            ?>
+                            @php($produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first())
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produto->nome }}</td>
                             <td>{{ $produto->descricao }}</td>
