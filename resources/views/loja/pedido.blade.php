@@ -9,7 +9,7 @@
       <table class="table table-bordered">
         <thead>
             <tr>
-                <th colspan="6">{{'Pedido #'.$pedido->id}}</th>
+                <th colspan="7">{{'Pedido #'.$pedido->id}}</th>
             </tr>
             <tr>
                 <th>Produto</th>
@@ -46,7 +46,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="6" style="text-align: right">Total: {{'R$ '.number_format($total,2)}}</th>
+                <th colspan="7" style="text-align: right">Total: {{'R$ '.number_format($total,2)}}</th>
             </tr>
         </tfoot>
       </table>

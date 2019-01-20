@@ -32,9 +32,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>Total</th>
+                                <th colspan="4" style="text-align: right">Total</th>
                                 <th>{{'R$ '.number_format($total,2)}}</th>
                             </tr>
                         </tfoot>

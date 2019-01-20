@@ -50,12 +50,12 @@
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><strong>Total</strong></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>{{'R$ '.number_format($total, 2)}}</th>
-                                <th></th>
                             </tr>
                         </tfoot>
                     </table>
