@@ -39,8 +39,6 @@ class PdfController extends Controller
             }
         }
 
-        // dd($itensPedidos);
-
         $date = date('d/m/Y');
         $view = \View::make($view, compact('date', 'itensPedidos', 'produtores', 'produtos'))->render();
         $pdf = \App::make('dompdf.wrapper');
