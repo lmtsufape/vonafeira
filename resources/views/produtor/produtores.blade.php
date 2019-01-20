@@ -27,7 +27,6 @@
                   <div class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th>Cod</th>
                             <th>Nome do Produtor</th>
                             <th>Endereco</th>
                             <th>Telefone</th>
@@ -36,7 +35,6 @@
 
                         @foreach ($produtores as $produtor)
                         <tr>
-                            <td>{{ $produtor->id }}</td>
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produtor->endereco}}</td>
                             <td>{{ $produtor->telefone}}</td>
