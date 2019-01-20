@@ -47,18 +47,18 @@
                                     <td>{{$unidadeVenda->nome}}
                                     <td>{{$produto->nome}}</td>
                                     <td>{{$produtor->nome}}
-                                    <td>{{'R$'.number_format($produto->preco, 2)}}</td>
-                                    <td>{{'R$'.number_format($subtotal_item,2)}}</td>                                    
+                                    <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
+                                    <td>{{'R$ '.number_format($subtotal_item,2)}}</td>                                    
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="6" style="text-align:left"><strong>Subtotal do Pedido:</strong> {{'R$'.number_format($subtotal,2)}}</td>
+                                <td colspan="6" style="text-align:left"><strong>Subtotal do Pedido:</strong> {{'R$ '.number_format($subtotal,2)}}</td>
                                 @php($total = $total+$subtotal)
                             </tr>
                         @endif
                     @endforeach
                     <tr>
-                        <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$'.number_format($total,2)}}</td>
+                        <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$ '.number_format($total,2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -67,7 +67,7 @@
     @endforeach
     <table class="table table-bordered">
         <thead>
-            <th colspan="6" style="text-align: center"><h1>Valor total do evento: {{'R$'.number_format($total_evento, 2)}}</h1></th>
+            <th colspan="6" style="text-align: center"><h1>Valor total do evento: {{'R$ '.number_format($total_evento, 2)}}</h1></th>
         </thead>
     </table>
 </body>

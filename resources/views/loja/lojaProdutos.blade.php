@@ -45,7 +45,7 @@
                                 <tr>
                                     <td>{{ $produto->nome }}</td>
                                     <td>{{ $produto->descricao }}</td>
-                                    <td>{{ $produto->preco }}</td>
+                                    <td>{{ 'R$ '.number_format($produto->preco,2)}}</td>
                                     @if(($produto->unidadeVenda->is_fracionado) == 1)
                                         <td><input id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @else

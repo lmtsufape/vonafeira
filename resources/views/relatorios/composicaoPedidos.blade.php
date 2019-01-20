@@ -43,8 +43,8 @@
                             <td>{{$produto->produtor->nome}}</td>
                             <td>{{$itemPedido->quantidade}}</td>
                             <td>{{$unidadeVenda->nome}}</td>
-                            <td>{{'R$'.number_format($produto->preco,2)}}</td>
-                            <td>{{'R$'.number_format($valor_item,2)}}</td>
+                            <td>{{'R$ '.number_format($produto->preco,2)}}</td>
+                            <td>{{'R$ '.number_format($valor_item,2)}}</td>
                             <td>{{$consumidor->name}}</td>
                             <td>{{$local_retirada}}</td>
                         </tr>

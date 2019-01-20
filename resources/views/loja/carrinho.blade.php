@@ -34,7 +34,7 @@
                                 <th></th>
                                 <th></th>
                                 <th>Total</th>
-                                <th>{{$total}}</th>
+                                <th>{{'R$ '.number_format($total,2)}}</th>
                             </tr>
                         </tfoot>
                             @for ($i = 0; $i < count($quantidades); $i++)
@@ -44,7 +44,7 @@
                                 <td>{{ $produtos[$i]['nome'] }}</td>
                                 <td>{{ $quantidades[$i] }}</td>
                                 <td>{{\projetoGCA\UnidadeVenda::find($produtos[$i]['unidadevenda_id'])->nome }}</td>
-                                <td>{{ $produtos[$i]['preco']*$quantidades[$i] }}</td>
+                                <td>{{ 'R$ '.number_format($produtos[$i]['preco']*$quantidades[$i],2) }}</td>
                             </tr>
                             @endfor
                     </table>
