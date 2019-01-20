@@ -30,7 +30,7 @@
                             <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                            <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                            <select id="produtor" class="form-control" name="idProdutor" autofocus>
                                 @if (old('idProdutor',NULL) != NULL)
                                     @foreach ($produtores as $produtor)
                                         @if (old('idProdutor') == $produtor->id)
@@ -116,7 +116,7 @@
                             <label for="unidadeVenda" class="col-md-4 control-label">Unidade de Venda</label>
 
                             <div class="col-md-6">
-                                <select name="unidadeVenda">
+                                <select id="unidade" class="form-control" name="unidadeVenda">
                                     @if (old('unidadeVenda',NULL) != NULL)
                                         @foreach ($unidadesVenda as $unidadeVenda)
                                             @if (old('unidadeVenda') == $unidadeVenda->id)
@@ -159,4 +159,20 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#produtor" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o produtor"
+    });
+</script>
+<script type="text/javascript">
+    $( "#unidade" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione a unidade"
+    });
+</script>
+
 @endsection

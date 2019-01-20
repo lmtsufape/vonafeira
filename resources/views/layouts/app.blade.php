@@ -13,6 +13,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
 
     <script type="text/javascript">
         /* Máscaras ER */
@@ -46,6 +48,25 @@
             background-color: #1B2E4F;
             border-color: #d3e0e9;
         }
+        /* Select2 Selects CSS - Start */
+        .select2-container--bootstrap .select2-selection--single .select2-selection__placeholder  {
+            color: #555;
+        }
+        .select2-container--bootstrap .select2-results__option {
+            color: #555;
+            background-color: #fff;
+        }
+        .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+            color: #fff;
+            background-color: #bbb;
+        }
+        .select2-container--bootstrap .select2-selection--single {
+            height: 36px;
+            padding: 6px 18px;
+            margin-left: 0px;
+        }
+        /* Select2 Selects CSS - End */
+
     </style>
 
 </head>

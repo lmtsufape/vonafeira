@@ -20,7 +20,7 @@
 </div>
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">
-                                <select class="form-control" name="grupoConsumo">
+                                <select id="grupoConsumo" class="form-control" name="grupoConsumo">
                                     <option value="" selected disabled hidden>Selecione</option>
                                     @foreach($gruposConsumo as $grupoConsumo)
                                         <option value={{$grupoConsumo->id}}>{{$grupoConsumo->name}}</option>
@@ -44,4 +44,16 @@
         </div>
     </div>
 </div>
+
+<!-- Script do Select2 -->
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#grupoConsumo" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o grupo"
+    });
+</script>
+<!-- Script do Select2 -->
+
 @endsection
