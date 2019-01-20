@@ -24,6 +24,7 @@
             <tr>
               <th>Qtd.</th>
               <th>Produto</th>
+              <th>Descrição</th>
               <th>Und. Venda</th>
               <th>Preço Unt.</th>
               <th>Subtotal</th>
@@ -60,6 +61,7 @@
                   <tr>
                     <td>{{$quantidade}}</td>
                     <td>{{$produto->nome}}</td>
+                    <td>{{$produto->descricao}}</td>
                     <td>{{$unidadeVenda->nome}}</td>
                     <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
                     <td>{{'R$ '.number_format($subtotal,2)}}</td>

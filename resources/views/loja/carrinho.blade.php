@@ -24,6 +24,7 @@
                         <thead>
 
                             <th>Produto</th>
+                            <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Unidade de Venda</th>
                             <th>Preço</th>
@@ -42,6 +43,7 @@
                             <input id="quantidade[{{$i}}]" type="hidden" class="form-control" name="quantidade[{{$i}}]" value="{{ $quantidades[$i] }}" >
                             <tr>
                                 <td>{{ $produtos[$i]['nome'] }}</td>
+                                <td>{{ $produtos[$i]['descricao'] }}</td>
                                 <td>{{ $quantidades[$i] }}</td>
                                 <td>{{\projetoGCA\UnidadeVenda::find($produtos[$i]['unidadevenda_id'])->nome }}</td>
                                 <td>{{ 'R$ '.number_format($produtos[$i]['preco']*$quantidades[$i],2) }}</td>

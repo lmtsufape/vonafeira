@@ -14,6 +14,7 @@
         <thead>
             <tr>
                 <th>Produto</th>
+                <th>Descrição</th>
                 <th>Produtor</th>
                 <th>Qtd.</th>
                 <th>Unidade</th>
@@ -40,6 +41,7 @@
 
                         <tr>
                             <td>{{$produto->nome}}</td>
+                            <td>{{$produto->descricao}}</td>
                             <td>{{$produto->produtor->nome}}</td>
                             <td>{{$itemPedido->quantidade}}</td>
                             <td>{{$unidadeVenda->nome}}</td>
