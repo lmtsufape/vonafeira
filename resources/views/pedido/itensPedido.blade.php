@@ -24,6 +24,7 @@
                             <tr>
                                 <th>Produto</th>
                                 <th>Descricao</th>
+                                <th>Produtor</th>
                                 <th>Quantidade</th>
                                 <th>Unidade</th>
                                 <th>Preço</th>
@@ -40,6 +41,7 @@
                           <tr>
                               <td>{{ $produto->nome}}</td>
                               <td>{{ $produto->descricao}}</td>
+                              <td>{{ \projetoGCA\Produtor::find($produto->produtor_id)->nome }}
                               <td>{{ $itemPedido->quantidade }}</td>
                               <td>{{ $unidadeVenda->nome}}</td>
                               <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>
