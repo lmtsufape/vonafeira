@@ -16,6 +16,7 @@
         <thead>
             <tr>
                 <th>PRODUTO</th>
+                <th>DESCRIÇÃO</th>
                 <th>PRECO</th>
                 <th>QUANTIDADE</th>
             </tr>
@@ -23,6 +24,7 @@
         <tbody>
             @foreach($pedido->itens as $item)
             <tr>
+                <th>{{$item->nome_produto}}</th>
                 <th>{{$item->nome_produto}}</th>
                 <th>{{'R$ '.number_format($item->preco, 2)}}</th>
                 <th>{{$item->quantidades}}</th>

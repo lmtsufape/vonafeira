@@ -13,6 +13,7 @@
             </tr>
             <tr>
                 <th>Produto</th>
+                <th>Descrição</th>
                 <th>Produtor</th>
                 <th>Quantidade</th>
                 <th>Un. Venda</th>
@@ -32,6 +33,7 @@
                         $total = $total + $total_item
                     ?>
                     <td>{{$produto->nome}}</td>
+                    <td>{{$produto->descricao}}</td>
                     <td>{{$produto->produtor->nome}}</td>
                     <td>{{$item->quantidade}}</td>
                     <td>{{$unidadeVenda->nome}}</td>
