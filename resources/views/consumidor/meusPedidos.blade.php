@@ -43,7 +43,7 @@
                                     <td>#{{ $pedido->id }}</td>
                                     <td>{{ $quantidade }}</td>
                                     <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
-                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
+                                    <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
 
                                     @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
                                       <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>

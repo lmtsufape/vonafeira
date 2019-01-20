@@ -40,8 +40,8 @@
                               <td>{{ $produto->nome}}</td>
                               <td>{{ $itemPedido->quantidade }}</td>
                               <td>{{ $unidadeVenda->nome}}</td>
-                              <td>{{ 'R$'.number_format($produto->preco, 2) }}</td>
-                              <td>{{ 'R$'.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
                               @php($total = $total + $produto->preco * $itemPedido->quantidade)
                           </tr>
                         @endforeach
@@ -52,7 +52,7 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th>{{'R$'.number_format($total, 2)}}</th>
+                                <th>{{'R$ '.number_format($total, 2)}}</th>
                                 <th></th>
                             </tr>
                         </tfoot>

@@ -35,8 +35,8 @@
                     <td>{{$produto->produtor->nome}}</td>
                     <td>{{$item->quantidade}}</td>
                     <td>{{$unidadeVenda->nome}}</td>
-                    <td>{{'R$'.number_format($produto->preco,2)}}</td>
-                    <td>{{'R$'.number_format($total_item,2)}}</td>
+                    <td>{{'R$ '.number_format($produto->preco,2)}}</td>
+                    <td>{{'R$ '.number_format($total_item,2)}}</td>
                 </tr>
 
             @endforeach
@@ -44,7 +44,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="6" style="text-align: right">Total: {{'R$'.number_format($total,2)}}</th>
+                <th colspan="6" style="text-align: right">Total: {{'R$ '.number_format($total,2)}}</th>
             </tr>
         </tfoot>
       </table>

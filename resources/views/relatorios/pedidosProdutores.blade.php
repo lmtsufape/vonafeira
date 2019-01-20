@@ -61,8 +61,8 @@
                     <td>{{$quantidade}}</td>
                     <td>{{$produto->nome}}</td>
                     <td>{{$unidadeVenda->nome}}</td>
-                    <td>{{'R$'.number_format($produto->preco, 2)}}</td>
-                    <td>{{'R$'.number_format($subtotal,2)}}</td>
+                    <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
+                    <td>{{'R$ '.number_format($subtotal,2)}}</td>
                   </tr>
 
                 @else
@@ -80,8 +80,8 @@
                         <td>{{$quantidade}}</td>
                         <td>{{$produto->nome}}</td>
                         <td>{{$unidadeVenda->nome}}</td>
-                        <td>{{'R$'.number_format($produto->preco, 2)}}</td>
-                        <td>{{'R$'.number_format($subtotal,2)}}</td>
+                        <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
+                        <td>{{'R$ '.number_format($subtotal,2)}}</td>
 
                       </tr>
                     @endif
@@ -94,7 +94,7 @@
             @endforeach
 
             <tr>
-                <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$'.number_format($total,2)}}</td>
+                <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$ '.number_format($total,2)}}</td>
             </tr>
           </tbody>
         </table>
