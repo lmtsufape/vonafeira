@@ -28,7 +28,7 @@
                         ?>
 
                         @if (count($eventos) != 0)
-                          <h3> Evento em: {{$grupoConsumo->name}} </h3>
+                          <h3> Eventos em: {{$grupoConsumo->name}} </h3>
                           @php($exibirMensagem = $exibirMensagem && false)
                         @endif
 

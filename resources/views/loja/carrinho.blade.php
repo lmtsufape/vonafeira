@@ -3,7 +3,7 @@
 @section('navbar')
   <a href="/home">Início</a> >
   <a href="/loja">Loja</a> >
-  <a href="/loja/evento/{{$evento}}">Evento em: {{$grupoConsumo->name}}</a> >
+  <a href="/loja/evento/{{$evento}}">Evento em: {{$grupoConsumo->name}}</a> > Carrinho
 @endsection
 
 @section('titulo','Carrinho')
@@ -28,11 +28,11 @@
                             <th>Quantidade</th>
                             <th>Unidade de Venda</th>
                             <th>Preço</th>
-
+                            <th>Produtor</th>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th colspan="4" style="text-align: right">Total</th>
+                                <th colspan="5" style="text-align: right">Total</th>
                                 <th>{{'R$ '.number_format($total,2)}}</th>
                             </tr>
                         </tfoot>
@@ -45,6 +45,7 @@
                                 <td>{{ $quantidades[$i] }}</td>
                                 <td>{{\projetoGCA\UnidadeVenda::find($produtos[$i]['unidadevenda_id'])->nome }}</td>
                                 <td>{{ 'R$ '.number_format($produtos[$i]['preco']*$quantidades[$i],2) }}</td>
+                                <td>{{\projetoGCA\Produtor::find($produtos[$i]['produtor_id'])->nome}}</td>
                             </tr>
                             @endfor
                     </table>
@@ -53,9 +54,11 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
+                                <a href="{{URL::previous()}}" class="btn btn-danger">Voltar</a>
                                 <button type="submit" class="btn btn-primary">
                                     Finalizar Pedido
                                 </button>
+
                             </div>
                         </div>
                     </div>

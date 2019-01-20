@@ -7,6 +7,7 @@
 
 @section('titulo','Loja')
 
+
 @section('content')
 <div class="container">
     <div class="row">
@@ -38,6 +39,7 @@
                                     <th>Preço</th>
                                     <th>Quantidade</th>
                                     <th>Unidade</th>
+                                    <th>Produtor</th>
                                 </tr>
 
                                 @foreach($produtos as $produto)
@@ -52,6 +54,8 @@
                                         <td><input id="quantidade" style="width: 6em" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @endif
                                     <td>{{ $produto->unidadeVenda->nome }}</td>
+                                    @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
+                                    <td>{{$produtor->nome}}</td>
                                 </tr>
 
                                 @endforeach
@@ -62,6 +66,7 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
+                                <a href="/loja" class="btn btn-danger">Voltar</a>
                                 <button type="submit" class="btn btn-primary">
                                     Adicionar ao Carrinho
                                 </button>

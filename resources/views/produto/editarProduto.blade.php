@@ -41,7 +41,7 @@
                                     @endforeach
                                 @else
                                     @foreach ($produtores as $produtor)
-                                        @if ($produto->idProdutor == $produtor->id)
+                                        @if ($produto->produtor_id == $produtor->id)
                                             <option value="{{$produtor->id}}" selected>{{$produtor->nome}}</option>
                                         @else
                                             <option value="{{$produtor->id}}">{{$produtor->nome}}</option>
