@@ -30,7 +30,7 @@
                             <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                              <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                              <select id="produtor" class="form-control" name="idProdutor" autofocus>
                                 <option value="" selected disabled hidden>Escolha o Produtor</option>
                                 @foreach ($produtores as $produtor)
                                   @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->id)
@@ -93,7 +93,7 @@
                             <label for="unidadeVenda" class="col-md-4 control-label">Unidade de Venda</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="unidadeVenda">
+                                <select id="unidade" class="form-control" name="unidadeVenda">
                                     <option value="" selected disabled hidden>Escolha uma unidade</option>
                                     @foreach ($unidadesVenda as $unidadeVenda)
                                         @if (Illuminate\Support\Facades\Input::old('unidadeVenda') == $unidadeVenda->id)
@@ -128,4 +128,22 @@
         </div>
     </div>
 </div>
+
+<!-- Script do Select2 -->
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#produtor" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o produtor"
+    });
+</script>
+<script type="text/javascript">
+    $( "#unidade" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione a unidade"
+    });
+</script>
+<!-- Script do Select2 -->
+
 @endsection

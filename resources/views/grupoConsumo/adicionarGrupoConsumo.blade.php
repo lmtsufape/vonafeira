@@ -177,4 +177,14 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#estado" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o estado"
+    });
+</script>
+
 @endsection
