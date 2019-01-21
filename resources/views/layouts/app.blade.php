@@ -67,6 +67,14 @@
         }
         /* Select2 Selects CSS - End */
 
+        #termo {
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
     </style>
 
 </head>
