@@ -11,8 +11,6 @@ class UnidadeVendaSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('unidade_vendas')->insert(['nome' => "UND", 'descricao' => "Unidade",'is_fracionado' => false, 'is_porcao' => true ]);
-        DB::table('unidade_vendas')->insert(['nome' => "KG", 'descricao' => "Quilo",'is_fracionado' => true, 'is_porcao' => true ]);
-
+      factory(\projetoGCA\UnidadeVenda::class, 50)->create();
     }
 }
