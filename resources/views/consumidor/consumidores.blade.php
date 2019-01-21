@@ -19,20 +19,16 @@
                             Não existem Consumidores cadastrados.
                     </div>
                 @else
-                  <div class="table-responsive">
+                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+
+                  <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th>Cod</th>
                             <th>Usuário</th>
-                            <th>Grupo de Consumo</th>
-                            <th>Ações</th>
                         </tr>
                         @foreach ($consumidores as $consumidor)
                         <tr>
-                            <td>{{ $consumidor->id }}</td>
                             <td>{{ $consumidor->usuario->name }}</td>
-                            <td>{{ $consumidor->grupoConsumo->name}}</td>
-                        </tr>
                         @endforeach
                     </table>
                   </div>
@@ -45,4 +41,30 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function buscar() {
+
+      // Declare variables 
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("termo");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tabela");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        } 
+      }
+    }
+</script>
+
 @endsection
