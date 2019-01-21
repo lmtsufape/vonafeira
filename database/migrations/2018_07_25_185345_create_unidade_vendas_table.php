@@ -19,7 +19,8 @@ class CreateUnidadeVendasTable extends Migration
             $table->string('descricao')->nullable();
             $table->boolean('is_fracionado')->default(false);
             $table->boolean('is_porcao')->default(false);
-            $table->integer('grupoConsumoId');
+            $table->integer('grupoConsumoId')->unsigned();
+            $table->foreign('grupoConsumoId')->references('id')->on('grupo_consumos');
             $table->timestamps();
         });
     }
