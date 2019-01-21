@@ -75,6 +75,37 @@
           margin-bottom: 12px;
         }
 
+        .navbar-default .navbar-nav > .dropdown > a:focus, .navbar-default .navbar-nav > .dropdown > a:hover {
+            color: #fff;
+            background-color: #1B2E4F;
+        }
+
+        .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            color: #000;
+            background-color: #fff;
+        }
+
+        .navbar-default .navbar-nav > a, .navbar-default .navbar-nav > li > a {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover, {
+            color: #fff;
+            background-color: #fff;
+        }
+
+        .dropdown-menu > li > a:hover {
+            background-color: #cccccc;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-text {
+            color: #000;
+            background-color: #fff;
+        }
+
+
+        
+
     </style>
 
 </head>
@@ -123,7 +154,7 @@
 
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
-                            <li><a style="color: #909090" class="main-menu" href="/home">Início</a></li>
+                            <li><a class="menu-principal" href="/home">Início</a></li>
                         @endif
                     </ul>
 
@@ -133,7 +164,7 @@
                         @if(Auth::check())
 
                         <li class="dropdown">
-                                <a style="color: #909090" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="/gruposConsumo" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
 
@@ -148,7 +179,7 @@
                             </li>
 
                         <li class="dropdown">
-                            <a style="color: #909090" href="/loja" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="/loja" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Loja <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
@@ -158,7 +189,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                                <a style="color: #909090" href="#" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul style="" class="dropdown-menu" role="menu">
@@ -177,9 +208,9 @@
                             </li>
                         @else
 
-                        <li><a style="color: #fff" href="{{ route('login') }}">Entrar</a></li>
+                        <li><a class="menu-principal" href="{{ route('login') }}">Entrar</a></li>
                         |
-                        <li><a style="color: #fff" href="{{ route('register') }}">Cadastrar</a></li>
+                        <li><a class="menu-principal" href="{{ route('register') }}">Cadastrar</a></li>
 
                         @endif
 
