@@ -34,7 +34,7 @@
                                 @php($i = 0)
                                 @foreach($itensPedido as $itemPedido)
                                     <?php
-                                      $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
+                                      $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                                     ?>
 
                                     <input id="item_id" type="hidden" class="form-control" name="item_id[{{$i}}]" value="{{ $itemPedido->id }}" >

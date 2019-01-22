@@ -53,6 +53,9 @@ class AutorizacaoMiddleware
             $rotas_evento_coordenador = [
                 'evento/pedidos/{evento_id}',
                 'evento/fechar/{eventoId}',
+            ];
+
+            $rotas_relatorios = [
                 'evento/pedidos/relatorioProdutor/{evento_id}',
                 'evento/pedidos/relatorioConsumidor/{evento_id}',
                 'evento/pedidos/relatorioComposicao/{evento_id}'
@@ -110,7 +113,20 @@ class AutorizacaoMiddleware
                         $evento = \projetoGCA\Evento::find($request->route($id));
                     }
                 }
-                if($evento == NULL || \Auth::user()->id != $evento->coordenador_id){
+                if($evento == NULL || \Auth::user()->id != $evento->coordenador_id ){
+                    return redirect('/home');
+                }
+
+            }elseif(in_array($request->route()->uri,$rotas_relatorios)){
+
+                $eventoIdNomes = ['evento_id','eventoId'];
+                $evento = NULL;
+                foreach($eventoIdNomes as $id){
+                    if(\projetoGCA\Evento::find($request->route($id)) != NULL){
+                        $evento = \projetoGCA\Evento::find($request->route($id));
+                    }
+                }
+                if($evento == NULL || $evento->estaAberto || \Auth::user()->id != $evento->coordenador_id ){
                     return redirect('/home');
                 }
 

@@ -32,7 +32,7 @@
                         <tbody>
                         @foreach ($itensPedido as $itemPedido)
                           <?php
-                            $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
+                            $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                             $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
                           ?>
                           <tr>
@@ -49,7 +49,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                
+
                                 <th colspan="5"></th>
                                 <th><strong>Total</strong></th>
                                 <th>{{'R$ '.number_format($total, 2)}}</th>

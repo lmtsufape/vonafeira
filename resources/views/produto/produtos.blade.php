@@ -45,8 +45,8 @@
                             <td>{{ $produto->descricao }}</td>
                             <td>{{ 'R$ '.number_format($produto->preco, 2 )}}</td>
                             <td>{{ $produto->unidadeVenda->nome }}</td>
-                            <td><a class="btn btn-success"href="{{ action('ProdutoController@editar', $produto->id) }}">Editar</a></td>
-                            <td><a class="btn btn-danger"href="{{ action('ProdutoController@remover',$produto->id) }}">Remover</a></td>
+                            <td><a class="btn btn-success" href="{{ action('ProdutoController@editar', $produto->id) }}">Editar</a></td>
+                            <td><a class="btn btn-danger" onclick="return confirm('Confirmar remoção de {{ $produto->nome}}?')" href="{{ action('ProdutoController@remover',$produto->id) }}">Remover</a></td>
                         </tr>
                         @endforeach
                     </table>
@@ -65,7 +65,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -82,7 +82,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

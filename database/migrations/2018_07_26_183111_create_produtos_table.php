@@ -25,6 +25,7 @@ class CreateProdutosTable extends Migration
             $table->integer('unidadevenda_id')->unsigned();
             $table->foreign('unidadevenda_id')->references('id')->on('unidade_vendas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
