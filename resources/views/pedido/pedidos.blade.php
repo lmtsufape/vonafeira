@@ -30,7 +30,7 @@
                             $valor_pedido = 0;
                             $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
                             foreach($itens_pedido as $item_pedido){
-                                $produto = \projetoGCA\Produto::find($item_pedido->produto_id);
+                                $produto = \projetoGCA\Produto::withTrashed()->find($item_pedido->produto_id);
                                 $valor_pedido = $item_pedido->quantidade * $produto->preco;
                                 $quantidade = $quantidade + $item_pedido->quantidade;
                             }

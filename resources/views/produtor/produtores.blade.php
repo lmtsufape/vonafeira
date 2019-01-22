@@ -6,6 +6,10 @@
     <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Produtores
 @endsection
 
+@push('styles')
+    <link href="{{ asset('css/pesquisa.css') }}" rel="stylesheet">
+@endpush
+
 @section('content')
 <h1><p id="teste"></p></h1>
 <div class="container">
@@ -67,7 +71,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -84,7 +88,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

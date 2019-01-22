@@ -35,7 +35,7 @@
                         <tbody>
                         @foreach ($itensPedido as $itemPedido)
                           <?php
-                            $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
+                            $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                             $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
                           ?>
                           <tr>

@@ -36,8 +36,7 @@
                             @php($itensPedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get())
                             @foreach($itensPedido as $itemPedido)
                                 <?php
-                                    $produto = \projetoGCA\Produto::find($itemPedido->produto_id);
-                                    //dd($produto);
+                                    $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                                     $unidadeVenda = \projetoGCA\UnidadeVenda::find($produto->unidadevenda_id);
                                     $produtor = \projetoGCA\Produtor::find($produto->produtor_id);
                                     $subtotal_item = $itemPedido->quantidade*$produto->preco;
@@ -50,7 +49,7 @@
                                     <td>{{$produto->descricao}}</td>
                                     <td>{{$produtor->nome}}</td>
                                     <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
-                                    <td>{{'R$ '.number_format($subtotal_item,2)}}</td>                                    
+                                    <td>{{'R$ '.number_format($subtotal_item,2)}}</td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -65,7 +64,7 @@
                 </tbody>
             </table>
         </div>
-        @php($total_evento = $total_evento + $total)       
+        @php($total_evento = $total_evento + $total)
     @endforeach
     <table class="table table-bordered">
         <thead>

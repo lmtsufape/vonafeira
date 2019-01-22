@@ -4,6 +4,7 @@ namespace projetoGCA\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,10 @@ class ProdutoController extends Controller
 
     public function cadastrar(Request $request){
         $validator = Validator::make($request->all(), [
-            'nome' => 'required|unique:produtos|min:2|max:191',
+            // 'nome' => 'required|unique:produtos,nome,NULL,id,deleted_at,NULL|min:2|max:191',
+            'nome' => ['required','min:2','max:191',Rule::unique('produtos','nome')
+                          ->where(function($query) { $query->whereNull('deleted_at'); })
+                      ],
             'descricao' => 'max:191',
             'preco' => 'required|numeric',
             'unidadeVenda' => 'required',
@@ -88,19 +92,12 @@ class ProdutoController extends Controller
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-
-            $produto->produtor_id = $request->idProdutor;
-            $produto->nome = $request->nome;
-            $produto->preco = $request->preco;
-            $produto->descricao = $request->descricao;
-            $produto->unidadevenda_id = $request->unidadeVenda;
-            $produto->grupoconsumo_id = $request->grupoConsumoId;
-            $produto->update();
-
         }
-        else if($this->verificarExistencia($request->nome) ){
+        else{
             $validator = Validator::make($request->all(), [
-                'nome' => 'required|unique:produtos|min:2|max:191',
+                'nome' => ['required','min:2','max:191',Rule::unique('produtos','nome')
+                              ->where(function($query) { $query->whereNull('deleted_at'); })
+                          ],
                 'descricao' => 'max:191',
                 'preco' => 'required|numeric',
                 'unidadeVenda' => 'required',
@@ -110,16 +107,16 @@ class ProdutoController extends Controller
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-
-            $produto->produtor_id = $request->idProdutor;
-            $produto->nome = $request->nome;
-            $produto->preco = $request->preco;
-            $produto->descricao = $request->descricao;
-            $produto->unidadevenda_id = $request->unidadeVenda;
-            $produto->grupoconsumo_id = $request->grupoConsumoId;
-            $produto->update();
-
         }
+
+        $produto->produtor_id = $request->idProdutor;
+        $produto->nome = $request->nome;
+        $produto->preco = $request->preco;
+        $produto->descricao = $request->descricao;
+        $produto->unidadevenda_id = $request->unidadeVenda;
+        $produto->grupoconsumo_id = $request->grupoConsumoId;
+        $produto->update();
+
         return redirect()
                     ->action('ProdutoController@listar', $request->grupoConsumoId)
                     ->withInput();
@@ -133,10 +130,5 @@ class ProdutoController extends Controller
             return view("produto.produtos", ['produtos' => $produtos], ['grupoConsumo' => $grupoConsumo]);
         }
         return view("/home");
-    }
-
-    public function verificarExistencia($nome){
-        $produto = \projetoGCA\Produto::where ('nome', '=', $nome)->first();
-        return empty($produto);
     }
 }
