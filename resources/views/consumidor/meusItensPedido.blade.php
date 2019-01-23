@@ -34,11 +34,12 @@
                           <?php
                             $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                             $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
+                            $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
                           ?>
                           <tr>
                               <td>{{ $produto->nome}}</td>
                               <td>{{ $produto->descricao}}</td>
-                              <td>{{ \projetoGCA\Produtor::find($produto->produtor_id)->nome}}</td>
+                              <td>{{ $produtor->nome}}</td>
                               <td>{{ $itemPedido->quantidade }}</td>
                               <td>{{ $unidadeVenda->nome}}</td>
                               <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>

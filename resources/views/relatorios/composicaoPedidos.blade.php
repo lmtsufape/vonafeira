@@ -42,7 +42,7 @@
                         <tr>
                             <td>{{$produto->nome}}</td>
                             <td>{{$produto->descricao}}</td>
-                            <td>{{$produto->produtor->nome}}</td>
+                            <td>{{$produto->produtor()->withTrashed()->first()->nome}}</td>
                             <td>{{$itemPedido->quantidade}}</td>
                             <td>{{$unidadeVenda->nome}}</td>
                             <td>{{'R$ '.number_format($produto->preco,2)}}</td>
@@ -56,9 +56,9 @@
                 @endforeach
 
             @endforeach
-            
+
         </tbody>
     </table>
-    
+
 </body>
 </html>

@@ -59,9 +59,17 @@ class ProdutorController extends Controller
   public function remover($id) {
       $produtor = \projetoGCA\Produtor::find($id);
 
-      $grupoConsumo = $produtor->grupoconsumo_id;
+      $produtos = \projetoGCA\Produto::where('produtor_id','=',$produtor->id)->get();
+
+      foreach ($produtos as $produto) {
+        $produto->delete();
+      }
 
       $produtor->delete();
+
+      $grupoConsumo = $produtor->grupoconsumo_id;
+
+
       return redirect()
               ->action('ProdutorController@listar', $grupoConsumo)
               ->withInput();

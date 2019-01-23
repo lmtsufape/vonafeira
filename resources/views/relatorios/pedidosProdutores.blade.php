@@ -19,7 +19,7 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-                <th colspan="5" style="text-align:center"><strong>Produdor: {{$produtor->nome}}</strong></th>
+                <th colspan="6" style="text-align:center"><strong>Produtor: {{$produtor->nome}}</strong></th>
             </tr>
             <tr>
               <th>Qtd.</th>
@@ -49,7 +49,7 @@
                 @if($unidadeVenda->is_porcao == false)
                   <?php
                     foreach($itensPedidos as $itemPedido){
-                      if($itemPedido->produto == $produto){
+                      if($itemPedido->produto()->withTrashed()->first() == $produto){
                         $quantidade = $quantidade + $itemPedido->quantidade;
                         $subtotal = $quantidade*$produto->preco;
                       }
@@ -70,7 +70,7 @@
                 @else
 
                   @foreach($itensPedidos as $itemPedido)
-                    @if($itemPedido->produto == $produto){
+                    @if($itemPedido->produto()->withTrashed()->first() == $produto){
                       <?php
                         $quantidade = $itemPedido->quantidade;
                         $subtotal = $quantidade*$produto->preco;
@@ -81,6 +81,7 @@
                       <tr>
                         <td>{{$quantidade}}</td>
                         <td>{{$produto->nome}}</td>
+                        <td>{{$produto->descricao}}</td>
                         <td>{{$unidadeVenda->nome}}</td>
                         <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
                         <td>{{'R$ '.number_format($subtotal,2)}}</td>

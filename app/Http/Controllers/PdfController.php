@@ -25,7 +25,9 @@ class PdfController extends Controller
 
         $produtores = array();
         foreach ($itensPedidos as $itemPedido) {
-            $produtor = $itemPedido->produto->produtor;
+            $ṕroduto = $itemPedido->produto()->withTrashed()->first();
+            $produtor = $ṕroduto->produtor()->withTrashed()->first();
+
             if(!in_array($produtor,$produtores)){
                 array_push($produtores,$produtor);
             }
@@ -33,7 +35,8 @@ class PdfController extends Controller
 
         $produtos = array();
         foreach ($itensPedidos as $itemPedido) {
-            $produto = $itemPedido->produto;
+            $produto = $itemPedido->produto()->withTrashed()->first();
+
             if(!in_array($produto,$produtos)){
                 array_push($produtos,$produto);
             }
