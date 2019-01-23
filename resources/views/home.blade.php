@@ -23,7 +23,7 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <a href="/gruposConsumo" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>
-                            <a href="/selecionarGrupo" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
+                            <a href="/entrarGrupo" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
                                 <a href="/loja" class="btn btn-primary" role="button" aria-pressed="true">Comprar</a>
                         </div>
                     </div>

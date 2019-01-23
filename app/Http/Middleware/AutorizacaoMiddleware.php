@@ -39,7 +39,6 @@ class AutorizacaoMiddleware
                 'editarGrupoConsumo/{id}',
                 'gerenciar/{id}',
                 //Evento
-                'editarEvento/{idGrupoConsumo}',
                 'adicionarEvento/{idGrupoConsumo}',
                 'eventos/{idGrupoConsumo}'
             ];

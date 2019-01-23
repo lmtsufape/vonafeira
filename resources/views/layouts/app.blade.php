@@ -173,7 +173,7 @@
                                         <a href="/gruposConsumo">Meus Grupos de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/selecionarGrupo">Entrar em Grupo de Consumo</a>
+                                        <a href="/entrarGrupo">Entrar em Grupo de Consumo</a>
                                     </li>
                                 </ul>
                             </li>
