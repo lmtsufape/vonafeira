@@ -46,8 +46,12 @@ class AutorizacaoMiddleware
 
             $rotas_pedidos = [
                 'meusPedidos/{pedido_id}',
-                'editarPedido/{id}',
                 'visualizarPedido/{id}'
+            ];
+
+            $rotas_pedidos_evento_aberto = [
+                'editarPedido/{id}',
+                'cancelarPedido/{id}',
             ];
 
             $rotas_evento_coordenador = [
@@ -102,6 +106,31 @@ class AutorizacaoMiddleware
                     if($user->id != \Auth::user()->id){
                         return redirect("/home");
                     }
+                }
+
+            }else if(in_array($request->route()->uri,$rotas_pedidos_evento_aberto)){
+
+                $pedidoIdNomes = ['id'];
+                $pedido = NULL;
+                foreach($pedidoIdNomes as $id){
+                    if(\projetoGCA\Pedido::find($request->route($id)) != NULL){
+                        $pedido = \projetoGCA\Pedido::find($request->route($id));
+                    }
+                }
+
+                if($pedido == NULL){
+                    return redirect("/home");
+                }
+
+                $evento = \projetoGCA\Evento::find($pedido->evento_id);
+
+                if($evento->estaAberto == False){
+                  return redirect("/home");
+                }else{
+                  $user = \projetoGCA\User::find($pedido->consumidor->user_id);
+                  if($user->id != \Auth::user()->id){
+                      return redirect("/home");
+                  }
                 }
 
             }elseif(in_array($request->route()->uri,$rotas_evento_coordenador)){
