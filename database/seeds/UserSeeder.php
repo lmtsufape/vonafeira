@@ -16,6 +16,11 @@ class UserSeeder extends Seeder
             'email' => 'caetano@decarli.com',
         ]);
 
-        factory(\projetoGCA\User::class, 49)->create();
+        factory(\projetoGCA\User::class)->create([
+            'name' => "Genova De' Carli",
+            'email' => 'genova@decarli.com',
+        ]);
+
+        factory(\projetoGCA\User::class, 48)->create();
     }
 }

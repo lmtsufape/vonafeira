@@ -11,6 +11,10 @@ class GrupoConsumoSeeder extends Seeder
      */
     public function run()
     {
-      factory(projetoGCA\GrupoConsumo::class, 10)->create();
+      factory(\projetoGCA\GrupoConsumo::class)->create([
+          'name' => "Fruto da Terra",
+      ]);
+
+      factory(projetoGCA\GrupoConsumo::class, 9)->create();
     }
 }

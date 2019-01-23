@@ -27,7 +27,8 @@ class ProdutoController extends Controller
         $validator = Validator::make($request->all(), [
             // 'nome' => 'required|unique:produtos,nome,NULL,id,deleted_at,NULL|min:2|max:191',
             'nome' => ['required','min:2','max:191',Rule::unique('produtos','nome')
-                          ->where(function($query) { $query->whereNull('deleted_at'); })
+                          ->where(function($query) use ($request){ $query->where('grupoconsumo_id', $request->grupoConsumo)
+                                                                         ->whereNull('deleted_at'); })
                       ],
             'descricao' => 'max:191',
             'preco' => 'required|numeric',
@@ -69,7 +70,7 @@ class ProdutoController extends Controller
     public function remover($id) {
         $produto = \projetoGCA\Produto::find($id);
         // return var_dump($produto);
-         $grupoConsumo = $produto->grupoconsumo_id;
+        $grupoConsumo = $produto->grupoconsumo_id;
         // return var_dump($produto);
         $produto->delete();
         return redirect()
@@ -96,8 +97,9 @@ class ProdutoController extends Controller
         else{
             $validator = Validator::make($request->all(), [
                 'nome' => ['required','min:2','max:191',Rule::unique('produtos','nome')
-                              ->where(function($query) { $query->whereNull('deleted_at'); })
-                          ],
+                            ->where(function($query) use ($request){ $query->where('grupoconsumo_id', $request->grupoConsumo)
+                                                                           ->whereNull('deleted_at'); })
+                        ],
                 'descricao' => 'max:191',
                 'preco' => 'required|numeric',
                 'unidadeVenda' => 'required',

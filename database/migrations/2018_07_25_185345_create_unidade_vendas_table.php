@@ -22,6 +22,7 @@ class CreateUnidadeVendasTable extends Migration
             $table->integer('grupoConsumoId')->unsigned();
             $table->foreign('grupoConsumoId')->references('id')->on('grupo_consumos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

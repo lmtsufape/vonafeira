@@ -37,7 +37,7 @@
             @foreach($produtos as $produto)
 
               <?php
-                $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
+                $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
               ?>
 
               @if($produto->produtor_id == $produtor->id)
