@@ -21,7 +21,7 @@
                           </div>
                           <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                               <div class="col-md-6">
-                                  <select id="grupoConsumo" class="form-control" name="grupoConsumo">
+                                  <select id="grupoConsumo" class="form-control" name="grupoConsumo" required>
                                       <option value="" selected disabled hidden>Selecione</option>
                                       @foreach($gruposConsumo as $grupoConsumo)
                                           <option value={{$grupoConsumo->id}}>{{$grupoConsumo->name}}</option>
