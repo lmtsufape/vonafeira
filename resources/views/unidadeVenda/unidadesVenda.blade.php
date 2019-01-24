@@ -3,8 +3,10 @@
 @section('titulo','Listagem de Unidades de Venda')
 
 @section('navbar')
-<a href="/home">Início</a> >
-    <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Unidades de Venda
+<a href="{{ route("home") }}">Início</a> >
+<a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+<a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+Listar Unidades de Venda
 @endsection
 
 @section('content')
@@ -38,9 +40,14 @@
                             <td>{{ $unidadesVenda->descricao }}</td>
                             <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
                             <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
-                            <td><a class="btn btn-warning" href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
+
                             <td>
-                              <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">
+                              <a class="btn btn-warning" href="{{ route("unidadeVenda.editar", ["grupoConsumoId" => $grupoConsumo->id, "id" => $unidadesVenda->id]) }}">
+                                Editar
+                              </a>
+                            </td>
+                            <td>
+                              <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ route("unidadeVenda.remover", ["id" => $unidadesVenda->id]) }}">
                                 Remover
                               </a>
                             </td>
@@ -52,8 +59,12 @@
                   @endif
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="/adicionarUnidadeVenda/{{$grupoConsumo->id}}">Novo</a>
+                    <a class="btn btn-danger" href="{{URL::previous()}}">
+                      Voltar
+                    </a>
+                    <a class="btn btn-success" href="{{ route("unidadeVenda.novo", ["grupoConsumoId" => $grupoConsumo->id]) }}">
+                      Novo
+                    </a>
                 </div>
             </div>
         </div>

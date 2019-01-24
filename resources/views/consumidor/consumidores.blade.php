@@ -3,7 +3,10 @@
 @section('titulo','Consumidores')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Consumidores
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Consumidores
 @endsection
 
 @section('content')
@@ -45,7 +48,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -62,7 +65,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

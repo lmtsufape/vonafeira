@@ -3,7 +3,11 @@
 @section('titulo','Cadastro de Produtos')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtos/{{$grupoConsumo->id}}">Listar Produtos</a> > Adicionar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Listar Produtos</a> >
+    Adicionar
 @endsection
 
 @section('content')
@@ -14,7 +18,7 @@
                 <div class="panel-heading">Novo Produto</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarProduto">
+                    <form class="form-horizontal" method="POST" action="{{ route("produto.cadastrar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <div class="col-md-6">
@@ -47,7 +51,9 @@
                                   </span>
                               @endif
                             </div>
-                            <a href="{{action('ProdutorController@novo', $grupoConsumo->id)}}" class="btn btn-primary">Novo</a>
+                            <a href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">
+                              Novo
+                            </a>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
@@ -111,7 +117,10 @@
                                     </span>
                                 @endif
                             </div>
-                            <a href="{{action('UnidadeVendaController@adicionar', $grupoConsumo->id)}}" class="btn btn-primary">Nova</a>
+
+                            <a href="{{ route("unidadeVenda.novo", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">
+                              Nova
+                            </a>
                         </div>
 
                         <div class="form-group">

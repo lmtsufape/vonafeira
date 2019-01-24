@@ -3,7 +3,9 @@
 @section('titulo','Cadastrar Grupo de Consumo')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > Adicionar Grupo de Consumo
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    Adicionar Grupo de Consumo
 @endsection
 
 @section('content')
@@ -15,7 +17,7 @@
                 <div class="panel-heading">Novo Grupo de Consumo</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarGrupoConsumo">
+                    <form class="form-horizontal" method="POST" action="{{ route("grupoConsumo.cadastrar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
@@ -30,7 +32,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                             <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
@@ -50,7 +52,7 @@
 
                             <div class="col-md-6">
                                 <select id="estado" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
-                                    
+
                                     @if (old('estado') == null)
                                         <option value="" selected disabled hidden>Selecionar</option>
                                     @endif
@@ -62,8 +64,8 @@
                                             <option value={{$estado}}>{{$estado}}</option>
                                         @endif
                                     @endforeach
-                                    
-                                </select>                                
+
+                                </select>
                                 @if ($errors->has('estado'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('estado') }}</strong>
@@ -102,7 +104,7 @@
                                             <option value={{$periodo}}>{{$periodo}}</option>
                                         @endif
                                     @endforeach
-                                    
+
                                 </select>
                                 @if ($errors->has('periodo'))
                                     <span class="help-block">
@@ -129,7 +131,7 @@
                                         @endif
                                     @endforeach
 
-                                </select>                                
+                                </select>
                                 @if ($errors->has('dia_semana'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('dia_semana') }}</strong>

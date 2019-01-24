@@ -3,7 +3,7 @@
 @section('titulo','Início')
 
 @section('navbar')
-    Painel
+    Início
 @endsection
 
 @section('content')
@@ -22,9 +22,9 @@
 
                     <div class="panel-footer">
                         <div class="form-group">
-                            <a href="/gruposConsumo" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>
-                            <a href="/entrarGrupo" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
-                                <a href="/loja" class="btn btn-primary" role="button" aria-pressed="true">Comprar</a>
+                            <a href="{{ route("grupoConsumo.listar") }}" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>
+                            <a href="{{ route("consumidor.grupo.entrar") }}" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
+                            <a href="{{ route("loja") }}" class="btn btn-primary" role="button" aria-pressed="true">Comprar</a>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,11 @@
 @section('titulo','Listagem de Pedidos')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> > Pedidos do Evento {{$evento->id}}
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Eventos</a> >
+    Pedidos do Evento {{$evento->id}}
 @endsection
 
 @section('content')
@@ -41,22 +45,35 @@
                             <td>{{ $quantidade }}</td>
                             <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
-                            <td><a class="btn btn-info" href="{{action('EventoController@itensPedido', $pedido->id)}}">Itens</a></td>
+                            <td>
+                              <a class="btn btn-info" href="{{ route("evento.pedido.itens", ["pedido_id" => $pedido->id]) }}">
+                                Itens
+                              </a>
+                            </td>
                         </tr>
                     @endforeach
                 </table>
                   </div>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="/eventos/{{$grupoConsumo->id}}">Voltar</a>
+
+                    <a class="btn btn-danger" href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
+                      Voltar
+                    </a>
                     @if($evento->estaAberto)
                         <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
                         <a class="btn btn-primary" disabled>Relatório Produtor</a>
                         <a class="btn btn-primary" disabled>Relatório Consumidor</a>
                     @else
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioMontagemPedidos', $evento->id)}}">Relatório Montagem Pedido</a>
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosProdutores', $evento->id)}}">Relatório Produtores</a>
-                        <a class="btn btn-primary" target="_blank" href="{{action('PdfController@criarRelatorioPedidosConsumidores', $evento->id)}}">Relatório Consumidores</a>
+                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.montagem", ["evento_id" => $evento->id]) }}">
+                          Relatório Montagem Pedido
+                        </a>
+                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.produtores", ["evento_id" => $evento->id]) }}">
+                          Relatório Produtores
+                        </a>
+                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.consumidores", ["evento_id" => $evento->id]) }}">
+                          Relatório Consumidores
+                        </a>
                     @endif
                 </div>
             </div>

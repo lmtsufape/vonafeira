@@ -21,7 +21,7 @@ Auth::routes();
 //Rota para termo de uso
 Route::get('/termos','PdfController@termosDeUso')->name('termos');
 
-Route::get('/compartilhar/{grupoConsumoId}', 'GrupoConsumoController@compartilhar')->middleware('auth');
+Route::get('/compartilhar/{grupoConsumoId}', 'GrupoConsumoController@compartilhar')->name('compartilhar.get')->middleware('auth');
 
 Route::middleware('autorizacao')->group(function() {
 
@@ -50,18 +50,17 @@ Route::middleware('autorizacao')->group(function() {
     Route::post('/atualizarProdutor', "ProdutorController@atualizar")->name('produtor.atualizar');
 
     // Rotas para Consumidor
-    Route::get('/adicionarConsumidor',  'ConsumidorController@adicionar')->name('consumidor.novo');
-    Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar')->name('consumidor.cadastrar');
     Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar')->name('consumidor.listar');
     Route::get('/entrarGrupo', 'ConsumidorController@entrarGrupo')->name('consumidor.grupo.entrar');
+    Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar')->name('consumidor.cadastrar');
 
     // Rotas para pedidos do Consumidor
     Route::get('/meusPedidos', 'ConsumidorController@pedidos')->name('consumidor.meusPedidos');
     Route::get('/meusPedidos/{pedido_id}', 'ConsumidorController@itensPedido')->name('consumidor.pedido.itens');
     Route::get('/editarPedido/{id}','ConsumidorController@editarPedido')->name('consumidor.pedido.editar');
     Route::get('/cancelarPedido/{id}', "ConsumidorController@cancelarPedido")->name('consumidor.pedido.cancelar');
-    Route::post('/atualizarPedido', "ConsumidorController@atualizarPedido")->name('consumidor.pedido.atualizar');
     Route::get('/removerProdutoPedido/{idItemPedido}','ConsumidorController@removerPedido')->name('consumidor.pedido.remover');
+    Route::post('/atualizarPedido', "ConsumidorController@atualizarPedido")->name('consumidor.pedido.atualizar');
 
     // Rotas para Grupo de Consumo
     Route::get('/adicionarGrupoConsumo',  'GrupoConsumoController@novo')->name('grupoConsumo.novo');
@@ -101,7 +100,7 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos')->name('evento.relatorio.montagem');
 
     //Rotas para emails
-    Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar');
+    Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar.post');
 
     //Rotas para Locais de Retirada
     Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/listar','LocalRetiradaController@listar')->name('locaisretirada.listar');

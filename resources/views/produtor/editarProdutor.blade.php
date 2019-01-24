@@ -3,7 +3,11 @@
 @section('titulo','Editar Produtor')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar: {{$produtor->nome}}
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("produtor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Listar Produtores</a> >
+    Editar: {{$produtor->nome}}
 @endsection
 
 @section('content')
@@ -14,7 +18,7 @@
                 <div class="panel-heading">Editar Produtor</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/atualizarProdutor">
+                    <form class="form-horizontal" method="POST" action="{{ route("produtor.atualizar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
                             <div class="col-md-6">

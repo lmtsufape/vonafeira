@@ -3,7 +3,8 @@
 @section('titulo','Meus Grupos de Consumo')
 
 @section('navbar')
-    <a href="/home">Início</a> > Meus Grupos de Consumo
+    <a href="{{ route("home") }}">Início</a> >
+    Meus Grupos de Consumo
 @endsection
 
 @section('content')
@@ -57,7 +58,12 @@
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td><a class="btn btn-primary" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td>
+
+                                <td>
+                                  <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
+                                    Gerenciar
+                                  </a>
+                                </td>
                             </tr>
                             @endforeach
 
@@ -71,7 +77,12 @@
                                     <td>{{ $grupoConsumo->periodo }}</td>
                                     <td>{{ $grupoConsumo->dia_semana }}</td>
                                     <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                    <td><a class="btn btn-danger" href="/grupoconsumo/sair/{{$grupoConsumo->id}}">Sair</a></td>
+
+                                    <td>
+                                      <a class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja sair do grupo de consumo {{$grupoConsumo->name}}?')" href="{{ route("grupoConsumo.sair", ["grupoConsumoId" => $grupoConsumo->id]) }}">
+                                        Sair
+                                      </a>
+                                    </td>
                                 </tr>
                               @endif
                             @endforeach
@@ -82,7 +93,8 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('GrupoConsumoController@novo')}}">Novo</a>
+
+                    <a class="btn btn-success" href="{{ route("grupoConsumo.novo") }}">Novo</a>
                 </div>
             </div>
         </div>
@@ -92,7 +104,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -109,7 +121,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

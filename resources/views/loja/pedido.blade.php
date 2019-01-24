@@ -54,9 +54,9 @@
       </table>
     </div>
 
-    <a href="/" class='btn btn-primary'>Início</a>
-    <a href="/editarPedido/{{$pedido->id}}" class='btn btn-primary'>Editar Pedido</a>
-    <a href="/meusPedidos" class='btn btn-primary'>Meus Pedidos</a>
+    <a href="{{ route("home") }}" class='btn btn-primary'>Início</a>
+    <a href="{{ route("consumidor.pedido.editar", ["id" => $pedido->id]) }}" class='btn btn-primary'>Editar Pedido</a>
+    <a href="{{ route("consumidor.meusPedidos") }}" class='btn btn-primary'>Meus Pedidos</a>
 </div>
 
 
