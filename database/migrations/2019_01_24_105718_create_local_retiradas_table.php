@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventosTable extends Migration
+class CreateLocalRetiradasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,11 @@ class CreateEventosTable extends Migration
      */
     public function up()
     {
-        Schema::create('eventos', function (Blueprint $table) {
+        Schema::create('local_retiradas', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('nome');
             $table->integer('grupoconsumo_id')->unsigned();
             $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
-            $table->integer('coordenador_id')->unsigned();
-            $table->foreign('coordenador_id')->references('id')->on('users');
-            $table->date('data_inicio_pedidos');
-            $table->date('data_fim_pedidos');
-            $table->date('data_evento');
-            $table->string('hora_evento');
-            $table->boolean('estaAberto');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ class CreateEventosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('eventos');
+        Schema::dropIfExists('local_retiradas');
     }
 }

@@ -21,4 +21,8 @@ class GrupoConsumo extends Model
     public function produtores(){
         return $this->hasMany(Produtor::class);
     }
+
+    public function locaisRetirada(){
+        return $this->hasMany(LocalRetirada::class);
+    }
 }
