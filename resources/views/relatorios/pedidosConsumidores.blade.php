@@ -15,14 +15,14 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="6" style="text-align:center"><strong>Consumidor: {{$consumidor->name}}</strong></th>
+                        <th colspan="7" style="text-align:center"><strong>Consumidor: {{$consumidor->name}}</strong></th>
                     </tr>
                 </thead>
                 <tbody>
                     @php($total=0)
                     @foreach($pedidos as $pedido)
                         @if($pedido->consumidor_id == $consumidor->id)
-                            <tr><th colspan="6">Pedido #{{$pedido->id}}</th></tr>
+                            <tr><th colspan="7">Pedido #{{$pedido->id}}</th></tr>
                             <tr>
                                 <th>Qtd.</th>
                                 <th>Und. Venda</th>
@@ -38,7 +38,7 @@
                                 <?php
                                     $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                                     $unidadeVenda = \projetoGCA\UnidadeVenda::find($produto->unidadevenda_id);
-                                    $produtor = \projetoGCA\Produtor::find($produto->produtor_id);
+                                    $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
                                     $subtotal_item = $itemPedido->quantidade*$produto->preco;
                                     $subtotal = $subtotal + $subtotal_item;
                                 ?>
@@ -53,13 +53,13 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="6" style="text-align:left"><strong>Subtotal do Pedido:</strong> {{'R$ '.number_format($subtotal,2)}}</td>
+                                <td colspan="7" style="text-align:left"><strong>Subtotal do Pedido:</strong> {{'R$ '.number_format($subtotal,2)}}</td>
                                 @php($total = $total+$subtotal)
                             </tr>
                         @endif
                     @endforeach
                     <tr>
-                        <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$ '.number_format($total,2)}}</td>
+                        <td colspan="7" style="text-align:right"><strong>Valor total:</strong> {{'R$ '.number_format($total,2)}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -6,10 +6,6 @@
     <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Produtores
 @endsection
 
-@push('styles')
-    <link href="{{ asset('css/pesquisa.css') }}" rel="stylesheet">
-@endpush
-
 @section('content')
 <h1><p id="teste"></p></h1>
 <div class="container">
@@ -45,8 +41,13 @@
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produtor->endereco}}</td>
                             <td>{{ $produtor->telefone}}</td>
-                            <td><a class="btn btn-success"href="{{ action('ProdutorController@editar', $produtor->id) }}">Editar</a></td>
-                            <td><a class="btn btn-danger"href="{{ action('ProdutorController@remover',$produtor->id) }}">Remover</a></td>
+                            <td><a class="btn btn-success" href="{{ action('ProdutorController@editar', $produtor->id) }}">Editar</a></td>
+                            <td>
+                              <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de todos seus produtos. Continuar?')" href="{{ action('ProdutorController@remover',$produtor->id) }}">
+                                Remover
+                              </a>
+                            </td>
+                          </td>
                         </tr>
                         @endforeach
                     </table>

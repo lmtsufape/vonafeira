@@ -74,7 +74,7 @@ class AutorizacaoMiddleware
 
             if(in_array($request->route()->uri,$rotas_coordenador)){
 
-                $grupoConsumoIdNomes = ['id','grupoConsumoId','idGrupoConsumo'];
+                $grupoConsumoIdNomes = ['grupoConsumoId','id','idGrupoConsumo'];
                 $grupoConsumo = NULL;
                 foreach ($grupoConsumoIdNomes as $id){
                     if(\projetoGCA\GrupoConsumo::find($request->route($id)) != NULL){
