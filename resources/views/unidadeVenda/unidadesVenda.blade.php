@@ -38,8 +38,12 @@
                             <td>{{ $unidadesVenda->descricao }}</td>
                             <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
                             <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
-                            <td><a class="btn btn-success"href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
-                            <td><a class="btn btn-danger"href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">Remover</a></td>
+                            <td><a class="btn btn-success" href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
+                            <td>
+                              <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">
+                                Remover
+                              </a>
+                            </td>
                         </tr>
 
                         @endforeach
@@ -59,7 +63,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -76,7 +80,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

@@ -37,7 +37,7 @@
                             @foreach($itensPedido as $itemPedido)
                                 <?php
                                     $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
-                                    $unidadeVenda = \projetoGCA\UnidadeVenda::find($produto->unidadevenda_id);
+                                    $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
                                     $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
                                     $subtotal_item = $itemPedido->quantidade*$produto->preco;
                                     $subtotal = $subtotal + $subtotal_item;
