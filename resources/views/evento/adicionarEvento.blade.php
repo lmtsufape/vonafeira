@@ -20,20 +20,6 @@
                         {{ csrf_field() }}
                         <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo->id }}">
 
-                        <div class="form-group{{ $errors->has('local_retirada') ? ' has-error' : '' }}">
-                            <label for="local_retirada" class="col-md-4 control-label">Local de Retirada</label>
-                            <div class="col-md-6">
-
-                                <input id="local_retirada" type="text" class="form-control" name="local_retirada" value="{{ old('local_retirada') }}">
-                                
-                                @if ($errors->has('local_retirada'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('local_retirada') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group{{ $errors->has('data_evento') ? ' has-error' : '' }}">
                             <label for="data_evento" class="col-md-4 control-label">Data do Evento</label>
                             <div class="col-md-6">
@@ -55,6 +41,30 @@
                                 @if ($errors->has('hora_evento'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('hora_evento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('locais') ? ' has-error' : '' }}">
+                            <label for="locais" class="col-md-4 control-label">Locais</label>
+                            <div class="col-md-6">
+                                @if(old('locais',null) != NULL)
+                                    @foreach($locaisretirada as $local)
+                                        @if(in_array($local->id,old('locais')))
+                                            <input type="checkbox" checked name="locais[{{ $local->id }}]" value="{{ $local->id }}">{{ $local->nome }} <br>
+                                        @else
+                                            <input type="checkbox" name="locais[{{ $local->id }}]" value="{{ $local->id }}">{{ $local->nome }} <br>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @foreach($locaisretirada as $local)
+                                        <input type="checkbox" name="locais[{{ $local->id }}]" value="{{ $local->id }}">{{ $local->nome }} <br>
+                                    @endforeach
+                                @endif
+                                @if ($errors->has('locais'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('locais') }}</strong>
                                     </span>
                                 @endif
                             </div>

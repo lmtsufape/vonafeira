@@ -50,7 +50,7 @@
                     <a href="/unidadesVenda/{{$grupoConsumo->id}}" class="btn btn-primary">Unidades de Venda</a>
                     <a href="{{action('ConsumidorController@listar', $grupoConsumo->id)}}" class="btn btn-primary">Consumidores</a>
                     <a href="/compartilhar/{{$grupoConsumo->id}}" class="btn btn-primary">Compartilhar</a>
-
+                    <a href="{{ route('locaisretirada.listar', ['grupoconsumo_id' => $grupoConsumo->id]) }}" class="btn btn-primary">Locais de Retirada</a>
                 </div>
             </div>
         </div>

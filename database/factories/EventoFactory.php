@@ -40,6 +40,5 @@ $factory->define(\projetoGCA\Evento::class, function (Faker $faker) {
         'data_fim_pedidos' => $dataFimPedidos,
         'hora_evento' => $faker->time($format = 'H:i:s', $max = 'now'),
         'estaAberto' => True,
-        'local_retirada' => $faker->company,
     ];
 });

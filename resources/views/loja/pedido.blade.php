@@ -19,6 +19,7 @@
                 <th>Un. Venda</th>
                 <th>Preço Un.</th>
                 <th>Subtotal</th>
+                <th>Local de Retirada</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@
                     <td>{{$unidadeVenda->nome}}</td>
                     <td>{{'R$ '.number_format($produto->preco,2)}}</td>
                     <td>{{'R$ '.number_format($total_item,2)}}</td>
+                    <td>{{ $pedido->localretiradaevento->localretirada->nome }}
                 </tr>
 
             @endforeach
@@ -46,7 +48,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th colspan="7" style="text-align: right">Total: {{'R$ '.number_format($total,2)}}</th>
+                <th colspan="8" style="text-align: right">Total: {{'R$ '.number_format($total,2)}}</th>
             </tr>
         </tfoot>
       </table>

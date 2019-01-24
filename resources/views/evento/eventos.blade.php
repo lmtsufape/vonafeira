@@ -48,7 +48,7 @@
                               <th>Data de início dos pedidos</th>
                               <th>Data de fim dos pedidos</th>
                               <th>Aberto</th>
-                              <th>Local de retirada</th>
+                              <th>Locais de retirada</th>
                               <th>Pedidos</th>
                               <th>Ações</th>
 
@@ -68,7 +68,12 @@
                                   Não
                                 @endif
                               </td>
-                              <td>{{$evento->local_retirada}}</td>
+                              <td>
+                                @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
+                                @foreach($locais as $local)
+                                    {{$local->localretirada->nome}}
+                                @endforeach
+                              </td>
                               <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
                               @if($evento->estaAberto)
                                   <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>

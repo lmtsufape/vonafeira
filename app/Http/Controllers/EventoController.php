@@ -12,7 +12,11 @@ class EventoController extends Controller
 
     public function novo($idGrupoConsumo){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
-        return view('evento.adicionarEvento', [ 'grupoConsumo' => $grupoConsumo ]);
+        $locaisretirada = \projetoGCA\LocalRetirada::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+        return view('evento.adicionarEvento', [
+            'grupoConsumo' => $grupoConsumo,
+            'locaisretirada' => $locaisretirada,
+        ]);
     }
     /**
      * @Deprecated
@@ -76,7 +80,7 @@ class EventoController extends Controller
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
-            'local_retirada' => 'required'
+            'locais' => 'required',
         ]);
 
         if($validator->fails()){
@@ -110,19 +114,24 @@ class EventoController extends Controller
         $evento->grupoconsumo_id = $grupoConsumo->id;
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
-        $evento->local_retirada = $request->local_retirada;
-
-
+        
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
         // calcula a data limite dos pedidos de venda
         $intervalo = new DateInterval("P{$grupoConsumo->prazo_pedidos}D");
         $dataFimPedidos = new DateTime($evento->data_evento);
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
-
+        
         $evento->estaAberto = True;
-
         $evento->save();
+
+        foreach($request->locais as $local){
+            $localretirada_evento = new \projetoGCA\LocalRetiradaEvento();
+            $localretirada_evento->evento_id = $evento->id;
+            $localretirada_evento->localretirada_id = $local;
+            $localretirada_evento->save();
+        }
+
 
         return redirect()
                 ->action('EventoController@listar', $request->id_grupo_consumo)

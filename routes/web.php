@@ -101,5 +101,13 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos')->name('evento.relatorio.montagem');
 
     //Rotas para emails
-    Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar');;
+    Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar');
+
+    //Rotas para Locais de Retirada
+    Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/listar','LocalRetiradaController@listar')->name('locaisretirada.listar');
+    Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/adicionar','LocalRetiradaController@adicionar')->name('locaisretirada.adicionar');
+    Route::post('/locaisretirada/criar','LocalRetiradaController@criar')->name('locaisretirada.criar');
+    Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/editar/{localretirada_id}','LocalRetiradaController@editar')->name('locaisretirada.editar');
+    Route::post('/locaisretirada/atualizar','LocalRetiradaController@atualizar')->name('locaisretirada.atualizar');
+    Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/remover/{localretirada_id}','LocalRetiradaController@remover')->name('locaisretirada.remover');
 });
