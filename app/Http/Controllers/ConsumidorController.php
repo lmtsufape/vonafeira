@@ -67,7 +67,7 @@ class ConsumidorController extends Controller
         return view("/home");
     }
 
-    public function selecionarGrupo(){
+    public function entrarGrupo(){
 
         $gruposConsumoTodos = GrupoConsumo::all();
 
@@ -77,7 +77,7 @@ class ConsumidorController extends Controller
 
         $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoParticipante);
 
-        return view('consumidor.selecionarGrupo',
+        return view('consumidor.entrarGrupo',
                    ['gruposConsumo' => $gruposConsumo]);
     }
 
