@@ -69,7 +69,6 @@ class ProdutorController extends Controller
 
       $grupoConsumo = $produtor->grupoconsumo_id;
 
-
       return redirect()
               ->action('ProdutorController@listar', $grupoConsumo)
               ->withInput();

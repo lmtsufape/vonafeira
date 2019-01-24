@@ -65,6 +65,7 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/meusPedidos', 'ConsumidorController@pedidos');
     Route::get('/meusPedidos/{pedido_id}', 'ConsumidorController@itensPedido');
     Route::get('/editarPedido/{id}','ConsumidorController@editarPedido');
+    Route::get('/cancelarPedido/{id}', "ConsumidorController@cancelarPedido");
     Route::post('/atualizarPedido', "ConsumidorController@atualizarPedido");
     Route::get('/removerProdutoPedido/{idItemPedido}','ConsumidorController@removerPedido');
 

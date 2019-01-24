@@ -26,7 +26,7 @@
                                 <th>Número de itens</th>
                                 <th>Data</th>
                                 <th>Total</th>
-                                <th colspan="2">Ações</th>
+                                <th colspan="3">Ações</th>
                             </tr>
                             @foreach($pedidos as $pedido)
                                 <?php
@@ -46,11 +46,13 @@
                                     <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
 
                                     @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
-                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
+                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a> </td>
                                     @if($evento->estaAberto)
-                                      <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a>
+                                      <td> <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a> </td>
+                                      <td> <a class="btn btn-danger" onclick="return confirm('Confirmar cancelamento de pedido?')" href="/cancelarPedido/{{$pedido->id}}">Cancelar</a> </td>
                                     @else
-                                      <button type="button" class="btn btn-warning" disabled>Editar</button>
+                                      <td> <button type="button" class="btn btn-warning" disabled>Editar</button> </td>
+                                      <td> <button type="button" class="btn btn-warning" disabled>Cancelar</button> </td>
                                     @endif
                                 </td>
 

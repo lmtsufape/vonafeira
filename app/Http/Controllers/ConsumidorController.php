@@ -156,4 +156,18 @@ class ConsumidorController extends Controller
       return redirect("/meusPedidos");
     }
 
+    public function cancelarPedido($idPedido) {
+        $pedido = \projetoGCA\Pedido::find($idPedido);
+
+        $itens = \projetoGCA\ItemPedido::where('pedido_id','=',$idPedido)->get();
+
+        foreach ($itens as $item) {
+          $item->delete();
+        }
+
+        $pedido->delete();
+
+        return back()
+                ->withInput();
+    }
 }

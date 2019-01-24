@@ -41,7 +41,7 @@
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produtor->endereco}}</td>
                             <td>{{ $produtor->telefone}}</td>
-                            <td><a class="btn btn-success" href="{{ action('ProdutorController@editar', $produtor->id) }}">Editar</a></td>
+                            <td><a class="btn btn-warning" href="{{ action('ProdutorController@editar', $produtor->id) }}">Editar</a></td>
                             <td>
                               <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de produtos cadastrados com este produtor. Continuar?')" href="{{ action('ProdutorController@remover',$produtor->id) }}">
                                 Remover

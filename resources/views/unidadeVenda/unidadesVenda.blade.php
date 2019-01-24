@@ -38,7 +38,7 @@
                             <td>{{ $unidadesVenda->descricao }}</td>
                             <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
                             <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
-                            <td><a class="btn btn-success" href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
+                            <td><a class="btn btn-warning" href="/editarUnidadeVenda/{{$grupoConsumo->id}}/{{$unidadesVenda->id}}">Editar</a></td>
                             <td>
                               <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ action('UnidadeVendaController@remover',$unidadesVenda->id) }}">
                                 Remover
