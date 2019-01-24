@@ -104,7 +104,7 @@
         }
 
 
-        
+
 
     </style>
 
@@ -122,17 +122,18 @@
     </div>
 
     <!-- Barra de Logos -->
-    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 100px; padding: 10px 0 10px 0">
+    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 200px; padding: 10px 0 10px 0">
         <ul id="logos" style="list-style:none;">
             <li style="margin-right:140px; margin-left:110px; border-right:1px">
-                <a href="/home">Vô Na Feira</a>
-                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:10px " height="70" align = "right" ></a>
+                <a href="{{ route("home") }}"><img src="{{asset('images/vonafeira.png')}}" style = "margin-left: 8px; margin-top:5px " height="170px" align = "left" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
-                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px" height="80" width="70" align = "right" ></a>
+                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:65px " height="80" align = "right" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
-                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px " height="80" width="70" align = "right"></a>
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px; margin-top: 65px" height="80" width="70" align = "right" ></a>
+
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px; margin-top: 65px " height="80" width="70" align = "right"></a>
             </li>
         </ul>
     </div>
@@ -154,7 +155,7 @@
 
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
-                            <li><a class="menu-principal" href="/home">Início</a></li>
+                            <li><a class="menu-principal" href="{{ route("home") }}">Início</a></li>
                         @endif
                     </ul>
 
@@ -193,7 +194,7 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul style="" class="dropdown-menu" role="menu">
-                                    <li><a href="/meusPedidos">Meus Pedidos</a></li>
+                                    <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
