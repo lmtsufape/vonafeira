@@ -127,7 +127,7 @@ class GrupoConsumoController extends Controller
 
             $gruposConsumoParticipante = \projetoGCA\GrupoConsumo::whereHas('consumidores', function($query){
                 $query->where('user_id', '=', Auth::user()->id);
-            })->get();
+            })->orderBy('name')->get();
 
             return view("grupoConsumo.gruposConsumo", ['gruposConsumo' => $gruposConsumo,
                                                        'gruposConsumoParticipante' => $gruposConsumoParticipante]);

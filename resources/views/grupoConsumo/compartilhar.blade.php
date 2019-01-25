@@ -23,7 +23,7 @@
                                     Para compartilhar seu grupo de consumo com outras pessoas, {{$coordenador->name}},
                                     apenas envie o seguinte link para elas:<br>
                                     <div style="text-align: center">
-                                        <input type="text" style="text-align: center" size="40" value="{{$app->make('url')->to('/compartilhar/')}}/{{$grupoConsumo->id}}" readonly></input>
+                                        <input type="text" style="text-align: center" size="40" value="{{ route('compartilhar.get',$grupoConsumo->id) }}" readonly></input>
                                     </div>
                                     <br>
 
