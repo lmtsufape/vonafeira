@@ -3,10 +3,12 @@
 @section('titulo','Adicionar Evento')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/eventos/{{$grupoConsumo->id}}">Listar Eventos</a> > Adicionar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Listar Eventos</a> >
+    Adicionar
 @endsection
-
-
 
 @section('content')
 <div class="container">
@@ -16,7 +18,7 @@
                 <div class="panel-heading">Novo Evento</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{action('EventoController@cadastrar')}}">
+                    <form class="form-horizontal" method="POST" action="{{ route("evento.cadastrar") }}">
                         {{ csrf_field() }}
                         <input type="hidden" class="form-control" name="id_grupo_consumo" value="{{ $grupoConsumo->id }}">
 
@@ -25,7 +27,7 @@
                             <div class="col-md-6">
 
                                 <input id="data_evento" type=date class="form-control" name="data_evento" value="{{ old('data_evento') }}">
-                                
+
                                 @if ($errors->has('data_evento'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('data_evento') }}</strong>

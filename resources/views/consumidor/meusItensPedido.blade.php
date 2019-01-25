@@ -3,8 +3,8 @@
 @section('titulo','Listagem de Pedido')
 
 @section('navbar')
-    <a href="/home">Início</a> >
-    <a href="/meusPedidos">Meus Pedidos</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a> >
     Itens do Pedido
 @endsection
 

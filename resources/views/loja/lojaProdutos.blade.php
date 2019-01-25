@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('navbar')
-  <a href="/home">Início</a> >
-  <a href="/loja">Loja</a> > Evento em: {{$grupoConsumo->name}}
+  <a href="{{ route("home") }}">Início</a> >
+  <a href="{{ route("loja") }}">Loja</a> >
+  Evento em: {{$grupoConsumo->name}}
 @endsection
 
 @section('titulo','Loja')
@@ -14,7 +15,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Produtos</div>
-                <form class="form-horizontal" method="POST" action="{{action('PedidoController@confirmar')}}">
+                <form class="form-horizontal" method="POST" action="{{ route("carrinho") }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="panel-body">
                         @if (\Session::has('fail'))
@@ -31,7 +32,7 @@
                         @else
                           <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento->id }}" >
                           <input id="grupo_consumo_id" type="hidden" class="form-control" name="grupo_consumo_id" value="{{ $grupoConsumo->id }}" >
-                          
+
                     <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
 
                           <div id="tabela" class="table-responsive">
@@ -69,7 +70,7 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
-                                <a href="/loja" class="btn btn-danger">Voltar</a>
+                                <a href="{{ route("loja") }}" class="btn btn-danger">Voltar</a>
                                 <button type="submit" class="btn btn-primary">
                                     Adicionar ao Carrinho
                                 </button>
@@ -86,7 +87,7 @@
 <script type="text/javascript">
     function buscar() {
 
-      // Declare variables 
+      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("termo");
       filter = input.value.toUpperCase();
@@ -103,7 +104,7 @@
           } else {
             tr[i].style.display = "none";
           }
-        } 
+        }
       }
     }
 </script>

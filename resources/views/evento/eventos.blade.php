@@ -3,7 +3,10 @@
 @section('titulo','Lista de Eventos')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Eventos
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Listar Eventos
 @endsection
 
 @section('content')
@@ -74,9 +77,17 @@
                                     {{$local->localretirada->nome}}
                                 @endforeach
                               </td>
-                              <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+                              <td>
+                                <a class="btn btn-primary" href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}">
+                                  Visualizar
+                                </a>
+                              </td>
                               @if($evento->estaAberto)
-                                  <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>
+                                  <td>
+                                    <a class="btn btn-danger" onclick="return confirm('Uma vez fechado um evento não pode ser reaberto. Confirmar fechamento do evento?')" href="{{ route("evento.fechar", ["eventoId" => $evento->id]) }}">
+                                      Fechar
+                                    </a>
+                                  </td>
                               @else
                                   <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
                               @endif
@@ -90,7 +101,7 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo->id)}}">Novo</a>
+                    <a class="btn btn-success" href="{{ route("evento.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Novo</a>
                 </div>
             </div>
         </div>

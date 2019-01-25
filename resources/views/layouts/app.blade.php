@@ -165,27 +165,27 @@
                         @if(Auth::check())
 
                         <li class="dropdown">
-                                <a href="/gruposConsumo" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="{{ route("grupoConsumo.listar") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/gruposConsumo">Meus Grupos de Consumo</a>
+                                        <a href="{{ route("grupoConsumo.listar") }}">Meus Grupos de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/entrarGrupo">Entrar em Grupo de Consumo</a>
+                                        <a href="{{ route("consumidor.grupo.entrar") }}">Entrar em Grupo de Consumo</a>
                                     </li>
                                 </ul>
                             </li>
 
                         <li class="dropdown">
-                            <a href="/loja" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="{{ route("loja") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Loja <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="/loja">Comprar</a>
+                                    <a href="{{ route("loja") }}">Comprar</a>
                                 </li>
                             </ul>
                         </li>

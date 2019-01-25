@@ -3,11 +3,11 @@
 @section('titulo','Listagem de Pedidos')
 
 @section('navbar')
-    <a href="/home">Início</a> >
-    <a href="/gruposConsumo">Grupos de Consumo</a> >
-    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
-    <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> >
-    <a href="{{action('EventoController@pedidos', $evento->id)}}"> Pedidos do evento {{$evento->id}}</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Eventos</a> >
+    <a href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}"> Pedidos do Evento {{$evento->id}}</a> >
     Itens do Pedido
 @endsection
 

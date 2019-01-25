@@ -3,7 +3,10 @@
 @section('titulo','Lista de Produtores')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Produtores
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Listar Produtores
 @endsection
 
 @section('content')
@@ -41,9 +44,13 @@
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produtor->endereco}}</td>
                             <td>{{ $produtor->telefone}}</td>
-                            <td><a class="btn btn-warning" href="{{ action('ProdutorController@editar', $produtor->id) }}">Editar</a></td>
                             <td>
-                              <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de produtos cadastrados com este produtor. Continuar?')" href="{{ action('ProdutorController@remover',$produtor->id) }}">
+                              <a class="btn btn-warning" href="{{ route("produtor.editar", ["idProdutor" => $produtor->id]) }}">
+                                Editar
+                              </a>
+                            </td>
+                            <td>
+                              <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de produtos cadastrados com este produtor. Continuar?')" href="{{ route("produtor.remover", ["idProdutor" => $produtor->id]) }}">
                                 Remover
                               </a>
                             </td>
@@ -56,7 +63,9 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('ProdutorController@novo', $grupoConsumo->id)}}">Novo</a>
+                    <a class="btn btn-success" href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
+                      Novo
+                    </a>
                 </div>
             </div>
         </div>

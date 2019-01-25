@@ -3,7 +3,7 @@
 @section('titulo','Meus Pedidos')
 
 @section('navbar')
-    <a href="/home">Início</a> > Meus Pedidos
+    <a href="{{ route("home") }}">Início</a> > Meus Pedidos
 @endsection
 
 @section('content')
@@ -46,10 +46,18 @@
                                     <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
 
                                     @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
-                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a> </td>
+                                      <td><a class="btn btn-primary" href="{{ route("consumidor.pedido.itens", ["pedido_id" => $pedido->id]) }}">Itens</a> </td>
                                     @if($evento->estaAberto)
-                                      <td> <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a> </td>
-                                      <td> <a class="btn btn-danger" onclick="return confirm('Confirmar cancelamento de pedido?')" href="/cancelarPedido/{{$pedido->id}}">Cancelar</a> </td>
+                                      <td>
+                                         <a class="btn btn-warning" href="{{ route("consumidor.pedido.editar", ["id" => $pedido->id]) }}">
+                                           Editar
+                                         </a>
+                                      </td>
+                                      <td>
+                                        <a class="btn btn-danger" onclick="return confirm('Confirmar cancelamento de pedido?')" href="{{ route("consumidor.pedido.cancelar", ["id" => $pedido->id]) }}">
+                                          Cancelar
+                                        </a>
+                                      </td>
                                     @else
                                       <td> <button type="button" class="btn btn-warning" disabled>Editar</button> </td>
                                       <td> <button type="button" class="btn btn-warning" disabled>Cancelar</button> </td>

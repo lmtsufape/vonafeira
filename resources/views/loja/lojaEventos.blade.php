@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('navbar')
-    <a href="/home">Início</a> > Loja
+    <a href="{{ route("home") }}">Início</a> > Loja
 @endsection
 @section('titulo','Loja')
 
@@ -46,12 +46,17 @@
                                 <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td></td>
                                 <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td></td>
                                 <td>{{$evento->local_retirada}}</td>
-                                <td><a class="btn btn-success" href="/loja/evento/{{$evento->id}}">Comprar</a></td>
+
+                                <td>
+                                  <a class="btn btn-success" href="{{ route("loja.evento", ["id" => $evento->id]) }}">
+                                    Comprar
+                                  </a>
+                                </td>
 
                               </tr>
 
                             </table>
-                          </div>  
+                          </div>
                         @endforeach
 
                       @endforeach

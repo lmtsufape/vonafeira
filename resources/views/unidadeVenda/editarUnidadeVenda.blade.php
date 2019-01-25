@@ -3,10 +3,10 @@
 @section('titulo','Editar Unidade de Venda')
 
 @section('navbar')
-    <a href="/">Início</a> >
-    <a href="/gruposConsumo">Grupos de Consumo</a> >
-    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
-    <a href="/unidadesVenda/{{$grupoConsumo->id}}">Listar Unidade de Venda</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("unidadeVenda.listar", ["grupoConsumoId" => $grupoConsumo->id]) }}">Listar Unidades de Venda</a> >
     Editar: {{$unidadeVenda->nome}}
 @endsection
 
@@ -18,7 +18,7 @@
                 <div class="panel-heading">Editar Unidade de Venda</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/atualizarUnidadeVenda">
+                    <form class="form-horizontal" method="POST" action="{{ route("unidadeVenda.atualizar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
                             <div class="col-md-6">

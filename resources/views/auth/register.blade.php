@@ -17,7 +17,7 @@ Enable = function(val)
     }else{
         sbmt.disabled = true;
     }
-}    
+}
 
 </script>
 
@@ -100,7 +100,7 @@ Enable = function(val)
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" onchange="Enable(this)" id="termos">Li e aceito os <a href="/termos" target="_blank">termos de uso.</a></input>
+                                        <input type="checkbox" onchange="Enable(this)" id="termos" >Li e aceito os <a href="{{ route("termos") }}" target="_blank">termos de uso.</a></input>
                                     </label>
                                 </div>
                             </div>

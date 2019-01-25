@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('navbar')
-  <a href="/home">Início</a> >
-  <a href="/loja">Loja</a> >
-  <a href="/loja/evento/{{$evento}}">Evento em: {{$grupoConsumo->name}}</a> > Carrinho
+  <a href="{{ route("home") }}">Início</a> >
+  <a href="{{ route("loja") }}">Loja</a> >
+  <a href="{{ route("loja.evento", ["id" => $evento]) }}">Evento em: {{$grupoConsumo->name}}</a> >
+  Carrinho
 @endsection
 
 @section('titulo','Carrinho')
@@ -14,7 +15,7 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>Finalizar Pedido</strong></div>
-                <form class="form-horizontal" method="POST" action="{{action('PedidoController@finalizar')}}">
+                <form class="form-horizontal" method="POST" action="{{ route("pedido.finalizar") }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >
                     <input id="grupo_id" type="hidden" class="form-control" name="grupo_id" value="{{ $grupoConsumo->id }}" >

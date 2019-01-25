@@ -3,10 +3,11 @@
 @section('titulo','Cadastro de Unidade de Venda')
 
 @section('navbar')
-    <a href="/home">Início</a> >
-    <a href="/gruposConsumo">Grupos de Consumo</a> >
-    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
-    <a href="/unidadesVenda/{{$grupoConsumo->id}}">Listar Unidade de Venda</a> > Adicionar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("unidadeVenda.listar", ["grupoConsumoId" => $grupoConsumo->id]) }}">Listar Unidades de Venda</a> >
+    Adicionar
 @endsection
 
 @section('content')
@@ -17,7 +18,7 @@
                 <div class="panel-heading">Nova Unidade de Venda</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarUnidadeVenda">
+                    <form class="form-horizontal" method="POST" action="{{ route("unidadeVenda.cadastrar") }}">
                         {{ csrf_field() }}
 
                         <input id="grupoConsumoId" type="number" name="grupoConsumoId" value="{{$grupoConsumo->id}}" hidden>
