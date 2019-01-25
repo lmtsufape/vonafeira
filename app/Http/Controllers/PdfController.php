@@ -89,7 +89,7 @@ class PdfController extends Controller
 
         $consumidores = array();
         foreach ($pedidos as $pedido) {
-            $consumidor = \projetoGCA\User::find($pedido->consumidor_id);
+            $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
             if(!(in_array($consumidor,$consumidores))){
                 array_push($consumidores,$consumidor);
             }

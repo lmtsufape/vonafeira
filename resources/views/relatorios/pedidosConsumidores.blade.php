@@ -15,14 +15,14 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="7" style="text-align:center"><strong>Consumidor: {{$consumidor->name}}</strong></th>
+                        <th colspan="7" style="text-align:center">Consumidor: {{ $consumidor->name }}</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php($total=0)
                     @foreach($pedidos as $pedido)
-                        @if($pedido->consumidor_id == $consumidor->id)
-                            <tr><th colspan="7">Pedido #{{$pedido->id}}</th></tr>
+                        @if($pedido->consumidor->user_id == $consumidor->id)
+                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento->localretirada->nome}}</th></tr>
                             <tr>
                                 <th>Qtd.</th>
                                 <th>Und. Venda</th>

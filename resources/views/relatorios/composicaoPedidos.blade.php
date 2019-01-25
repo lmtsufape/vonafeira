@@ -36,7 +36,7 @@
                             $valor_item = $itemPedido->quantidade * $produto->preco;
                             $pedido = $itemPedido->pedido;
                             $consumidor = $pedido->consumidor->usuario;
-                            $local_retirada = $pedido->evento->local_retirada;
+                            $local_retirada = $pedido->localretiradaevento->localretirada->nome;
                         ?>
 
                         <tr>

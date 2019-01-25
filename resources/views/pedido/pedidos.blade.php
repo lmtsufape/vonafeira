@@ -27,9 +27,9 @@
                         <th>Data</th>
                         <th colspan="2">Ações</th>
                     </tr>
-                    @foreach($pedidos as $pedido)
+                    @foreach($pedidos as $pedido)   
                         <?php
-                            $user = \projetoGCA\User::find($pedido->consumidor_id);
+                            $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
                             $quantidade = 0;
                             $valor_pedido = 0;
                             $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
@@ -41,7 +41,7 @@
                         ?>
                         <tr>
                             <td>{{ $pedido->id }}</td>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $consumidor->name }}</td>
                             <td>{{ $quantidade }}</td>
                             <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
                             <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
