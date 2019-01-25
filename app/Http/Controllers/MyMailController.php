@@ -12,9 +12,8 @@ class MyMailController extends Controller
     public function emailCompartilhar(Request $request){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($request->grupoConsumoId);
         $coordenador = \projetoGCA\User::find($grupoConsumo->coordenador_id);
-        $url_base = url("/");
-        $url_diretiva = "/compartilhar/".$grupoConsumo->id;
-        $link = $url_base.$url_diretiva;
+
+        $link = route('compartilhar.get',$grupoConsumo->id);
 
         $consumidores = $grupoConsumo->consumidores;
         foreach($consumidores as $consumidor){
