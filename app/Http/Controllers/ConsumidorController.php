@@ -57,7 +57,12 @@ class ConsumidorController extends Controller
     public function listar($idGrupoConsumo){
         if(Auth::check()){
             $grupoConsumo = GrupoConsumo::find($idGrupoConsumo);
-            $consumidores = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->orderBy('id')->get();
+            $consumidores = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->get();
+            $users_id = array();
+            foreach($consumidores as $consumidor){
+                array_push($users_id,$consumidor->user_id);
+            }
+            $consumidores = User::whereIn('id',$users_id)->orderBy('name')->get();
             return view(
                 "consumidor.consumidores",
                 ['consumidores' => $consumidores,

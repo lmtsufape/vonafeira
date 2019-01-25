@@ -31,7 +31,7 @@
                         </tr>
                         @foreach ($consumidores as $consumidor)
                         <tr>
-                            <td>{{ $consumidor->usuario->name }}</td>
+                            <td>{{ $consumidor->name }}</td>
                         @endforeach
                     </table>
                   </div>
