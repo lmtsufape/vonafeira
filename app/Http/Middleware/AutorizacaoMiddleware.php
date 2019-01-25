@@ -40,7 +40,12 @@ class AutorizacaoMiddleware
                 'gerenciar/{id}',
                 //Evento
                 'adicionarEvento/{idGrupoConsumo}',
-                'eventos/{idGrupoConsumo}'
+                'eventos/{idGrupoConsumo}',
+                //Locais de Retirada
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/listar',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/adicionar',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/editar/{localretirada_id}',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/remover/{localretirada_id}'
             ];
 
             $rotas_pedidos = [
@@ -77,7 +82,7 @@ class AutorizacaoMiddleware
 
             if(in_array($request->route()->uri,$rotas_coordenador)){
 
-                $grupoConsumoIdNomes = ['grupoConsumoId','id','idGrupoConsumo'];
+                $grupoConsumoIdNomes = ['grupoConsumoId','id','idGrupoConsumo','grupoconsumo_id'];
                 $grupoConsumo = NULL;
                 foreach ($grupoConsumoIdNomes as $id){
                     if(\projetoGCA\GrupoConsumo::find($request->route($id)) != NULL){
