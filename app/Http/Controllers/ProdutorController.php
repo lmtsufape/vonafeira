@@ -16,7 +16,7 @@ class ProdutorController extends Controller
       if(\Auth::check()){
           $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
 
-          $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+          $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->orderBy('nome')->get();
 
           return view("produtor.produtores", ['produtores' => $produtores, 'grupoConsumo' => $grupoConsumo]);
       }

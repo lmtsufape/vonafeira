@@ -42,7 +42,7 @@ class UnidadeVendaController extends Controller
 
     public function listar ($grupoConsumoId) {
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
-        $unidadesVenda = \projetoGCA\UnidadeVenda::where("grupoConsumoId","=",$grupoConsumo->id)->get();
+        $unidadesVenda = \projetoGCA\UnidadeVenda::where("grupoConsumoId","=",$grupoConsumo->id)->orderBy('nome')->get();
         return view(
             "unidadeVenda.unidadesVenda",
             ['listaUnidades' => $unidadesVenda,

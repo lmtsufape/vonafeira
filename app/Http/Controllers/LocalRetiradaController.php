@@ -9,7 +9,7 @@ class LocalRetiradaController extends Controller
 {
     public function listar($grupoconsumo_id){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoconsumo_id);
-        $locaisRetirada = \projetoGCA\LocalRetirada::where('grupoconsumo_id','=',$grupoConsumo->id)->get();
+        $locaisRetirada = \projetoGCA\LocalRetirada::where('grupoconsumo_id','=',$grupoConsumo->id)->orderBy('nome')->get();
 
         return view(
             'localretirada.listar', [
