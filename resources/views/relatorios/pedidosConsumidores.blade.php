@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/relatorios.css') }}" rel="stylesheet">
-    <title>Relatório de Composição de Pedidos.pdf</title>
+    <title>Relatório de Pedidos para o Consumidor.pdf</title>
 </head>
 <body>
     <h3>Relatório de Pedidos para o Consumidor - Emitido em {{$data}}</h3>
@@ -22,7 +22,7 @@
                     @php($total=0)
                     @foreach($pedidos as $pedido)
                         @if($pedido->consumidor->user_id == $consumidor->id)
-                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento->localretirada->nome}}</th></tr>
+                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}</th></tr>
                             <tr>
                                 <th>Qtd.</th>
                                 <th>Und. Venda</th>

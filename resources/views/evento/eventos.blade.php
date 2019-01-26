@@ -74,7 +74,7 @@
                               <td>
                                 @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
                                 @foreach($locais as $local)
-                                    {{$local->localretirada->nome}}
+                                    {{$local->localretirada()->withTrashed()->first()->nome}}
                                 @endforeach
                               </td>
                               <td>
