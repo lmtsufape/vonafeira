@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Painel</div>
+                <div class="panel-heading">Início</div>
 
                 <div class="panel-body">
                     @if (session('status'))
@@ -21,7 +21,7 @@
                     @endif
 
                     <div class="panel-footer">
-                        <div class="form-group">
+                        <div class="form-group" align="center">
                             <a href="{{ route("grupoConsumo.listar") }}" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>
                             <a href="{{ route("consumidor.grupo.entrar") }}" class="btn btn-primary " role="button" aria-pressed="true">Entrar em grupo de consumo</a>
                             <a href="{{ route("loja") }}" class="btn btn-primary" role="button" aria-pressed="true">Comprar</a>

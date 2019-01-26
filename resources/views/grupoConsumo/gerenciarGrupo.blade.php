@@ -17,9 +17,15 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                   Grupo de Consumo: <strong>{{$grupoConsumo->name}}</strong>
+                  <a href="{{ route("compartilhar.get", ["grupoConsumoId" => $grupoConsumo->id]) }}">
+                    <img src="{{asset('images/share.png')}}" style = "margin-left: 15px; margin-right: -10px " height="25" width="25" align = "right">
+                  </a>
+
                   <a href="{{ route("grupoConsumo.editar", ["id" => $grupoConsumo->id]) }}">
                     <img src="{{asset('images/edit.png')}}" style = "margin-left: 15px; margin-right: -10px " height="25" width="25" align = "right">
                   </a>
+
+
                 </div>
 
                 <div class="panel-body">
@@ -44,13 +50,14 @@
                     </div>
                     <hr>
 
-                    <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Eventos</a>
-                    <a href="{{ route("produtor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Produtores</a>
-                    <a href="{{ route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Produtos</a>
-                    <a href="{{ route("unidadeVenda.listar", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">Unidades de Venda</a>
-                    <a href="{{ route("consumidor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Consumidores</a>
-                    <a href="{{ route("compartilhar.get", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">Compartilhar</a>
-                    <a href="{{ route("locaisretirada.listar", ["grupoconsumo_id" => $grupoConsumo->id]) }}" class="btn btn-primary">Locais de Retirada</a>
+                    <center>
+                      <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Eventos</a>
+                      <a href="{{ route("produtor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Produtores</a>
+                      <a href="{{ route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Produtos</a>
+                      <a href="{{ route("unidadeVenda.listar", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">Unidades de Venda</a>
+                      <a href="{{ route("consumidor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">Consumidores</a>
+                      <a href="{{ route("locaisretirada.listar", ["grupoconsumo_id" => $grupoConsumo->id]) }}" class="btn btn-primary">Locais de Retirada</a>
+                    </center>
                 </div>
             </div>
         </div>
