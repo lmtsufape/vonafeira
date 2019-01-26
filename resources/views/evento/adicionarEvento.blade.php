@@ -49,6 +49,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('locais') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('input_outro') ? ' has-error' : '' }}">
                             <label for="locais" class="col-md-4 control-label">Locais</label>
                             <div class="col-md-6">
                                 @if(old('locais',null) != NULL)
@@ -64,12 +65,21 @@
                                         <input type="checkbox" name="locais[{{ $local->id }}]" value="{{ $local->id }}">{{ $local->nome }} <br>
                                     @endforeach
                                 @endif
+                                <input type="checkbox" name="checkbox_outro" onchange="Enable(this)">Outro<br>
+                                <input id="input" name="input_outro" type="text" style="display: none">
+                                
+                                @if ($errors->has('input_outro'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('input_outro') }}</strong>
+                                    </span>
+                                @endif
                                 @if ($errors->has('locais'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('locais') }}</strong>
                                     </span>
                                 @endif
                             </div>
+                        </div>
                         </div>
 
                         <div class="form-group">
@@ -86,4 +96,17 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    Enable = function(checkbox){
+        var input = document.getElementById('input')
+
+        if(checkbox.checked == true){
+            input.style.display = 'block';
+        }else{
+            input.style.display = 'none';
+        }
+    }
+</script>
+
 @endsection

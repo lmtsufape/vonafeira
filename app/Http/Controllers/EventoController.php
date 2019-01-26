@@ -77,10 +77,16 @@ class EventoController extends Controller
 
     public function cadastrar(Request $request){
 
+        //dd($request->checkbox_outro);
+
+
+
+
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
-            'locais' => 'required',
+            'locais' => 'required_without:checkbox_outro',
+            'input_outro' => 'required_if:checkbox_outro,on',
         ]);
 
         if($validator->fails()){
@@ -121,17 +127,34 @@ class EventoController extends Controller
         $dataFimPedidos = new DateTime($evento->data_evento);
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
-        
+
+
+
+
         $evento->estaAberto = True;
         $evento->save();
 
-        foreach($request->locais as $local){
+        if($request->input_outro != NULL){
+            $localretirada = new \projetoGCA\LocalRetirada();
+            $localretirada->nome = $request->input_outro;
+            $localretirada->grupoconsumo_id = $request->id_grupo_consumo;
+            $localretirada->save();
+
             $localretirada_evento = new \projetoGCA\LocalRetiradaEvento();
             $localretirada_evento->evento_id = $evento->id;
-            $localretirada_evento->localretirada_id = $local;
+            $localretirada_evento->localretirada_id = $localretirada->id;
             $localretirada_evento->save();
+
         }
 
+        if($request->locais != NULL){
+            foreach($request->locais as $local){
+                $localretirada_evento = new \projetoGCA\LocalRetiradaEvento();
+                $localretirada_evento->evento_id = $evento->id;
+                $localretirada_evento->localretirada_id = $local;
+                $localretirada_evento->save();
+            }
+        }
 
         return redirect()
                 ->action('EventoController@listar', $request->id_grupo_consumo)
