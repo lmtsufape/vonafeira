@@ -25,17 +25,18 @@
                     <table id="tabela" class="table table-hover">
                         <tr>
                             <th>Nome</th>
-                            <th>Ações</th>
+                            <th colspan="2">Ações</th>
                         </tr>
 
                         @foreach ($locaisRetirada as $local)
                         <tr>
                             <td>{{ $local->nome}}</td>
                             <td>
-                                <a class="btn btn-warning" href="{{ route('locaisretirada.editar',[$grupoConsumo->id,$local->id]) }}">Editar</a>
-                                <a class="btn btn-danger" href="{{ route('locaisretirada.remover',[$grupoConsumo->id,$local->id]) }}" onclick="return confirm('Confirmar remoção de {{ $local->nome}}?')">Remover</a>
-                              </a>
-                          </td>
+                              <a class="btn btn-warning" href="{{ route('locaisretirada.editar',[$grupoConsumo->id,$local->id]) }}">Editar</a>
+                            </td>
+                            <td>
+                              <a class="btn btn-danger" href="{{ route('locaisretirada.remover',[$grupoConsumo->id,$local->id]) }}" onclick="return confirm('Confirmar remoção de {{ $local->nome}}?')">Remover</a>
+                            </td>
                         </tr>
                         @endforeach
                     </table>
