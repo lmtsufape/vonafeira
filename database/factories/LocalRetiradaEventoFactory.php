@@ -13,12 +13,16 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(\projetoGCA\LocalRetirada::class, function (Faker $faker) {
+$factory->define(\projetoGCA\LocalRetiradaEvento::class, function (Faker $faker) {
 
     static $increment = 1;
 
+    // $localId = DB::table('local_retiradas')
+    //                     ->where('grupoconsumo_id', '=', $increment)
+    //                     ->first()->id;
+
     return [
-        'nome' => $faker->streetAddress,
-        'grupoconsumo_id' => $increment++,
+        'evento_id' => $increment++,
+        'localretirada_id' => $increment++,
     ];
 });

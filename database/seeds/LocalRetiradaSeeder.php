@@ -11,6 +11,19 @@ class LocalRetiradaSeeder extends Seeder
      */
     public function run()
     {
-        factory(projetoGCA\Pedido::class, 50)->create();        
+        for ($i=1; $i <= 10; $i++) {
+
+          factory(\projetoGCA\LocalRetirada::class)->create([
+              'grupoconsumo_id' => $i,
+          ]);
+
+          factory(\projetoGCA\LocalRetirada::class)->create([
+              'grupoconsumo_id' => $i,
+          ]);
+
+          factory(\projetoGCA\LocalRetirada::class)->create([
+              'grupoconsumo_id' => $i,
+          ]);
+        }
     }
 }

@@ -18,8 +18,9 @@ class DatabaseSeeder extends Seeder
       $this->call(ProdutoSeeder::class);
       $this->call(EventoSeeder::class);
       $this->call(ConsumidorSeeder::class);
-      //$this->call(PedidoSeeder::class);
-      //$this->call(ItemPedidoSeeder::class);
-      //$this->call(LocalRetiradaSeeder::class);
+      $this->call(LocalRetiradaSeeder::class);
+      $this->call(LocalRetiradaEventoSeeder::class);
+      $this->call(PedidoSeeder::class);
+      $this->call(ItemPedidoSeeder::class);
     }
 }

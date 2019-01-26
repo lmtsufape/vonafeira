@@ -25,12 +25,19 @@ $factory->define(\projetoGCA\Pedido::class, function (Faker $faker) {
                   ->where('grupoconsumo_id', '=', $consumidor->grupo_consumo_id)
                   ->first()->id;
 
+    $locaisId = DB::table('local_retirada_eventos')
+                  ->where('evento_id', '=', $eventoId)
+                  ->get();
+
+    $localId = $locaisId[rand(0, count($locaisId)-1)]->id;
+
     $dataPedido = new DateTime("now");
     $dataPedido->add(new DateInterval("P1D"));
 
     return [
         'consumidor_id' => $consumidorId,
         'evento_id' => $eventoId,
+        'localretiradaevento_id' => $localId,
         'data_pedido' => $dataPedido,
         'is_confirmado' => True,
     ];
