@@ -4,7 +4,9 @@
 
 @section('navbar')
     <a href="{{ route("home") }}">Início</a> >
-    Entrar em Grupo: {{$grupoConsumo->name}}
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Compartilhar
 @endsection
 
 <!--/gerenciar/2-->
