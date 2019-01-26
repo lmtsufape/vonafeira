@@ -14,12 +14,11 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(\projetoGCA\UnidadeVenda::class, function (Faker $faker) {
-  
+
     return [
         'nome' => $faker->word,
         'descricao' => $faker->word,
         'is_fracionado' => $faker->boolean,
         'is_porcao' => $faker->boolean,
-        'grupoConsumoId' => rand(1, DB::table('grupo_consumos')->count()),
     ];
 });

@@ -11,6 +11,18 @@ class UnidadeVendaSeeder extends Seeder
      */
     public function run()
     {
-      factory(\projetoGCA\UnidadeVenda::class, 50)->create();
+      $grupoId = 0;
+
+      for ($i=0; $i <= 49; $i++) {
+
+        if($i%5 == 0){
+          $grupoId++;
+        }
+
+        factory(\projetoGCA\UnidadeVenda::class)->create([
+          'grupoConsumoId' => $grupoId,
+        ]);
+
+      }
     }
 }
