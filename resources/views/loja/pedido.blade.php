@@ -40,7 +40,7 @@
                     <td>{{$unidadeVenda->nome}}</td>
                     <td>{{'R$ '.number_format($produto->preco,2)}}</td>
                     <td>{{'R$ '.number_format($total_item,2)}}</td>
-                    <td>{{ $pedido->localretiradaevento->localretirada->nome }}
+                    <td>{{ $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome }}
                 </tr>
 
             @endforeach

@@ -19,6 +19,7 @@ class CreateLocalRetiradasTable extends Migration
             $table->integer('grupoconsumo_id')->unsigned();
             $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -55,15 +55,15 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
-                                
+
                                 <select class="form-control" name="localretiradaevento" required>
                                     <option value="" selected disabled hidden>Escolha local de retirada</option>
                                     @php($evento = \projetoGCA\Evento::find($evento))
                                     @foreach ($evento->locaisretiradaevento as $local)
                                         @if (old('localretiradaevento') == $local->id)
-                                            <option value="{{$local->id}}" selected>{{$local->localretirada->nome}}</option>
+                                            <option value="{{$local->id}}" selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @else
-                                            <option value="{{$local->id}}">{{$local->localretirada->nome}}</option>
+                                            <option value="{{$local->id}}">{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @endif
                                     @endforeach
                                 </select>
