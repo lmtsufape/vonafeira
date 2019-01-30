@@ -104,9 +104,9 @@
                             <div class="col-md-6">
 
                                 @if(old() != NULL)
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{old('preco')}}">
+                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{old('preco')}}">
                                 @else
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{$produto->preco}}">
+                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{$produto->preco}}">
                                 @endif
 
                                 @if ($errors->has('preco'))

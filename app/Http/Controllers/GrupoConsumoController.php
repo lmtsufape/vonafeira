@@ -49,7 +49,7 @@ class GrupoConsumoController extends Controller
         $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
         $grupoConsumo->coordenador_id = Auth::user()->id;
         $grupoConsumo->estado = $request->estado;
-        $grupoConsumo->localidade = $request->localidade;
+        $grupoConsumo->cidade = $request->localidade;
         $grupoConsumo->save();
 
         ConsumidorController::cadastrarCoordenador($grupoConsumo->id, $grupoConsumo->coordenador_id);
@@ -113,7 +113,7 @@ class GrupoConsumoController extends Controller
             $grupoConsumo->dia_semana = $request->dia_semana;
             $grupoConsumo->prazo_pedidos = $request->prazo_pedidos;
             $grupoConsumo->estado = $request->estado;
-            $grupoConsumo->localidade = $request->localidade;
+            $grupoConsumo->cidade = $request->localidade;
             $grupoConsumo->update();
 
             return redirect("/gerenciar/$grupoConsumo->id");
@@ -158,7 +158,7 @@ class GrupoConsumoController extends Controller
     public function compartilhar($grupoConsumoId){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
         $coordenador = \projetoGCA\User::find($grupoConsumo->coordenador_id);
-        
+
         $user = \Auth::user();
         $user_already_in = 0; //false
         if($user->id == $coordenador->id){

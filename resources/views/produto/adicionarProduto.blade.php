@@ -86,7 +86,7 @@
                             <label for="preco" class="col-md-4 control-label">Preço</label>
 
                             <div class="col-md-6">
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
+                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
 
                                 @if ($errors->has('preco'))
                                     <span class="help-block">

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class GrupoConsumo extends Model
 {
     public function coordenador(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'coordenador_id');
     }
 
     public function consumidores(){
