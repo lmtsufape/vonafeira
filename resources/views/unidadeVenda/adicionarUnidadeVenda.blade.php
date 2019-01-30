@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('is_fracionado') ? ' has-error' : '' }}">
-                            <label for="is_fracionado" class="col-md-4 control-label">Permitir Francionamento</label>
+                            <label for="is_fracionado" class="col-md-4 control-label">Permitir Fracionamento</label>
 
                             <div class="col-md-6">
                               <select id="is_fracionado" class="form-control" name="is_fracionado">

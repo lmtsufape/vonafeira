@@ -13,6 +13,7 @@ class EventoController extends Controller
     public function novo($idGrupoConsumo){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
         $locaisretirada = \projetoGCA\LocalRetirada::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+
         return view('evento.adicionarEvento', [
             'grupoConsumo' => $grupoConsumo,
             'locaisretirada' => $locaisretirada,
@@ -77,11 +78,6 @@ class EventoController extends Controller
 
     public function cadastrar(Request $request){
 
-        //dd($request->checkbox_outro);
-
-
-
-
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
@@ -120,7 +116,7 @@ class EventoController extends Controller
         $evento->grupoconsumo_id = $grupoConsumo->id;
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
-        
+
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
         // calcula a data limite dos pedidos de venda
         $intervalo = new DateInterval("P{$grupoConsumo->prazo_pedidos}D");
@@ -163,9 +159,16 @@ class EventoController extends Controller
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+
+
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);
+            $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->where('estaAberto', '=' ,'True')->first();
+            return view("evento.eventos", [
+              'eventos' => $eventos,
+              'grupoConsumo' => $grupoConsumo,
+              'ultimoEvento' => $ultimoEvento,
+              ]);
         }
         return view("/home");
     }

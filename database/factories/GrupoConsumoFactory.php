@@ -24,7 +24,7 @@ $factory->define(\projetoGCA\GrupoConsumo::class, function (Faker $faker) {
         'dia_semana' => $faker->dayOfWeek($max = 'now'),
         'prazo_pedidos' => $faker->numberBetween($min = 1, $max = 6),
         'estado' => $faker->state,
-        'localidade' => $faker->city,
+        'cidade' => $faker->city,
         'coordenador_id' => $userId++,
     ];
 });

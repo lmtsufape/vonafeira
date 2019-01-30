@@ -31,7 +31,7 @@ class ProdutoController extends Controller
                                                                          ->whereNull('deleted_at'); })
                       ],
             'descricao' => 'max:191',
-            'preco' => 'required|numeric',
+            'preco' => 'required|numeric|min:0.01',
             'unidadeVenda' => 'required',
             'idProdutor' => 'required'
         ]);
@@ -85,7 +85,7 @@ class ProdutoController extends Controller
             $validator = Validator::make($request->all(), [
                 'nome' => 'required|min:2|max:191',
                 'descricao' => 'max:191',
-                'preco' => 'required|numeric',
+                'preco' => 'required|numeric|min:0.01',
                 'unidadeVenda' => 'required',
                 'idProdutor' => 'required'
             ]);

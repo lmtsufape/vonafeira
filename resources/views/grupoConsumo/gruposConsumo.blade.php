@@ -53,7 +53,7 @@
                             <tr>
                                 <td>{{ $grupoConsumo->name }}</td>
                                 <td>{{ $grupoConsumo->descricao }}</td>
-                                <td>{{ $grupoConsumo->localidade }}</td>
+                                <td>{{ $grupoConsumo->cidade }}</td>
                                 <td>{{ $grupoConsumo->estado }}</td>
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
@@ -72,7 +72,7 @@
                                 <tr>
                                     <td>{{ $grupoConsumo->name }}</td>
                                     <td>{{ $grupoConsumo->descricao }}</td>
-                                    <td>{{ $grupoConsumo->localidade }}</td>
+                                    <td>{{ $grupoConsumo->cidade }}</td>
                                     <td>{{ $grupoConsumo->estado }}</td>
                                     <td>{{ $grupoConsumo->periodo }}</td>
                                     <td>{{ $grupoConsumo->dia_semana }}</td>

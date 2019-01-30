@@ -27,7 +27,7 @@
                         <th>Data</th>
                         <th colspan="2">Ações</th>
                     </tr>
-                    @foreach($pedidos as $pedido)   
+                    @foreach($pedidos as $pedido)
                         <?php
                             $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
                             $quantidade = 0;

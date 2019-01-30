@@ -31,6 +31,8 @@
                 <div class="panel-body">
                     <div style="width: 100%; margin-left: 0%" class="row">
                         <div style="width: 50%; float: left" class="column col-md-8">
+                            <strong>Coordenador</strong>
+                            <p>{{$grupoConsumo->coordenador->name}}</p>
                             <strong>Descrição</strong>
                             @if($grupoConsumo->descricao == NULL)
                             <p>Não há descrição.</p>
@@ -39,7 +41,7 @@
                         </div>
                         <div style="width: 50%; float: left" class="column col-md-8">
                             <strong>Localidade/Estado</strong>
-                            <p>{{$grupoConsumo->localidade}}/{{$grupoConsumo->estado}}</p>
+                            <p>{{$grupoConsumo->cidade}}/{{$grupoConsumo->estado}}</p>
                             <strong>Dia de ocorrência</strong>
                             <p>{{$grupoConsumo->dia_semana}}</p>
                             <strong>Periodicidade</strong>

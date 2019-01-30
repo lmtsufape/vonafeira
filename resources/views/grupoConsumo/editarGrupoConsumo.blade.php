@@ -98,13 +98,13 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('localidade') ? ' has-error' : '' }}">
-                            <label for="localidade" class="col-md-4 control-label">Localidade</label>
+                            <label for="localidade" class="col-md-4 control-label">Cidade</label>
 
                             <div class="col-md-6">
                                 @if(old('localidade',NULL) != NULL)
                                     <input id="localidade" type="text" class="form-control" name="localidade" value="{{old('localidade')}}">
                                 @else
-                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{$grupoConsumo->localidade}}">
+                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{$grupoConsumo->cidade}}">
                                 @endif
 
                                 @if ($errors->has('localidade'))
