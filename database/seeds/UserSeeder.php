@@ -11,10 +11,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => "Luiz",
-            'email' => "luiz@gmail",
-            'password' => "123456"
+        factory(\projetoGCA\User::class)->create([
+            'name' => "caetano De' Carli",
+            'email' => 'caetano@decarli.com',
         ]);
+
+        factory(\projetoGCA\User::class)->create([
+            'name' => "Genova De' Carli",
+            'email' => 'genova@decarli.com',
+        ]);
+
+        factory(\projetoGCA\User::class, 48)->create();
     }
 }

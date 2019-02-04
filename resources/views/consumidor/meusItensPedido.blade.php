@@ -3,8 +3,8 @@
 @section('titulo','Listagem de Pedido')
 
 @section('navbar')
-    <a href="/home">Painel</a> >
-    <a href="/meusPedidos">Meus Pedidos</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a> >
     Itens do Pedido
 @endsection
 
@@ -20,6 +20,8 @@
                         <thead>
                             <tr>
                                 <th>Produto</th>
+                                <th>Descrição</th>
+                                <th>Produtor</th>
                                 <th>Quantidade</th>
                                 <th>Unidade</th>
                                 <th>Preço</th>
@@ -30,26 +32,28 @@
                         <tbody>
                         @foreach ($itensPedido as $itemPedido)
                           <?php
-                            $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
-                            $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
+                            $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
+                            $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
+                            $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
                           ?>
                           <tr>
                               <td>{{ $produto->nome}}</td>
+                              <td>{{ $produto->descricao}}</td>
+                              <td>{{ $produtor->nome}}</td>
                               <td>{{ $itemPedido->quantidade }}</td>
                               <td>{{ $unidadeVenda->nome}}</td>
-                              <td>{{ 'R$'.number_format($produto->preco, 2) }}</td>
-                              <td>{{ 'R$'.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
                               @php($total = $total + $produto->preco * $itemPedido->quantidade)
                           </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
+
+                                <th colspan="5"></th>
                                 <th><strong>Total</strong></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th>{{'R$'.number_format($total, 2)}}</th>
+                                <th>{{'R$ '.number_format($total, 2)}}</th>
                                 <th></th>
                             </tr>
                         </tfoot>

@@ -16,6 +16,7 @@
         <thead>
             <tr>
                 <th>PRODUTO</th>
+                <th>DESCRIÇÃO</th>
                 <th>PRECO</th>
                 <th>QUANTIDADE</th>
             </tr>
@@ -24,7 +25,8 @@
             @foreach($pedido->itens as $item)
             <tr>
                 <th>{{$item->nome_produto}}</th>
-                <th>{{'R$'.number_format($item->preco, 2)}}</th>
+                <th>{{$item->nome_produto}}</th>
+                <th>{{'R$ '.number_format($item->preco, 2)}}</th>
                 <th>{{$item->quantidades}}</th>
             </tr>
             @php ($total = $total + $item->preco*$item->quantidades)
@@ -33,7 +35,7 @@
         <tfoot>
         <tr>
                 <th><strong>Total</strong></th>
-                <th>{{'R$'.number_format($total, 2)}}</th>
+                <th>{{'R$ '.number_format($total, 2)}}</th>
                 <th></th>
             </tr>
         </tfoot>

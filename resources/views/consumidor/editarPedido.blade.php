@@ -3,8 +3,8 @@
 @section('titulo','Editar Pedido')
 
 @section('navbar')
-    <a href="/home">Painel</a> >
-    <a href="/meusPedidos">Meus Pedidos</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a> >
     Editar
 @endsection
 
@@ -15,7 +15,7 @@
             <div class="panel panel-default">
               <div class="panel panel-default">
                   <div class="panel-heading">Editar Pedido</div>
-                  <form class="form-horizontal" method="POST" action="{{action('ConsumidorController@atualizarPedido')}}">
+                  <form class="form-horizontal" method="POST" action="{{ route('consumidor.pedido.atualizar') }}">
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <div class="panel-body">
 
@@ -34,7 +34,7 @@
                                 @php($i = 0)
                                 @foreach($itensPedido as $itemPedido)
                                     <?php
-                                      $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
+                                      $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
                                     ?>
 
                                     <input id="item_id" type="hidden" class="form-control" name="item_id[{{$i}}]" value="{{ $itemPedido->id }}" >
@@ -57,7 +57,7 @@
                                           @endif
                                         @endif
                                         <td>{{ $produto->unidadeVenda->nome }}</td>
-                                        <td><a href="/removerProdutoPedido/{{$itemPedido->id}}" class='btn btn-danger'>Remover</a></td>
+                                        <td><a onclick="return confirm('Confirmar cancelamento deste item?')" href="{{ route("consumidor.pedido.remover", ["idItemPedido" => $itemPedido->id]) }}" class='btn btn-danger'>Remover</a></td>
                                     </tr>
                                   @php($i++)
                                 @endforeach
@@ -66,13 +66,7 @@
 
                       </div>
                       <div class="panel-footer">
-                          <div class="form-group">
-                              <div class="col-md-6 col-md-offset-13">
-                                  <button type="submit" class="btn btn-primary">
-                                      Atualizar Pedido
-                                  </button>
-                              </div>
-                          </div>
+                          <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
                       </div>
 
                   </form>

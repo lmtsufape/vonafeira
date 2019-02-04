@@ -3,7 +3,7 @@
 @section('titulo','Meus Pedidos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Meus Pedidos
+    <a href="{{ route("home") }}">Início</a> > Meus Pedidos
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
                                 <th>Número de itens</th>
                                 <th>Data</th>
                                 <th>Total</th>
-                                <th colspan="2">Ações</th>
+                                <th colspan="3">Ações</th>
                             </tr>
                             @foreach($pedidos as $pedido)
                                 <?php
@@ -34,7 +34,7 @@
                                     $valor_pedido = 0;
                                     $itens_pedido = \projetoGCA\ItemPedido::where('pedido_id','=',$pedido->id)->get();
                                     foreach($itens_pedido as $item_pedido){
-                                        $produto = \projetoGCA\Produto::find($item_pedido->produto_id);
+                                        $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$item_pedido->produto_id)->first();
                                         $valor_pedido = $valor_pedido + $item_pedido->quantidade * $produto->preco;
                                         $quantidade = $quantidade + 1;
                                     }
@@ -43,14 +43,24 @@
                                     <td>#{{ $pedido->id }}</td>
                                     <td>{{ $quantidade }}</td>
                                     <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
-                                    <td>{{ 'R$'.number_format($valor_pedido, 2) }}</td>
+                                    <td>{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
 
                                     @php($evento = \projetoGCA\Evento::find($pedido->evento_id))
-                                      <td><a class="btn btn-primary" href="/meusPedidos/{{$pedido->id}}">Itens</a>
+                                      <td><a class="btn btn-primary" href="{{ route("consumidor.pedido.itens", ["pedido_id" => $pedido->id]) }}">Itens</a> </td>
                                     @if($evento->estaAberto)
-                                      <a class="btn btn-warning" href="/editarPedido/{{$pedido->id}}">Editar</a>
+                                      <td>
+                                         <a class="btn btn-warning" href="{{ route("consumidor.pedido.editar", ["id" => $pedido->id]) }}">
+                                           Editar
+                                         </a>
+                                      </td>
+                                      <td>
+                                        <a class="btn btn-danger" onclick="return confirm('Confirmar cancelamento de pedido?')" href="{{ route("consumidor.pedido.cancelar", ["id" => $pedido->id]) }}">
+                                          Cancelar
+                                        </a>
+                                      </td>
                                     @else
-                                      <button type="button" class="btn btn-warning" disabled>Editar</button>
+                                      <td> <button type="button" class="btn btn-warning" disabled>Editar</button> </td>
+                                      <td> <button type="button" class="btn btn-warning" disabled>Cancelar</button> </td>
                                     @endif
                                 </td>
 

@@ -14,13 +14,14 @@
         <thead>
             <tr>
                 <th>Produto</th>
+                <th>Descrição</th>
                 <th>Produtor</th>
-                <th>Quantidade</th>
+                <th>Qtd.</th>
                 <th>Unidade</th>
-                <th>Valor Un.</th>
-                <th>Valor Total</th>
-                <th>Nome Consumidor</th>
-                <th>Local Retirada</th>
+                <th>Valor Unt.</th>
+                <th>Total</th>
+                <th>Consumidor</th>
+                <th>Retirada</th>
             </tr>
         </thead>
         <tbody>
@@ -35,16 +36,17 @@
                             $valor_item = $itemPedido->quantidade * $produto->preco;
                             $pedido = $itemPedido->pedido;
                             $consumidor = $pedido->consumidor->usuario;
-                            $local_retirada = $pedido->evento->local_retirada;
+                            $local_retirada = $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome;
                         ?>
 
                         <tr>
                             <td>{{$produto->nome}}</td>
-                            <td>{{$produto->produtor->nome}}</td>
+                            <td>{{$produto->descricao}}</td>
+                            <td>{{$produto->produtor()->withTrashed()->first()->nome}}</td>
                             <td>{{$itemPedido->quantidade}}</td>
                             <td>{{$unidadeVenda->nome}}</td>
-                            <td>{{'R$'.number_format($produto->preco,2)}}</td>
-                            <td>{{'R$'.number_format($valor_item,2)}}</td>
+                            <td>{{'R$ '.number_format($produto->preco,2)}}</td>
+                            <td>{{'R$ '.number_format($valor_item,2)}}</td>
                             <td>{{$consumidor->name}}</td>
                             <td>{{$local_retirada}}</td>
                         </tr>
@@ -54,9 +56,9 @@
                 @endforeach
 
             @endforeach
-            
+
         </tbody>
     </table>
-    
+
 </body>
 </html>

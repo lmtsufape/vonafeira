@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class GrupoConsumo extends Model
 {
     public function coordenador(){
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'coordenador_id');
     }
 
     public function consumidores(){
@@ -20,5 +20,9 @@ class GrupoConsumo extends Model
 
     public function produtores(){
         return $this->hasMany(Produtor::class);
+    }
+
+    public function locaisRetirada(){
+        return $this->hasMany(LocalRetirada::class);
     }
 }

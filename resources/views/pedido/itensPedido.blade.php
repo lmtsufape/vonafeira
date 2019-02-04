@@ -3,11 +3,11 @@
 @section('titulo','Listagem de Pedidos')
 
 @section('navbar')
-    <a href="/home">Painel</a> >
-    <a href="/gruposConsumo">Grupos de Consumo</a> >
-    <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
-    <a href="/eventos/{{$grupoConsumo->id}}">Eventos</a> >
-    <a href="{{action('EventoController@pedidos', $evento->id)}}"> Pedidos do evento {{$evento->id}}</a> >
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Eventos</a> >
+    <a href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}"> Pedidos do Evento {{$evento->id}}</a> >
     Itens do Pedido
 @endsection
 
@@ -23,6 +23,8 @@
                         <thead>
                             <tr>
                                 <th>Produto</th>
+                                <th>Descricao</th>
+                                <th>Produtor</th>
                                 <th>Quantidade</th>
                                 <th>Unidade</th>
                                 <th>Preço</th>
@@ -33,27 +35,30 @@
                         <tbody>
                         @foreach ($itensPedido as $itemPedido)
                           <?php
-                            $produto = \projetoGCA\Produto::where('id','=',$itemPedido->produto_id)->first();
-                            $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
+                            $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
+                            $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
+                            $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
                           ?>
                           <tr>
                               <td>{{ $produto->nome}}</td>
+                              <td>{{ $produto->descricao}}</td>
+                              <td>{{ $produtor->nome }}
                               <td>{{ $itemPedido->quantidade }}</td>
                               <td>{{ $unidadeVenda->nome}}</td>
-                              <td>{{ 'R$'.number_format($produto->preco, 2) }}</td>
-                              <td>{{ 'R$'.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>
+                              <td>{{ 'R$ '.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
                               @php($total = $total + $produto->preco * $itemPedido->quantidade)
                           </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th><strong>Total</strong></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th>{{'R$'.number_format($total, 2)}}</th>
-                                <th></th>
+                                <th>{{'R$ '.number_format($total, 2)}}</th>
                             </tr>
                         </tfoot>
                     </table>

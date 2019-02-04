@@ -58,6 +58,11 @@ class ConsumidorController extends Controller
         if(Auth::check()){
             $grupoConsumo = GrupoConsumo::find($idGrupoConsumo);
             $consumidores = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->get();
+            $users_id = array();
+            foreach($consumidores as $consumidor){
+                array_push($users_id,$consumidor->user_id);
+            }
+            $consumidores = User::whereIn('id',$users_id)->orderBy('name')->get();
             return view(
                 "consumidor.consumidores",
                 ['consumidores' => $consumidores,
@@ -67,7 +72,7 @@ class ConsumidorController extends Controller
         return view("/home");
     }
 
-    public function selecionarGrupo(){
+    public function entrarGrupo(){
 
         $gruposConsumoTodos = GrupoConsumo::all();
 
@@ -77,7 +82,7 @@ class ConsumidorController extends Controller
 
         $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoParticipante);
 
-        return view('consumidor.selecionarGrupo',
+        return view('consumidor.entrarGrupo',
                    ['gruposConsumo' => $gruposConsumo]);
     }
 
@@ -156,4 +161,18 @@ class ConsumidorController extends Controller
       return redirect("/meusPedidos");
     }
 
+    public function cancelarPedido($idPedido) {
+        $pedido = \projetoGCA\Pedido::find($idPedido);
+
+        $itens = \projetoGCA\ItemPedido::where('pedido_id','=',$idPedido)->get();
+
+        foreach ($itens as $item) {
+          $item->delete();
+        }
+
+        $pedido->delete();
+
+        return back()
+                ->withInput();
+    }
 }

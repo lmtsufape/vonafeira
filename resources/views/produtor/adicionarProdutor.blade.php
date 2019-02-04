@@ -3,7 +3,11 @@
 @section('titulo','Cadastrar Produtor')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtores/{{$grupoConsumo->id}}">Listar Produtores</a> > Adicionar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("produtor.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Listar Produtores</a> >
+    Adicionar
 @endsection
 
 @section('content')
@@ -14,7 +18,7 @@
                 <div class="panel-heading">Novo Produtor</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarProdutor">
+                    <form class="form-horizontal" method="POST" action="{{ route("produtor.cadastrar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('grupoConsumo') ? ' has-error' : '' }}">
                             <div class="col-md-6">

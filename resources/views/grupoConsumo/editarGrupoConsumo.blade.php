@@ -6,7 +6,10 @@
 @section('titulo','Editar Grupo de Consumo')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Editar
 @endsection
 
 @section('content')
@@ -17,7 +20,7 @@
                 <div class="panel-heading">Editar grupo de consumo: <strong>{{$grupoConsumo->name}}</strong></div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{action('GrupoConsumoController@atualizar')}}">
+                    <form class="form-horizontal" method="POST" action="{{ route("grupoConsumo.atualizar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
                             <div class="col-md-6">
@@ -41,7 +44,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                             <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
@@ -85,7 +88,7 @@
                                     @endif
 
                                 </select>
-                                
+
                                 @if ($errors->has('estado'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('estado') }}</strong>
@@ -95,13 +98,13 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('localidade') ? ' has-error' : '' }}">
-                            <label for="localidade" class="col-md-4 control-label">Localidade</label>
+                            <label for="localidade" class="col-md-4 control-label">Cidade</label>
 
                             <div class="col-md-6">
                                 @if(old('localidade',NULL) != NULL)
                                     <input id="localidade" type="text" class="form-control" name="localidade" value="{{old('localidade')}}">
                                 @else
-                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{$grupoConsumo->localidade}}">
+                                    <input id="localidade" type="text" class="form-control" name="localidade" value="{{$grupoConsumo->cidade}}">
                                 @endif
 
                                 @if ($errors->has('localidade'))
@@ -117,7 +120,7 @@
 
                             <div class="col-md-6">
                             <select id="periodo" class="form-control" name="periodo" required autofocus>
-                                
+
                                 @if(old('periodo',NULL) != NULL)
 
                                     @if (old('periodo') == "Semanal")
@@ -189,7 +192,7 @@
 
                             <div class="col-md-6">
                                 <select id="dia_semana" class="form-control" name="dia_semana" required autofocus>
-                                    
+
                                     @if(old('dia_semana',NULL) != NULL)
 
                                         @if (old('dia_semana') == "Domingo")
@@ -280,7 +283,7 @@
 
                                     @endif
 
-                                </select>   
+                                </select>
                                 @if ($errors->has('periodo'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('periodo') }}</strong>
@@ -294,7 +297,7 @@
 
                             <div class="col-md-6">
                                 <select id="prazo_pedidos" class="form-control" name="prazo_pedidos" required autofocus>
-                                    
+
                                     @if(old('prazo_pedidos',NULL) != NULL)
 
                                         @if (old('prazo_pedidos') == 1)
@@ -326,7 +329,7 @@
                                         @else
                                             <option value="5">5 dias antes</option>
                                         @endif
-                                    
+
                                         @if (old('prazo_pedidos') == 6)
                                             <option value="6" selected>6 dias antes</option>
                                         @else
@@ -364,7 +367,7 @@
                                         @else
                                             <option value="5">5 dias antes</option>
                                         @endif
-                                    
+
                                         @if ($grupoConsumo->prazo_pedidos == 6)
                                             <option value="6" selected>6 dias antes</option>
                                         @else

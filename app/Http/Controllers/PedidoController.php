@@ -16,6 +16,7 @@ class PedidoController extends Controller
 {
 
     public function confirmar(Request $request) {
+
         $input = $request->input();
         $grupoConsumo = GrupoConsumo::find($input['grupo_consumo_id']);
 
@@ -69,6 +70,7 @@ class PedidoController extends Controller
 
 
     public function finalizar(Request $request){
+
         $input = $request->input();
         $array_of_item_ids = $input['produto_id'];
 
@@ -81,6 +83,7 @@ class PedidoController extends Controller
         $pedido->consumidor_id = $consumidor->id;
         $pedido->evento_id = $input['evento_id'];
         $pedido->data_pedido = new DateTime();
+        $pedido->localretiradaevento_id = $request->localretiradaevento;
         $pedido->is_confirmado = false;
         $pedido->save();
         $itens = array();

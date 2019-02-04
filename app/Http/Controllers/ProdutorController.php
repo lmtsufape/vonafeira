@@ -16,7 +16,7 @@ class ProdutorController extends Controller
       if(\Auth::check()){
           $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
 
-          $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+          $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->orderBy('nome')->get();
 
           return view("produtor.produtores", ['produtores' => $produtores, 'grupoConsumo' => $grupoConsumo]);
       }
@@ -59,9 +59,16 @@ class ProdutorController extends Controller
   public function remover($id) {
       $produtor = \projetoGCA\Produtor::find($id);
 
-      $grupoConsumo = $produtor->grupoconsumo_id;
+      $produtos = \projetoGCA\Produto::where('produtor_id','=',$produtor->id)->get();
+
+      foreach ($produtos as $produto) {
+        $produto->delete();
+      }
 
       $produtor->delete();
+
+      $grupoConsumo = $produtor->grupoconsumo_id;
+
       return redirect()
               ->action('ProdutorController@listar', $grupoConsumo)
               ->withInput();

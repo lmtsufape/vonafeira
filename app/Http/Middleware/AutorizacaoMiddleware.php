@@ -39,20 +39,31 @@ class AutorizacaoMiddleware
                 'editarGrupoConsumo/{id}',
                 'gerenciar/{id}',
                 //Evento
-                'editarEvento/{idGrupoConsumo}',
                 'adicionarEvento/{idGrupoConsumo}',
-                'eventos/{idGrupoConsumo}'
+                'eventos/{idGrupoConsumo}',
+                //Locais de Retirada
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/listar',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/adicionar',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/editar/{localretirada_id}',
+                'grupoconsumo/{grupoconsumo_id}/locaisretirada/remover/{localretirada_id}'
             ];
 
             $rotas_pedidos = [
                 'meusPedidos/{pedido_id}',
-                'editarPedido/{id}',
                 'visualizarPedido/{id}'
+            ];
+
+            $rotas_pedidos_evento_aberto = [
+                'editarPedido/{id}',
+                'cancelarPedido/{id}',
             ];
 
             $rotas_evento_coordenador = [
                 'evento/pedidos/{evento_id}',
                 'evento/fechar/{eventoId}',
+            ];
+
+            $rotas_relatorios = [
                 'evento/pedidos/relatorioProdutor/{evento_id}',
                 'evento/pedidos/relatorioConsumidor/{evento_id}',
                 'evento/pedidos/relatorioComposicao/{evento_id}'
@@ -71,7 +82,7 @@ class AutorizacaoMiddleware
 
             if(in_array($request->route()->uri,$rotas_coordenador)){
 
-                $grupoConsumoIdNomes = ['id','grupoConsumoId','idGrupoConsumo'];
+                $grupoConsumoIdNomes = ['grupoConsumoId','id','idGrupoConsumo','grupoconsumo_id'];
                 $grupoConsumo = NULL;
                 foreach ($grupoConsumoIdNomes as $id){
                     if(\projetoGCA\GrupoConsumo::find($request->route($id)) != NULL){
@@ -101,6 +112,31 @@ class AutorizacaoMiddleware
                     }
                 }
 
+            }else if(in_array($request->route()->uri,$rotas_pedidos_evento_aberto)){
+
+                $pedidoIdNomes = ['id'];
+                $pedido = NULL;
+                foreach($pedidoIdNomes as $id){
+                    if(\projetoGCA\Pedido::find($request->route($id)) != NULL){
+                        $pedido = \projetoGCA\Pedido::find($request->route($id));
+                    }
+                }
+
+                if($pedido == NULL){
+                    return redirect("/home");
+                }
+
+                $evento = \projetoGCA\Evento::find($pedido->evento_id);
+
+                if($evento->estaAberto == False){
+                  return redirect("/home");
+                }else{
+                  $user = \projetoGCA\User::find($pedido->consumidor->user_id);
+                  if($user->id != \Auth::user()->id){
+                      return redirect("/home");
+                  }
+                }
+
             }elseif(in_array($request->route()->uri,$rotas_evento_coordenador)){
 
                 $eventoIdNomes = ['evento_id','eventoId'];
@@ -110,7 +146,20 @@ class AutorizacaoMiddleware
                         $evento = \projetoGCA\Evento::find($request->route($id));
                     }
                 }
-                if($evento == NULL || \Auth::user()->id != $evento->coordenador_id){
+                if($evento == NULL || \Auth::user()->id != $evento->coordenador_id ){
+                    return redirect('/home');
+                }
+
+            }elseif(in_array($request->route()->uri,$rotas_relatorios)){
+
+                $eventoIdNomes = ['evento_id','eventoId'];
+                $evento = NULL;
+                foreach($eventoIdNomes as $id){
+                    if(\projetoGCA\Evento::find($request->route($id)) != NULL){
+                        $evento = \projetoGCA\Evento::find($request->route($id));
+                    }
+                }
+                if($evento == NULL || $evento->estaAberto || \Auth::user()->id != $evento->coordenador_id ){
                     return redirect('/home');
                 }
 

@@ -20,4 +20,8 @@ class Pedido extends Model
     public function evento(){
         return $this->belongsTo(Evento::class, "evento_id");
     }
+
+    public function localretiradaevento(){
+        return $this->belongsTo(LocalRetiradaEvento::class, 'localretiradaevento_id');
+    }
 }

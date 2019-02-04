@@ -3,7 +3,11 @@
 @section('titulo','Cadastro de Produtos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > <a href="/produtos/{{$grupoConsumo->id}}">Listar Produtos</a> > Adicionar
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Listar Produtos</a> >
+    Adicionar
 @endsection
 
 @section('content')
@@ -14,7 +18,7 @@
                 <div class="panel-heading">Novo Produto</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarProduto">
+                    <form class="form-horizontal" method="POST" action="{{ route("produto.cadastrar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <div class="col-md-6">
@@ -30,7 +34,7 @@
                             <label for="idProdutor" class="col-md-4 control-label">Produtor</label>
 
                             <div class="col-md-6">
-                              <select id="idProdutor" class="form-control" name="idProdutor" autofocus>
+                              <select id="produtor" class="form-control" name="idProdutor" autofocus>
                                 <option value="" selected disabled hidden>Escolha o Produtor</option>
                                 @foreach ($produtores as $produtor)
                                   @if (Illuminate\Support\Facades\Input::old('idProdutor') == $produtor->id)
@@ -47,7 +51,9 @@
                                   </span>
                               @endif
                             </div>
-                            <a href="{{action('ProdutorController@novo', $grupoConsumo->id)}}" class="btn btn-primary">Novo</a>
+                            <a href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">
+                              Novo
+                            </a>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
@@ -80,7 +86,7 @@
                             <label for="preco" class="col-md-4 control-label">Preço</label>
 
                             <div class="col-md-6">
-                                <input id="preco" type="number" min="0" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
+                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
 
                                 @if ($errors->has('preco'))
                                     <span class="help-block">
@@ -93,7 +99,7 @@
                             <label for="unidadeVenda" class="col-md-4 control-label">Unidade de Venda</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="unidadeVenda">
+                                <select id="unidade" class="form-control" name="unidadeVenda">
                                     <option value="" selected disabled hidden>Escolha uma unidade</option>
                                     @foreach ($unidadesVenda as $unidadeVenda)
                                         @if (Illuminate\Support\Facades\Input::old('unidadeVenda') == $unidadeVenda->id)
@@ -111,7 +117,10 @@
                                     </span>
                                 @endif
                             </div>
-                            <a href="{{action('UnidadeVendaController@adicionar', $grupoConsumo->id)}}" class="btn btn-primary">Nova</a>
+
+                            <a href="{{ route("unidadeVenda.novo", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">
+                              Nova
+                            </a>
                         </div>
 
                         <div class="form-group">
@@ -128,4 +137,22 @@
         </div>
     </div>
 </div>
+
+<!-- Script do Select2 -->
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#produtor" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o produtor"
+    });
+</script>
+<script type="text/javascript">
+    $( "#unidade" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione a unidade"
+    });
+</script>
+<!-- Script do Select2 -->
+
 @endsection

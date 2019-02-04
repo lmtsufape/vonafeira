@@ -3,7 +3,9 @@
 @section('titulo','Cadastrar Grupo de Consumo')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > Adicionar Grupo de Consumo
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    Adicionar Grupo de Consumo
 @endsection
 
 @section('content')
@@ -15,7 +17,7 @@
                 <div class="panel-heading">Novo Grupo de Consumo</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/cadastrarGrupoConsumo">
+                    <form class="form-horizontal" method="POST" action="{{ route("grupoConsumo.cadastrar") }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
@@ -30,7 +32,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
                             <label for="descricao" class="col-md-4 control-label">Descrição</label>
 
@@ -50,7 +52,7 @@
 
                             <div class="col-md-6">
                                 <select id="estado" class="form-control" name="estado" value="{{ old('estado') }}" autofocus>
-                                    
+
                                     @if (old('estado') == null)
                                         <option value="" selected disabled hidden>Selecionar</option>
                                     @endif
@@ -62,8 +64,8 @@
                                             <option value={{$estado}}>{{$estado}}</option>
                                         @endif
                                     @endforeach
-                                    
-                                </select>                                
+
+                                </select>
                                 @if ($errors->has('estado'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('estado') }}</strong>
@@ -73,7 +75,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('localidade') ? ' has-error' : '' }}">
-                            <label for="localidade" class="col-md-4 control-label">Localidade</label>
+                            <label for="localidade" class="col-md-4 control-label">Cidade</label>
 
                             <div class="col-md-6">
                                 <input id="localidade" type="text" class="form-control" name="localidade" value="{{ old('localidade') }}">
@@ -102,7 +104,7 @@
                                             <option value={{$periodo}}>{{$periodo}}</option>
                                         @endif
                                     @endforeach
-                                    
+
                                 </select>
                                 @if ($errors->has('periodo'))
                                     <span class="help-block">
@@ -129,7 +131,7 @@
                                         @endif
                                     @endforeach
 
-                                </select>                                
+                                </select>
                                 @if ($errors->has('dia_semana'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('dia_semana') }}</strong>
@@ -177,4 +179,14 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{ asset('js/select2.min.js') }}"></script>
+<script type="text/javascript">
+    $( "#estado" ).select2({
+        theme: "bootstrap",
+        placeholder: "Selecione o estado"
+    });
+</script>
+
 @endsection

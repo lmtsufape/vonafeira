@@ -3,7 +3,10 @@
 @section('titulo','Lista de Eventos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Eventos
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Listar Eventos
 @endsection
 
 @section('content')
@@ -13,11 +16,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Eventos</div>
                     @if(old('data_evento'))
+                    <br>
                         <div class="alert alert-success">
                             <strong>Sucesso!</strong>
                             O evento o foi adicionado.
                         </div>
                     @endif
+                    <br>
                     @if(session('warning'))
                         <div class="alert alert-danger">
                             <strong>Aviso!</strong>
@@ -31,6 +36,7 @@
                         </div>
                     @else
                     @if (\Session::has('success'))
+                    <br>
                         <div class="alert alert-success">
                             <strong>Sucesso!</strong>
                             {!! \Session::get('success') !!}
@@ -45,7 +51,7 @@
                               <th>Data de início dos pedidos</th>
                               <th>Data de fim dos pedidos</th>
                               <th>Aberto</th>
-                              <th>Local de retirada</th>
+                              <th>Locais de retirada</th>
                               <th>Pedidos</th>
                               <th>Ações</th>
 
@@ -65,10 +71,23 @@
                                   Não
                                 @endif
                               </td>
-                              <td>{{$evento->local_retirada}}</td>
-                              <td><a class="btn btn-primary" href="{{action('EventoController@pedidos', $evento->id)}}">Visualizar</a></td>
+                              <td>
+                                @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
+                                @foreach($locais as $local)
+                                    {{$local->localretirada()->withTrashed()->first()->nome}}
+                                @endforeach
+                              </td>
+                              <td>
+                                <a class="btn btn-primary" href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}">
+                                  Visualizar
+                                </a>
+                              </td>
                               @if($evento->estaAberto)
-                                  <td><a class="btn btn-danger" href="/evento/fechar/{{$evento->id}}">Fechar</a></td>
+                                  <td>
+                                    <a class="btn btn-danger" onclick="return confirm('Uma vez fechado um evento não pode ser reaberto. Confirmar fechamento do evento?')" href="{{ route("evento.fechar", ["eventoId" => $evento->id]) }}">
+                                      Fechar
+                                    </a>
+                                  </td>
                               @else
                                   <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
                               @endif
@@ -82,7 +101,12 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('EventoController@novo', $grupoConsumo->id)}}">Novo</a>
+
+                    @if(is_null($ultimoEvento))
+                      <a class="btn btn-success" href="{{ route("evento.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Novo</a>
+                    @else
+                      <a class="btn btn-success" disabled>Novo</a>
+                    @endif
                 </div>
             </div>
         </div>

@@ -13,6 +13,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
 
     <script type="text/javascript">
         /* Máscaras ER */
@@ -46,6 +48,64 @@
             background-color: #1B2E4F;
             border-color: #d3e0e9;
         }
+        /* Select2 Selects CSS - Start */
+        .select2-container--bootstrap .select2-selection--single .select2-selection__placeholder  {
+            color: #555;
+        }
+        .select2-container--bootstrap .select2-results__option {
+            color: #555;
+            background-color: #fff;
+        }
+        .select2-container--bootstrap .select2-results__option--highlighted[aria-selected] {
+            color: #fff;
+            background-color: #bbb;
+        }
+        .select2-container--bootstrap .select2-selection--single {
+            height: 36px;
+            padding: 6px 18px;
+            margin-left: 0px;
+        }
+        /* Select2 Selects CSS - End */
+
+        #termo {
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+
+        .navbar-default .navbar-nav > .dropdown > a:focus, .navbar-default .navbar-nav > .dropdown > a:hover {
+            color: #fff;
+            background-color: #1B2E4F;
+        }
+
+        .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            color: #000;
+            background-color: #fff;
+        }
+
+        .navbar-default .navbar-nav > a, .navbar-default .navbar-nav > li > a {
+            color: #fff;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover, {
+            color: #fff;
+            background-color: #fff;
+        }
+
+        .dropdown-menu > li > a:hover {
+            background-color: #cccccc;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-text {
+            color: #000;
+            background-color: #fff;
+        }
+
+
+
+
     </style>
 
 </head>
@@ -62,17 +122,18 @@
     </div>
 
     <!-- Barra de Logos -->
-    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 100px; padding: 10px 0 10px 0">
+    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 200px; padding: 10px 0 10px 0">
         <ul id="logos" style="list-style:none;">
             <li style="margin-right:140px; margin-left:110px; border-right:1px">
-                <a href="/home">Vô Na Feira</a>
-                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:10px " height="70" align = "right" ></a>
+                <a href="{{ route("home") }}"><img src="{{asset('images/vonafeira.png')}}" style = "margin-left: 8px; margin-top:5px " height="170px" align = "left" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
-                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px" height="80" width="70" align = "right" ></a>
+                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:65px " height="80" align = "right" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px" height="80" align = "right" >
-                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px " height="80" width="70" align = "right"></a>
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px; margin-top: 65px" height="80" width="70" align = "right" ></a>
+
+                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px; margin-top: 65px " height="80" width="70" align = "right"></a>
             </li>
         </ul>
     </div>
@@ -94,7 +155,7 @@
 
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
-                            <li><a style="color: #909090" class="main-menu" href="/home">Início</a></li>
+                            <li><a class="menu-principal" href="{{ route("home") }}">Início</a></li>
                         @endif
                     </ul>
 
@@ -104,36 +165,36 @@
                         @if(Auth::check())
 
                         <li class="dropdown">
-                                <a style="color: #909090" href="/gruposConsumo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="{{ route("grupoConsumo.listar") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     Grupos de Consumo <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="/gruposConsumo">Meus Grupos de Consumo</a>
+                                        <a href="{{ route("grupoConsumo.listar") }}">Meus Grupos de Consumo</a>
                                     </li>
                                     <li>
-                                        <a href="/selecionarGrupo">Entrar em Grupo de Consumo</a>
+                                        <a href="{{ route("consumidor.grupo.entrar") }}">Entrar em Grupo de Consumo</a>
                                     </li>
                                 </ul>
                             </li>
 
                         <li class="dropdown">
-                            <a style="color: #909090" href="/loja" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="{{ route("loja") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 Loja <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="/loja">Comprar</a>
+                                    <a href="{{ route("loja") }}">Comprar</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="dropdown">
-                                <a style="color: #909090" href="#" class="main-menu dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <ul style="" class="dropdown-menu" role="menu">
-                                    <li><a href="/meusPedidos">Meus Pedidos</a></li>
+                                    <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -148,9 +209,9 @@
                             </li>
                         @else
 
-                        <li><a style="color: #fff" href="{{ route('login') }}">Entrar</a></li>
+                        <li><a class="menu-principal" href="{{ route('login') }}">Entrar</a></li>
                         |
-                        <li><a style="color: #fff" href="{{ route('register') }}">Cadastrar</a></li>
+                        <li><a class="menu-principal" href="{{ route('register') }}">Cadastrar</a></li>
 
                         @endif
 
@@ -161,6 +222,12 @@
             </div>
         </div>
     </div>
+
+    @php($url = str_replace(URL::to('/'),'',URL::current()))
+
+    @if(!($url == '/home'))
+    @if(!($url == '/login'))
+    @if(!($url == '/register'))
 
     <div style="margin-top: -30px" class="container">
         <hr>
@@ -175,6 +242,10 @@
             </div>
         <hr>
     </div>
+
+    @endif
+    @endif
+    @endif
 
     </div>
 

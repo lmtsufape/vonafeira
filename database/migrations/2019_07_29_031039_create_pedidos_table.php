@@ -19,6 +19,8 @@ class CreatePedidosTable extends Migration
             $table->foreign('consumidor_id')->references('id')->on('consumidors');
             $table->integer('evento_id')->unsigned();
             $table->foreign('evento_id')->references('id')->on('eventos');
+            $table->integer('localretiradaevento_id');
+            $table->foreign('localretiradaevento_id')->references('id')->on('local_retirada_eventos');
             $table->date('data_pedido');
             $table->boolean('is_confirmado');
             $table->timestamps();

@@ -25,7 +25,9 @@ class PdfController extends Controller
 
         $produtores = array();
         foreach ($itensPedidos as $itemPedido) {
-            $produtor = $itemPedido->produto->produtor;
+            $ṕroduto = $itemPedido->produto()->withTrashed()->first();
+            $produtor = $ṕroduto->produtor()->withTrashed()->first();
+
             if(!in_array($produtor,$produtores)){
                 array_push($produtores,$produtor);
             }
@@ -33,13 +35,12 @@ class PdfController extends Controller
 
         $produtos = array();
         foreach ($itensPedidos as $itemPedido) {
-            $produto = $itemPedido->produto;
+            $produto = $itemPedido->produto()->withTrashed()->first();
+
             if(!in_array($produto,$produtos)){
                 array_push($produtos,$produto);
             }
         }
-
-        // dd($itensPedidos);
 
         $date = date('d/m/Y');
         $view = \View::make($view, compact('date', 'itensPedidos', 'produtores', 'produtos'))->render();
@@ -54,7 +55,7 @@ class PdfController extends Controller
     public function criarRelatorioMontagemPedidos($evento_id){
         $view = 'relatorios.composicaoPedidos';
 
-        $produtos = \projetoGCA\Produto::all()->sortBy('nome');
+        $produtos = \projetoGCA\Produto::withTrashed()->get()->sortBy('nome');
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
 
         $itensPedido = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
@@ -64,7 +65,7 @@ class PdfController extends Controller
         $produtos_array = array();
         foreach($produtos as $produto){
             foreach ($itensPedido as $itemPedido) {
-                if($itemPedido->produto->id == $produto->id){
+                if($itemPedido->produto()->withTrashed()->first()->id == $produto->id){
                     if(!in_array($produto,$produtos_array)){
                         array_push($produtos_array,$produto);
                     }
@@ -88,7 +89,7 @@ class PdfController extends Controller
 
         $consumidores = array();
         foreach ($pedidos as $pedido) {
-            $consumidor = \projetoGCA\User::find($pedido->consumidor_id);
+            $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
             if(!(in_array($consumidor,$consumidores))){
                 array_push($consumidores,$consumidor);
             }

@@ -14,4 +14,8 @@ class Evento extends Model
     public function grupoConsumo(){
         return $this->belongsTo(GrupoConsumo::class, "grupoconsumo_id");
     }
+
+    public function locaisretiradaevento(){
+        return $this->hasMany(LocalRetiradaEvento::class);
+    }
 }

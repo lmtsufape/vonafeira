@@ -19,60 +19,85 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-                <th colspan="6" style="text-align:center"><strong>Produdor: {{$produtor->nome}}</strong></th>
+                <th colspan="6" style="text-align:center"><strong>Produtor: {{$produtor->nome}}</strong></th>
             </tr>
             <tr>
-              <th>Quantidade</th>
-              <th>Un.</th>
+              <th>Qtd.</th>
               <th>Produto</th>
-              <th>Preço Unitário</th>
-              <th>Porção</th>
+              <th>Descrição</th>
+              <th>Und. Venda</th>
+              <th>Preço Unt.</th>
               <th>Subtotal</th>
             </tr>
           </thead>
           <tbody>
 
 
-
+            @php($total=0)
             @foreach($produtos as $produto)
 
+              <?php
+                $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
+              ?>
+
               @if($produto->produtor_id == $produtor->id)
+
+
                 @php($subtotal=0)
                 @php($quantidade=0)
 
-                <?php
-                  foreach($itensPedidos as $itemPedido){
-                    if($itemPedido->produto == $produto){
-                      $quantidade = $quantidade + $itemPedido->quantidade;
-                      $subtotal = $quantidade*$produto->preco;
+                @if($unidadeVenda->is_porcao == false)
+                  <?php
+                    foreach($itensPedidos as $itemPedido){
+                      if($itemPedido->produto()->withTrashed()->first() == $produto){
+                        $quantidade = $quantidade + $itemPedido->quantidade;
+                        $subtotal = $quantidade*$produto->preco;
+                      }
                     }
-                  }
-                ?>
 
-                <?php
-                  $unidadeVenda = \projetoGCA\UnidadeVenda::where('id','=',$produto->unidadevenda_id)->first();
-                ?>
+                    $total = $total + $subtotal;
+                  ?>
 
-                <tr>
-                  <td>{{$quantidade}}</td>
-                  <td>{{$unidadeVenda->nome}}</td>
-                  <td>{{$produto->nome}}</td>
-                  <td>{{'R$'.number_format($produto->preco, 2)}}</td>
-                  @if($unidadeVenda->is_porcao)
-                    <td>Sim</td>
-                  @else
-                    <td>Não</td>
-                  @endif
-                  <td>{{'R$'.number_format($subtotal,2)}}</td>
+                  <tr>
+                    <td>{{$quantidade}}</td>
+                    <td>{{$produto->nome}}</td>
+                    <td>{{$produto->descricao}}</td>
+                    <td>{{$unidadeVenda->nome}}</td>
+                    <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
+                    <td>{{'R$ '.number_format($subtotal,2)}}</td>
+                  </tr>
 
-                </tr>
+                @else
 
-                @php($total = $total + $subtotal)
+                  @foreach($itensPedidos as $itemPedido)
+                    @if($itemPedido->produto()->withTrashed()->first() == $produto){
+                      <?php
+                        $quantidade = $itemPedido->quantidade;
+                        $subtotal = $quantidade*$produto->preco;
+
+                        $total = $total + $subtotal;
+                      ?>
+
+                      <tr>
+                        <td>{{$quantidade}}</td>
+                        <td>{{$produto->nome}}</td>
+                        <td>{{$produto->descricao}}</td>
+                        <td>{{$unidadeVenda->nome}}</td>
+                        <td>{{'R$ '.number_format($produto->preco, 2)}}</td>
+                        <td>{{'R$ '.number_format($subtotal,2)}}</td>
+
+                      </tr>
+                    @endif
+                  @endforeach
+
+                @endif
+
+
               @endif
             @endforeach
 
             <tr>
-                <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$'.number_format($total,2)}}</td>
+                <td colspan="6" style="text-align:right"><strong>Valor total:</strong> {{'R$ '.number_format($total,2)}}</td>
             </tr>
           </tbody>
         </table>

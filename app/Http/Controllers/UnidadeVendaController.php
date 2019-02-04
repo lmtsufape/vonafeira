@@ -16,8 +16,9 @@ class UnidadeVendaController extends Controller
     public function cadastrar(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nome' => ['required','min:2','max:50',Rule::unique('unidade_vendas')
-                          ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId); })
+            'nome' => ['required','min:2','max:50',Rule::unique('unidade_vendas','nome')
+                          ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId)
+                                                                         ->whereNull('deleted_at'); })
                       ],
             'descricao' => 'min:0',
             'is_fracionado' => 'required',
@@ -41,7 +42,7 @@ class UnidadeVendaController extends Controller
 
     public function listar ($grupoConsumoId) {
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
-        $unidadesVenda = \projetoGCA\UnidadeVenda::where("grupoConsumoId","=",$grupoConsumo->id)->get();
+        $unidadesVenda = \projetoGCA\UnidadeVenda::where("grupoConsumoId","=",$grupoConsumo->id)->orderBy('nome')->get();
         return view(
             "unidadeVenda.unidadesVenda",
             ['listaUnidades' => $unidadesVenda,
@@ -60,6 +61,7 @@ class UnidadeVendaController extends Controller
 
         if($request->nome == $unidadeVenda->nome){
             $validator = Validator::make($request->all(), [
+                'nome' => 'required|min:2|max:50',
                 'descricao' => 'min:0',
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
@@ -68,16 +70,13 @@ class UnidadeVendaController extends Controller
             if($validator->fails()){
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
-
-            $unidadeVenda->nome = $request->nome;
-            $unidadeVenda->descricao = $request->descricao;
-            $unidadeVenda->is_fracionado = $request->is_fracionado;
-            $unidadeVenda->is_porcao = $request->is_porcao;
-            $unidadeVenda->update();
 
         }else{
             $validator = Validator::make($request->all(), [
-                'nome' => 'required|unique:unidade_vendas|min:2|max:50',
+              'nome' => ['required','min:2','max:50',Rule::unique('unidade_vendas','nome')
+                            ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId)
+                                                                           ->whereNull('deleted_at'); })
+                        ],
                 'descricao' => 'min:0',
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
@@ -87,24 +86,28 @@ class UnidadeVendaController extends Controller
                 return redirect()->back()->withErrors($validator->errors())->withInput();
             }
 
-            $unidadeVenda->nome = $request->nome;
-            $unidadeVenda->descricao = $request->descricao;
-            $unidadeVenda->is_fracionado = $request->is_fracionado;
-            $unidadeVenda->is_porcao = $request->is_porcao;
-            $unidadeVenda->update();
         }
+
+        $unidadeVenda->nome = $request->nome;
+        $unidadeVenda->descricao = $request->descricao;
+        $unidadeVenda->is_fracionado = $request->is_fracionado;
+        $unidadeVenda->is_porcao = $request->is_porcao;
+        $unidadeVenda->update();
 
         return redirect("/unidadesVenda/{$unidadeVenda->grupoConsumoId}");
     }
 
-    public function verificarExistencia($nome){
-        $unidadeVenda = \projetoGCA\UnidadeVenda::where ('nome', '=', $nome)->first();
-        return empty($unidadeVenda);
-    }
-
     public function remover($id) {
         $unidadeVenda = \projetoGCA\UnidadeVenda::find($id);
+
+        $produtos = \projetoGCA\Produto::where('unidadevenda_id','=',$unidadeVenda->id)->get();
+
+        foreach ($produtos as $produto) {
+          $produto->delete();
+        }
+
         $unidadeVenda->delete();
+
         return back()
                 ->withInput();
     }

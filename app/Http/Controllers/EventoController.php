@@ -12,7 +12,12 @@ class EventoController extends Controller
 
     public function novo($idGrupoConsumo){
         $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
-        return view('evento.adicionarEvento', [ 'grupoConsumo' => $grupoConsumo ]);
+        $locaisretirada = \projetoGCA\LocalRetirada::where('grupoconsumo_id','=',$idGrupoConsumo)->get();
+
+        return view('evento.adicionarEvento', [
+            'grupoConsumo' => $grupoConsumo,
+            'locaisretirada' => $locaisretirada,
+        ]);
     }
     /**
      * @Deprecated
@@ -76,7 +81,8 @@ class EventoController extends Controller
         $validator = Validator::make($request->all(), [
             'data_evento' => 'required',
             'hora_evento' => 'required',
-            'local_retirada' => 'required'
+            'locais' => 'required_without:checkbox_outro',
+            'input_outro' => 'required_if:checkbox_outro,on',
         ]);
 
         if($validator->fails()){
@@ -110,8 +116,6 @@ class EventoController extends Controller
         $evento->grupoconsumo_id = $grupoConsumo->id;
         $evento->data_evento = $request->data_evento;
         $evento->hora_evento = $request->hora_evento;
-        $evento->local_retirada = $request->local_retirada;
-
 
         $evento->data_inicio_pedidos = $dataHoje->format('Y-m-d');
         // calcula a data limite dos pedidos de venda
@@ -120,9 +124,33 @@ class EventoController extends Controller
         $dataFimPedidos->sub($intervalo);
         $evento->data_fim_pedidos = $dataFimPedidos->format('Y-m-d');
 
-        $evento->estaAberto = True;
 
+
+
+        $evento->estaAberto = True;
         $evento->save();
+
+        if($request->input_outro != NULL){
+            $localretirada = new \projetoGCA\LocalRetirada();
+            $localretirada->nome = $request->input_outro;
+            $localretirada->grupoconsumo_id = $request->id_grupo_consumo;
+            $localretirada->save();
+
+            $localretirada_evento = new \projetoGCA\LocalRetiradaEvento();
+            $localretirada_evento->evento_id = $evento->id;
+            $localretirada_evento->localretirada_id = $localretirada->id;
+            $localretirada_evento->save();
+
+        }
+
+        if($request->locais != NULL){
+            foreach($request->locais as $local){
+                $localretirada_evento = new \projetoGCA\LocalRetiradaEvento();
+                $localretirada_evento->evento_id = $evento->id;
+                $localretirada_evento->localretirada_id = $local;
+                $localretirada_evento->save();
+            }
+        }
 
         return redirect()
                 ->action('EventoController@listar', $request->id_grupo_consumo)
@@ -131,9 +159,16 @@ class EventoController extends Controller
 
     public function listar($idGrupoConsumo){
         if(Auth::check()){
+
+
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
             $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
-            return view("evento.eventos", ['eventos' => $eventos], ['grupoConsumo' => $grupoConsumo]);
+            $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->where('estaAberto', '=' ,'True')->first();
+            return view("evento.eventos", [
+              'eventos' => $eventos,
+              'grupoConsumo' => $grupoConsumo,
+              'ultimoEvento' => $ultimoEvento,
+              ]);
         }
         return view("/home");
     }

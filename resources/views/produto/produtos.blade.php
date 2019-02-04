@@ -3,7 +3,10 @@
 @section('titulo','Listar Produtos')
 
 @section('navbar')
-    <a href="/home">Painel</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Listar Produtos
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    Listar Produtos
 @endsection
 
 @section('content')
@@ -24,10 +27,11 @@
                             Não existem produtos cadastrados para este grupo de consumo.
                     </div>
                 @else
-                  <div class="table-responsive">
+                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+
+                  <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th>Cod</th>
                             <th>Nome do Produtor</th>
                             <th>Nome</th>
                             <th>Descrição</th>
@@ -38,17 +42,22 @@
 
                         @foreach ($produtos as $produto)
                         <tr>
-                            <td>{{ $produto->id }}</td>
-                            <?php
-                              $produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first();
-                            ?>
+                            @php($produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first())
                             <td>{{ $produtor->nome}}</td>
                             <td>{{ $produto->nome }}</td>
                             <td>{{ $produto->descricao }}</td>
-                            <td>{{ 'R$'.number_format($produto->preco, 2 )}}</td>
+                            <td>{{ 'R$ '.number_format($produto->preco, 2 )}}</td>
                             <td>{{ $produto->unidadeVenda->nome }}</td>
-                            <td><a class="btn btn-success"href="{{ action('ProdutoController@editar', $produto->id) }}">Editar</a></td>
-                            <td><a class="btn btn-danger"href="{{ action('ProdutoController@remover',$produto->id) }}">Remover</a></td>
+                            <td>
+                              <a class="btn btn-success" href="{{ route("produto.editar", ["idProduto" => $produto->id]) }}">
+                                Editar
+                              </a>
+                            </td>
+                            <td>
+                              <a class="btn btn-danger" onclick="return confirm('Confirmar remoção de {{ $produto->nome}}?')" href="{{ route("produto.remover", ["idProduto" => $produto->id]) }}">
+                                Remover
+                              </a>
+                            </td>
                         </tr>
                         @endforeach
                     </table>
@@ -57,10 +66,36 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('ProdutoController@novo', $grupoConsumo->id)}}">Novo</a>
+                    <a class="btn btn-success" href="{{ route("produto.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Novo</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function buscar() {
+
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("termo");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tabela");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+
 @endsection

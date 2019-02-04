@@ -3,7 +3,8 @@
 @section('titulo','Meus Grupos de Consumo')
 
 @section('navbar')
-    <a href="/home">Painel</a> > Meus Grupos de Consumo
+    <a href="{{ route("home") }}">Início</a> >
+    Meus Grupos de Consumo
 @endsection
 
 @section('content')
@@ -13,14 +14,16 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Grupos de Consumo</div>
                 @if(old('name'))
+                <br>
                     <div class="alert alert-success">
                         <strong>Sucesso!</strong>
                         O grupo foi adicionado.
                     </div>
                 @endif
                 @if (\Session::has('success'))
+                <br>
                     <div class="alert alert-success">
-                        <strong>Sucesso!</strong>
+                        <strong>Sucessos!</strong>
                         {!! \Session::get('success') !!}
                     </div>
                 @endif
@@ -30,7 +33,9 @@
                             Não existem grupos de consumo cadastrados.
                     </div>
                     @else
-                      <div class="table-responsive">
+                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+
+                      <div id="tabela" class="table-responsive">
                         <table class="table table-hover">
 
                             <tr>
@@ -48,12 +53,17 @@
                             <tr>
                                 <td>{{ $grupoConsumo->name }}</td>
                                 <td>{{ $grupoConsumo->descricao }}</td>
-                                <td>{{ $grupoConsumo->localidade }}</td>
+                                <td>{{ $grupoConsumo->cidade }}</td>
                                 <td>{{ $grupoConsumo->estado }}</td>
                                 <td>{{ $grupoConsumo->periodo }}</td>
                                 <td>{{ $grupoConsumo->dia_semana }}</td>
                                 <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                <td><a class="btn btn-primary" href="{{action('GrupoConsumoController@gerenciar', $grupoConsumo->id)}}">Gerenciar</a></td>
+
+                                <td>
+                                  <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
+                                    Gerenciar
+                                  </a>
+                                </td>
                             </tr>
                             @endforeach
 
@@ -62,12 +72,17 @@
                                 <tr>
                                     <td>{{ $grupoConsumo->name }}</td>
                                     <td>{{ $grupoConsumo->descricao }}</td>
-                                    <td>{{ $grupoConsumo->localidade }}</td>
+                                    <td>{{ $grupoConsumo->cidade }}</td>
                                     <td>{{ $grupoConsumo->estado }}</td>
                                     <td>{{ $grupoConsumo->periodo }}</td>
                                     <td>{{ $grupoConsumo->dia_semana }}</td>
                                     <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-                                    <td><a class="btn btn-danger" href="/grupoconsumo/sair/{{$grupoConsumo->id}}">Sair</a></td>
+
+                                    <td>
+                                      <a class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja sair do grupo de consumo {{$grupoConsumo->name}}?')" href="{{ route("grupoConsumo.sair", ["grupoConsumoId" => $grupoConsumo->id]) }}">
+                                        Sair
+                                      </a>
+                                    </td>
                                 </tr>
                               @endif
                             @endforeach
@@ -78,10 +93,37 @@
                 </div>
                 <div class="panel-footer">
                     <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{action('GrupoConsumoController@novo')}}">Novo</a>
+
+                    <a class="btn btn-success" href="{{ route("grupoConsumo.novo") }}">Novo</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    function buscar() {
+
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("termo");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("tabela");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+
 @endsection
