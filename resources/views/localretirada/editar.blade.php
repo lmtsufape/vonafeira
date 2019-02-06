@@ -3,7 +3,11 @@
 @section('titulo','Editar Produtor')
 
 @section('navbar')
-    <a href="/home">Início</a> > <a href="/gruposConsumo">Grupos de Consumo</a> > <a href="/gerenciar/{{$grupoConsumo->id}}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> > Editar: {{$local->nome}}
+<a href="{{ route("home") }}">Início</a> > 
+    <a href="{{ route("grupoConsumo.listar")}}">Grupos de Consumo</a> > 
+    <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
+    <a href="{{ route('locaisretirada.listar',['grupoconsumo_id' => $grupoConsumo->id]) }}">Locais de Retirada</a> > 
+    Editar: {{$local->nome}}
 @endsection
 
 @section('content')
