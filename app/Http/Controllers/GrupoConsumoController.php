@@ -29,7 +29,7 @@ class GrupoConsumoController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|unique:grupo_consumos|min:3|max:50',
-            'descricao' => 'min:0',
+            'descricao' => 'max:300',
             'periodo' => 'required',
             'dia_semana' => 'required',
             'prazo_pedidos' => 'required',
@@ -76,7 +76,7 @@ class GrupoConsumoController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:3|max:50',
-                'descricao' => 'min:0',
+                'descricao' => 'max:300',
                 'periodo' => 'required',
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
@@ -92,7 +92,7 @@ class GrupoConsumoController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|unique:grupo_consumos|min:3|max:50',
-                'descricao' => 'min:0',
+                'descricao' => 'max:300',
                 'periodo' => 'required',
                 'dia_semana' => 'required',
                 'prazo_pedidos' => 'required',
