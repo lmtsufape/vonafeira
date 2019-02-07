@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
 
 class GrupoConsumoController extends Controller
 {
@@ -129,8 +130,15 @@ class GrupoConsumoController extends Controller
                 $query->where('user_id', '=', Auth::user()->id);
             })->orderBy('name')->get();
 
-            return view("grupoConsumo.gruposConsumo", ['gruposConsumo' => $gruposConsumo,
+            $agent = new Agent();
+
+            if ($agent->isMobile()){
+                return view("_mobile.grupoConsumo.listar", ['gruposConsumo' => $gruposConsumo,
+                'gruposConsumoParticipante' => $gruposConsumoParticipante]);
+            }else{
+                return view("grupoConsumo.gruposConsumo", ['gruposConsumo' => $gruposConsumo,
                                                        'gruposConsumoParticipante' => $gruposConsumoParticipante]);
+            }
         }
         return view("/home");
     }

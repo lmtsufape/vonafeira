@@ -6,6 +6,8 @@ use projetoGCA\User;
 use projetoGCA\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Jenssegers\Agent\Agent;
+
 
 class RegisterController extends Controller
 {
@@ -69,5 +71,15 @@ class RegisterController extends Controller
             'telefone' => $data['telefone'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $agent = new Agent();
+        if($agent->isMobile()){
+            return view('_mobile.auth.register');
+        }else{
+            return view('auth.register');
+        }
     }
 }

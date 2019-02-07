@@ -180,6 +180,9 @@ return [
         projetoGCA\Providers\EventServiceProvider::class,
         projetoGCA\Providers\RouteServiceProvider::class,
 
+        //Agent
+        Jenssegers\Agent\AgentServiceProvider::class,
+
     ],
 
     /*
@@ -229,6 +232,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 
