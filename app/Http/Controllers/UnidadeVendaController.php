@@ -20,7 +20,7 @@ class UnidadeVendaController extends Controller
                           ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId)
                                                                          ->whereNull('deleted_at'); })
                       ],
-            'descricao' => 'min:0',
+            'descricao' => 'max:191',
             'is_fracionado' => 'required',
             'is_porcao' => 'required',
         ]);
@@ -62,7 +62,7 @@ class UnidadeVendaController extends Controller
         if($request->nome == $unidadeVenda->nome){
             $validator = Validator::make($request->all(), [
                 'nome' => 'required|min:2|max:50',
-                'descricao' => 'min:0',
+                'descricao' => 'max:191',
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
             ]);
@@ -77,7 +77,7 @@ class UnidadeVendaController extends Controller
                             ->where(function($query) use ($request){ $query->where('grupoConsumoId', $request->grupoConsumoId)
                                                                            ->whereNull('deleted_at'); })
                         ],
-                'descricao' => 'min:0',
+                'descricao' => 'max:191',
                 'is_fracionado' => 'required',
                 'is_porcao' => 'required',
             ]);
