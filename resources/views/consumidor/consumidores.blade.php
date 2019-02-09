@@ -26,13 +26,18 @@
 
                   <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
+                      <thead>
                         <tr>
                             <th>Usuário</th>
                         </tr>
+                      </thead>
+                      <tbody>
                         @foreach ($consumidores as $consumidor)
                         <tr>
-                            <td>{{ $consumidor->name }}</td>
+                            <td data-title="Usuario">{{ $consumidor->name }}</td>
+                        </tr>
                         @endforeach
+                      </tbody>
                     </table>
                   </div>
                 @endif

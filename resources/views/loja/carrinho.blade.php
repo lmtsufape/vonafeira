@@ -20,10 +20,9 @@
                     <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento }}" >
                     <input id="grupo_id" type="hidden" class="form-control" name="grupo_id" value="{{ $grupoConsumo->id }}" >
                 <div class="panel-body">
-                  <div class="table-responsive">
+                  <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
                         <thead>
-
                             <th>Produto</th>
                             <th>Descrição</th>
                             <th>Quantidade</th>
@@ -31,24 +30,26 @@
                             <th>Preço</th>
                             <th>Produtor</th>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th colspan="5" style="text-align: right">Total</th>
-                                <th>{{'R$ '.number_format($total,2)}}</th>
-                            </tr>
-                        </tfoot>
-                            @for ($i = 0; $i < count($quantidades); $i++)
+                        <tbody>
+                          @for ($i = 0; $i < count($quantidades); $i++)
                             <input id="produto_id" type="hidden" class="form-control" name="produto_id[{{$i}}]" value="{{ $produtos[$i]['id'] }}" >
                             <input id="quantidade[{{$i}}]" type="hidden" class="form-control" name="quantidade[{{$i}}]" value="{{ $quantidades[$i] }}" >
                             <tr>
-                                <td>{{ $produtos[$i]['nome'] }}</td>
-                                <td>{{ $produtos[$i]['descricao'] }}</td>
-                                <td>{{ $quantidades[$i] }}</td>
-                                <td>{{\projetoGCA\UnidadeVenda::find($produtos[$i]['unidadevenda_id'])->nome }}</td>
-                                <td>{{ 'R$ '.number_format($produtos[$i]['preco']*$quantidades[$i],2) }}</td>
-                                <td>{{\projetoGCA\Produtor::find($produtos[$i]['produtor_id'])->nome}}</td>
+                              <td data-title="Produto">{{ $produtos[$i]['nome'] }}</td>
+                              <td data-title="Descrição">{{ $produtos[$i]['descricao'] }}</td>
+                              <td data-title="Quantidade">{{ $quantidades[$i] }}</td>
+                              <td data-title="Unidade de Venda">{{\projetoGCA\UnidadeVenda::find($produtos[$i]['unidadevenda_id'])->nome }}</td>
+                              <td data-title="Preçõ">{{ 'R$ '.number_format($produtos[$i]['preco']*$quantidades[$i],2) }}</td>
+                              <td data-title="Produtor">{{\projetoGCA\Produtor::find($produtos[$i]['produtor_id'])->nome}}</td>
                             </tr>
-                            @endfor
+                          @endfor
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="5" style="text-align: right">Total</th>
+                            <th colspan="5" style="text-align: right">{{'R$ '.number_format($total,2)}}</th>
+                          </tr>
+                        </tfoot>
                     </table>
                   </div>
                 </div>

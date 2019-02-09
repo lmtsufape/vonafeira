@@ -25,36 +25,37 @@ Listar Unidades de Venda
 
                     <div id="tabela" class="table-responsive">
                       <table class="table table-hover">
+                        <thead>
+                          <tr>
+                              <th>Nome</th>
+                              <th>Descrição</th>
+                              <th>Fracionado</th>
+                              <th>Porção</th>
+                              <th colspan="2">Ação</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($listaUnidades as $unidadesVenda)
+                            <tr>
+                              <td data-title="Nome">{{ $unidadesVenda->nome }}</td>
+                              <td data-title="Descrição">{{ $unidadesVenda->descricao }}</td>
+                              <td data-title="Fracionado">{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
+                              <td data-title="Porção">{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
 
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Fracionado</th>
-                            <th>Porção</th>
-                            <th colspan="2">Ação</th>
-                        </tr>
-
-                        @foreach ($listaUnidades as $unidadesVenda)
-                        <tr>
-                            <td>{{ $unidadesVenda->nome }}</td>
-                            <td>{{ $unidadesVenda->descricao }}</td>
-                            <td>{{ ($unidadesVenda->is_fracionado ? "Sim": "Não") }}</td>
-                            <td>{{ ($unidadesVenda->is_porcao ? "Sim": "Não") }}</td>
-
-                            <td>
-                              <a class="btn btn-warning" href="{{ route("unidadeVenda.editar", ["grupoConsumoId" => $grupoConsumo->id, "id" => $unidadesVenda->id]) }}">
-                                Editar
-                              </a>
-                            </td>
-                            <td>
-                              <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ route("unidadeVenda.remover", ["id" => $unidadesVenda->id]) }}">
-                                Remover
-                              </a>
-                            </td>
-                        </tr>
-
-                        @endforeach
-                    </table>
+                              <td>
+                                <a class="btn btn-warning" href="{{ route("unidadeVenda.editar", ["grupoConsumoId" => $grupoConsumo->id, "id" => $unidadesVenda->id]) }}">
+                                  Editar
+                                </a>
+                              </td>
+                              <td>
+                                <a class="btn btn-danger" onclick="return confirm('Remover {{$unidadesVenda->nome}} causará remoção de produtos cadastrados com esta unidade de venda. Continuar?')" href="{{ route("unidadeVenda.remover", ["id" => $unidadesVenda->id]) }}">
+                                  Remover
+                                </a>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
                     </div>
                   @endif
                 </div>

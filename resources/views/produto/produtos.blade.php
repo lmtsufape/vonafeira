@@ -31,23 +31,25 @@
 
                   <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
+                      <thead>
                         <tr>
-                            <th>Nome do Produtor</th>
                             <th>Nome</th>
+                            <th>Produtor</th>
                             <th>Descrição</th>
                             <th>Preço</th>
                             <th>Unidade de Venda</th>
                             <th colspan="2">Ações</th>
                         </tr>
-
+                      </thead>
+                      <tbody>
                         @foreach ($produtos as $produto)
-                        <tr>
+                          <tr>
                             @php($produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first())
-                            <td>{{ $produtor->nome}}</td>
-                            <td>{{ $produto->nome }}</td>
-                            <td>{{ $produto->descricao }}</td>
-                            <td>{{ 'R$ '.number_format($produto->preco, 2 )}}</td>
-                            <td>{{ $produto->unidadeVenda->nome }}</td>
+                            <td data-title="Nome">{{ $produto->nome }}</td>
+                            <td data-title="Produtor">{{ $produtor->nome}}</td>
+                            <td data-title="Descrição">{{ $produto->descricao }}</td>
+                            <td data-title="Preço">{{ 'R$ '.number_format($produto->preco, 2 )}}</td>
+                            <td data-title="Unidade de Venda">{{ $produto->unidadeVenda->nome }}</td>
                             <td>
                               <a class="btn btn-success" href="{{ route("produto.editar", ["idProduto" => $produto->id]) }}">
                                 Editar
@@ -58,8 +60,9 @@
                                 Remover
                               </a>
                             </td>
-                        </tr>
+                          </tr>
                         @endforeach
+                      </tbody>
                     </table>
                   </div>
                 @endif

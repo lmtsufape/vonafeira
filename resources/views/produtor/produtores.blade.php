@@ -17,55 +17,58 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Produtores</div>
                 @if(old('nome'))
-                    <div class="alert alert-success">
-                        <strong>Sucesso!</strong>
-                        O produtor {{old('nome')}} foi adicionado.
-                    </div>
-                @endif
-                <div class="panel-body">
-                @if(count($produtores) == 0)
-                    <div class="alert alert-danger">
-                            Não existem produtores cadastrados neste grupo de consumo.
-                    </div>
-                @else
-                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
-
-                  <div class="table-responsive">
-                    <table id="tabela" class="table table-hover">
-                        <tr>
-                            <th>Nome do Produtor</th>
-                            <th>Endereco</th>
-                            <th>Telefone</th>
-                            <th colspan="2">Ações</th>
-                        </tr>
-
-                        @foreach ($produtores as $produtor)
-                        <tr>
-                            <td>{{ $produtor->nome}}</td>
-                            <td>{{ $produtor->endereco}}</td>
-                            <td>{{ $produtor->telefone}}</td>
-                            <td>
-                              <a class="btn btn-warning" href="{{ route("produtor.editar", ["idProdutor" => $produtor->id]) }}">
-                                Editar
-                              </a>
-                            </td>
-                            <td>
-                              <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de produtos cadastrados com este produtor. Continuar?')" href="{{ route("produtor.remover", ["idProdutor" => $produtor->id]) }}">
-                                Remover
-                              </a>
-                            </td>
-                          </td>
-                        </tr>
-                        @endforeach
-                    </table>
+                  <div class="alert alert-success">
+                      <strong>Sucesso!</strong>
+                      O produtor {{old('nome')}} foi adicionado.
                   </div>
                 @endif
+
+                <div class="panel-body">
+                  @if(count($produtores) == 0)
+                    <div class="alert alert-danger">
+                      Não existem produtores cadastrados neste grupo de consumo.
+                    </div>
+                  @else
+                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+
+                    <div id="tabela" class="table-responsive">
+                      <table id="tabela" class="table table-hover">
+                        <thead>
+                          <tr>
+                              <th>Nome do Produtor</th>
+                              <th>Endereço</th>
+                              <th>Telefone</th>
+                              <th colspan="2">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($produtores as $produtor)
+                            <tr>
+                              <td data-title="Nome do Produtor">{{ $produtor->nome}}</td>
+                              <td data-title="Endereço">{{ $produtor->endereco}}</td>
+                              <td data-title="Telefone">{{ $produtor->telefone}}</td>
+                              <td>
+                                <a class="btn btn-warning" href="{{ route("produtor.editar", ["idProdutor" => $produtor->id]) }}">
+                                  Editar
+                                </a>
+                              </td>
+                              <td>
+                                <a class="btn btn-danger" onclick="return confirm('Remover {{$produtor->nome}} causará remoção de produtos cadastrados com este produtor. Continuar?')" href="{{ route("produtor.remover", ["idProdutor" => $produtor->id]) }}">
+                                  Remover
+                                </a>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                  @endif
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                    <a class="btn btn-success" href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
-                      Novo
-                    </a>
+                  <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                  <a class="btn btn-success" href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
+                    Novo
+                  </a>
                 </div>
             </div>
         </div>
