@@ -15,47 +15,43 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Itens do Pedido</div>
                 <div class="panel-body">
-                  <div class="table-responsive">
+                  <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
                         <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Descrição</th>
-                                <th>Produtor</th>
-                                <th>Quantidade</th>
-                                <th>Unidade</th>
-                                <th>Preço</th>
-                                <th>Preço Total do Item</th>
-                            </tr>
+                          <tr>
+                              <th>Produto</th>
+                              <th>Descrição</th>
+                              <th>Produtor</th>
+                              <th>Quantidade</th>
+                              <th>Unidade</th>
+                              <th>Preço</th>
+                              <th>Preço Total do Item</th>
+                          </tr>
                         </thead>
                         @php($total = 0)
                         <tbody>
-                        @foreach ($itensPedido as $itemPedido)
-                          <?php
-                            $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
-                            $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
-                            $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
-                          ?>
-                          <tr>
-                              <td>{{ $produto->nome}}</td>
-                              <td>{{ $produto->descricao}}</td>
-                              <td>{{ $produtor->nome}}</td>
-                              <td>{{ $itemPedido->quantidade }}</td>
-                              <td>{{ $unidadeVenda->nome}}</td>
-                              <td>{{ 'R$ '.number_format($produto->preco, 2) }}</td>
-                              <td>{{ 'R$ '.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
-                              @php($total = $total + $produto->preco * $itemPedido->quantidade)
-                          </tr>
-                        @endforeach
+                          @foreach ($itensPedido as $itemPedido)
+                            <?php
+                              $produto = \projetoGCA\Produto::withTrashed()->where('id','=',$itemPedido->produto_id)->first();
+                              $unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first();
+                              $produtor = \projetoGCA\Produtor::withTrashed()->where('id','=',$produto->produtor_id)->first();
+                            ?>
+                            <tr>
+                                <td data-title="Produto">{{ $produto->nome}}</td>
+                                <td data-title="Descrição">{{ $produto->descricao}}</td>
+                                <td data-title="Produtor">{{ $produtor->nome}}</td>
+                                <td data-title="Quantidade">{{ $itemPedido->quantidade }}</td>
+                                <td data-title="Unidade">{{ $unidadeVenda->nome}}</td>
+                                <td data-title="Preço">{{ 'R$ '.number_format($produto->preco, 2) }}</td>
+                                <td data-title="Preço Total do Item">{{ 'R$ '.number_format($produto->preco * $itemPedido->quantidade, 2) }}</td>
+                                @php($total = $total + $produto->preco * $itemPedido->quantidade)
+                            </tr>
+                          @endforeach
                         </tbody>
                         <tfoot>
-                            <tr>
-
-                                <th colspan="5"></th>
-                                <th><strong>Total</strong></th>
-                                <th>{{'R$ '.number_format($total, 2)}}</th>
-                                <th></th>
-                            </tr>
+                          <tr>
+                              <th colspan="7" style="text-align: right">Total: {{'R$ '.number_format($total, 2)}}</th>
+                          </tr>
                         </tfoot>
                     </table>
                   </div>

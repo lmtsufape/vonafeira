@@ -37,10 +37,9 @@
                             <table class="table table-hover">
                               <thead>
                                 <tr>
-                                    <th>Data do Evento</th>
-                                    <th>Data Fim Pedidos</th>
-                                    <th>Local de Retirada</th>
-
+                                  <th>Data do Evento</th>
+                                  <th>Data Fim Pedidos</th>
+                                  <th>Local de Retirada</th>
                                 </tr>
                               </thead>
                               <tbody>

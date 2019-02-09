@@ -66,7 +66,7 @@
                                   @endforeach
                                 <tbody>
                             </table>
-                          <div class="table-responsive">
+                          <div id="tabela" class="table-responsive">
 
                     </div>
                     <div class="panel-footer">

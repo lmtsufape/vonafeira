@@ -114,6 +114,7 @@
         	#tabela table,
         	#tabela thead,
         	#tabela tbody,
+          #tabela tfoot,
         	#tabela th,
         	#tabela td,
         	#tabela tr {
