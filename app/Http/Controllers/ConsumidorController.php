@@ -11,8 +11,6 @@ use \projetoGCA\ItemPedido;
 use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
-use Jenssegers\Agent\Agent;
-
 class ConsumidorController extends Controller
 {
     /**
@@ -84,17 +82,8 @@ class ConsumidorController extends Controller
 
         $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoParticipante);
 
-        $agent = new Agent();
-
-        if($agent->isMobile()){
-            return view('_mobile.grupoConsumo.entrar',[
-                'gruposConsumo' => $gruposConsumo
-            ]);
-        }else{
-            return view('consumidor.entrarGrupo',
+        return view('consumidor.entrarGrupo',
                    ['gruposConsumo' => $gruposConsumo]);
-        }
-        
     }
 
     public function pedidos(){
