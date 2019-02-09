@@ -33,36 +33,38 @@
                           <input id="evento_id" type="hidden" class="form-control" name="evento_id" value="{{ $evento->id }}" >
                           <input id="grupo_consumo_id" type="hidden" class="form-control" name="grupo_consumo_id" value="{{ $grupoConsumo->id }}" >
 
-                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+                          <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
 
                           <div id="tabela" class="table-responsive">
                             <table class="table table-hover">
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Descrição</th>
-                                    <th>Preço</th>
-                                    <th>Quantidade</th>
-                                    <th>Unidade</th>
-                                    <th>Produtor</th>
-                                </tr>
-
-                                @foreach($produtos as $produto)
-                                <input id="item_id" type="hidden" class="form-control" name="item_id[{{$produto->id}}]" value="{{ $produto->id }}" >
-                                <tr>
-                                    <td>{{ $produto->nome }}</td>
-                                    <td>{{ $produto->descricao }}</td>
-                                    <td>{{ 'R$ '.number_format($produto->preco,2)}}</td>
-                                    @if(($produto->unidadeVenda->is_fracionado) == 1)
-                                        <td><input id="quantidade" style="width: 6em" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
-                                    @else
-                                        <td><input id="quantidade" style="width: 6em" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}" autofocus></td>
-                                    @endif
-                                    <td>{{ $produto->unidadeVenda->nome }}</td>
-                                    @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
-                                    <td>{{$produtor->nome}}</td>
-                                </tr>
-
-                                @endforeach
+                                <thead>
+                                  <tr>
+                                      <th>Nome</th>
+                                      <th>Descrição</th>
+                                      <th>Preço</th>
+                                      <th>Quantidade</th>
+                                      <th>Unidade</th>
+                                      <th>Produtor</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($produtos as $produto)
+                                  <input id="item_id" type="hidden" class="form-control" name="item_id[{{$produto->id}}]" value="{{ $produto->id }}" >
+                                  <tr>
+                                      <td data-title="Nome">{{ $produto->nome }}</td>
+                                      <td data-title="Descrição">{{ $produto->descricao }}</td>
+                                      <td data-title="Preço">{{ 'R$ '.number_format($produto->preco,2)}}</td>
+                                      @if(($produto->unidadeVenda->is_fracionado) == 1)
+                                          <td data-title="Quantidade"><input id="quantidade" style="width: 6em" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
+                                      @else
+                                          <td data-title="Quantidade"><input id="quantidade" style="width: 6em" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
+                                      @endif
+                                      <td data-title="Unidade">{{ $produto->unidadeVenda->nome }}</td>
+                                      @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
+                                      <td data-title="Produtor">{{$produtor->nome}}</td>
+                                  </tr>
+                                  @endforeach
+                                <tbody>
                             </table>
                           <div class="table-responsive">
 
