@@ -37,46 +37,47 @@
 
                       <div id="tabela" class="table-responsive">
                         <table class="table table-hover">
-
+                          <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Descrição</th>
-                                <th>Localidade</th>
+                                <th>Cidade</th>
                                 <th>Estado</th>
                                 <th>Período</th>
                                 <th>Dia da Semana</th>
                                 <th>Limite para pedidos</th>
                                 <th colspan="2">Ação</th>
                             </tr>
-
+                          </thead>
+                          <tbody>
                             @foreach ($gruposConsumo as $grupoConsumo)
-                            <tr>
-                                <td>{{ $grupoConsumo->name }}</td>
-                                <td>{{ $grupoConsumo->descricao }}</td>
-                                <td>{{ $grupoConsumo->cidade }}</td>
-                                <td>{{ $grupoConsumo->estado }}</td>
-                                <td>{{ $grupoConsumo->periodo }}</td>
-                                <td>{{ $grupoConsumo->dia_semana }}</td>
-                                <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
+                              <tr>
+                                  <td data-title="Nome">{{ $grupoConsumo->name }}</td>
+                                  <td data-title="Descrição">{{ $grupoConsumo->descricao }}</td>
+                                  <td data-title="Cidade">{{ $grupoConsumo->cidade }}</td>
+                                  <td data-title="Estado">{{ $grupoConsumo->estado }}</td>
+                                  <td data-title="Período">{{ $grupoConsumo->periodo }}</td>
+                                  <td data-title="Dia da Semana">{{ $grupoConsumo->dia_semana }}</td>
+                                  <td data-title="Limite para pedidos">{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
 
-                                <td>
-                                  <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
-                                    Gerenciar
-                                  </a>
-                                </td>
-                            </tr>
+                                  <td>
+                                    <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
+                                      Gerenciar
+                                    </a>
+                                  </td>
+                              </tr>
                             @endforeach
 
                             @foreach ($gruposConsumoParticipante as $grupoConsumo)
                               @if($grupoConsumo->coordenador_id != Auth::user()->id)
                                 <tr>
-                                    <td>{{ $grupoConsumo->name }}</td>
-                                    <td>{{ $grupoConsumo->descricao }}</td>
-                                    <td>{{ $grupoConsumo->cidade }}</td>
-                                    <td>{{ $grupoConsumo->estado }}</td>
-                                    <td>{{ $grupoConsumo->periodo }}</td>
-                                    <td>{{ $grupoConsumo->dia_semana }}</td>
-                                    <td>{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
+                                    <td data-title="Nome">{{ $grupoConsumo->name }}</td>
+                                    <td data-title="Descrição"{{ $grupoConsumo->descricao }}</td>
+                                    <td data-title="Cidade">{{ $grupoConsumo->cidade }}</td>
+                                    <td data-title="Estado">{{ $grupoConsumo->estado }}</td>
+                                    <td data-title="Período">{{ $grupoConsumo->periodo }}</td>
+                                    <td data-title="Dia da Semana">{{ $grupoConsumo->dia_semana }}</td>
+                                    <td data-title="Limite para pedidos">{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
 
                                     <td>
                                       <a class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja sair do grupo de consumo {{$grupoConsumo->name}}?')" href="{{ route("grupoConsumo.sair", ["grupoConsumoId" => $grupoConsumo->id]) }}">
@@ -86,7 +87,7 @@
                                 </tr>
                               @endif
                             @endforeach
-
+                          </tbody>
                         </table>
                       </div>
                     @endif

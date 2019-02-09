@@ -42,58 +42,59 @@
                             {!! \Session::get('success') !!}
                         </div>
                     @endif
-                      <div class="table-responsive">
+                      <div id="tabela" class="table-responsive">
                         <table class="table table-hover">
+                          <thead>
+                            <tr>
+                                <th>Data do evento</th>
+                                <th>Hora do evento</th>
+                                <th>Data de início dos pedidos</th>
+                                <th>Data de fim dos pedidos</th>
+                                <th>Aberto</th>
+                                <th>Locais de retirada</th>
+                                <th>Pedidos</th>
+                                <th>Ações</th>
 
-                          <tr>
-                              <th>Data do evento</th>
-                              <th>Hora do evento</th>
-                              <th>Data de início dos pedidos</th>
-                              <th>Data de fim dos pedidos</th>
-                              <th>Aberto</th>
-                              <th>Locais de retirada</th>
-                              <th>Pedidos</th>
-                              <th>Ações</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($eventos as $evento)
+                              <tr>
+                                <td data-title="Data do evento">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td>
+                                <td data-title="Hora do evento">{{ $evento->hora_evento }}</td>
+                                <td data-title="Data de início dos pedidos">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_inicio_pedidos, 'd/m/Y') }}</td>
+                                <td data-title="Data de fim dos pedidos">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td>
 
-                          </tr>
-
-                          @foreach ($eventos as $evento)
-                          <tr>
-                              <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td>
-                              <td>{{ $evento->hora_evento }}</td>
-                              <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_inicio_pedidos, 'd/m/Y') }}</td>
-                              <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td>
-
-                              <td>
-                                @if ($evento->estaAberto)
-                                  Sim
-                                @else
-                                  Não
-                                @endif
-                              </td>
-                              <td>
-                                @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
-                                @foreach($locais as $local)
-                                    {{$local->localretirada()->withTrashed()->first()->nome}}
-                                @endforeach
-                              </td>
-                              <td>
-                                <a class="btn btn-primary" href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}">
-                                  Visualizar
-                                </a>
-                              </td>
-                              @if($evento->estaAberto)
+                                <td data-title="Aberto">
+                                  @if ($evento->estaAberto)
+                                    Sim
+                                  @else
+                                    Não
+                                  @endif
+                                </td>
+                                <td data-title="Locais de Retirada">
+                                  @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
+                                  @foreach($locais as $local)
+                                      {{$local->localretirada()->withTrashed()->first()->nome}}
+                                  @endforeach
+                                </td>
+                                <td>
+                                  <a class="btn btn-primary" href="{{ route("evento.pedidos", ["evento_id" => $evento->id]) }}">
+                                    Visualizar
+                                  </a>
+                                </td>
+                                @if($evento->estaAberto)
                                   <td>
                                     <a class="btn btn-danger" onclick="return confirm('Uma vez fechado um evento não pode ser reaberto. Confirmar fechamento do evento?')" href="{{ route("evento.fechar", ["eventoId" => $evento->id]) }}">
                                       Fechar
                                     </a>
                                   </td>
-                              @else
-                                  <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
-                              @endif
+                                @else
+                                    <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
+                                @endif
 
-                          </tr>
-                          @endforeach
+                              </tr>
+                            @endforeach
                           </tbody>
                       </table>
                       </div>

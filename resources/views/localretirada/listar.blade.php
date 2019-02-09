@@ -3,8 +3,8 @@
 @section('titulo','Lista de Produtores')
 
 @section('navbar')
-    <a href="{{ route("home") }}">Início</a> > 
-    <a href="{{ route("grupoConsumo.listar")}}">Grupos de Consumo</a> > 
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("grupoConsumo.listar")}}">Grupos de Consumo</a> >
     <a href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Gerenciar Grupo: {{$grupoConsumo->name}}</a> >
     Listar Locais de Retirada
 @endsection
@@ -24,24 +24,27 @@
                 @else
                     <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
 
-                  <div class="table-responsive">
+                  <div id="tabela" class="table-responsive">
                     <table id="tabela" class="table table-hover">
-                        <tr>
-                            <th>Nome</th>
-                            <th colspan="2">Ações</th>
-                        </tr>
-
-                        @foreach ($locaisRetirada as $local)
-                        <tr>
-                            <td>{{ $local->nome}}</td>
-                            <td>
-                              <a class="btn btn-warning" href="{{ route('locaisretirada.editar',[$grupoConsumo->id,$local->id]) }}">Editar</a>
-                            </td>
-                            <td>
-                              <a class="btn btn-danger" href="{{ route('locaisretirada.remover',[$grupoConsumo->id,$local->id]) }}" onclick="return confirm('Remover este local não afetará Os eventos atuais. Confirmar remoção de {{ $local->nome}}?')">Remover</a>
-                            </td>
-                        </tr>
-                        @endforeach
+                        <thead>
+                          <tr>
+                              <th>Nome</th>
+                              <th colspan="2">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($locaisRetirada as $local)
+                            <tr>
+                              <td data-title="Nome">{{ $local->nome}}</td>
+                              <td>
+                                <a class="btn btn-warning" href="{{ route('locaisretirada.editar',[$grupoConsumo->id,$local->id]) }}">Editar</a>
+                              </td>
+                              <td>
+                                <a class="btn btn-danger" href="{{ route('locaisretirada.remover',[$grupoConsumo->id,$local->id]) }}" onclick="return confirm('Remover este local não afetará Os eventos atuais. Confirmar remoção de {{ $local->nome}}?')">Remover</a>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
                     </table>
                   </div>
                 @endif

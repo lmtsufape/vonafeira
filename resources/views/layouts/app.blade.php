@@ -103,157 +103,195 @@
             background-color: #fff;
         }
 
+        @media (max-width: 1024px) {
+          #barra-logos{display: none;}
+          .btn-toggle{display: block;}
+        }
 
+        @media only screen and (max-width: 1024px) {
 
+        	/* Force table to not be like tables anymore */
+        	#tabela table,
+        	#tabela thead,
+        	#tabela tbody,
+          #tabela tfoot,
+        	#tabela th,
+        	#tabela td,
+        	#tabela tr {
+        		display: block;
+        	}
+
+        	/* Hide table headers (but not display: none;, for accessibility) */
+        	#tabela thead tr {
+        		position: absolute;
+        		top: -9999px;
+        		left: -9999px;
+        	}
+
+        	#tabela tr { border: 1px solid #ccc; }
+
+        	#tabela td {
+        		/* Behave  like a "row" */
+        		border: none;
+        		border-bottom: 1px solid #eee;
+        		position: relative;
+        		padding-left: 50%;
+        		white-space: normal;
+        		text-align:left;
+        	}
+
+        	#tabela td:before {
+        		/* Now like a table header */
+        		position: absolute;
+        		/* Top/left values mimic padding */
+        		top: 6px;
+        		left: 6px;
+        		width: 45%;
+        		padding-right: 10px;
+        		white-space: nowrap;
+        		text-align:left;
+        		font-weight: bold;
+        	}
+
+        	/*
+        	Label the data
+        	*/
+        	#tabela td:before { content: attr(data-title); }
+        }
 
     </style>
 
 </head>
 <body>
     <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
-    <ul id="menu-barra-temp" style="list-style:none;">
-        <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
-            <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
-        </li>
-        <li>
-        <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
-        </li>
-    </ul>
+      <ul id="menu-barra-temp" style="list-style:none;">
+          <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
+              <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
+          </li>
+          <li>
+          <a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html">Atualize sua Barra de Governo</a>
+          </li>
+      </ul>
     </div>
 
     <!-- Barra de Logos -->
-    <div id="barra-logos" style="background:#FFFFFF; margin-top: 1px; height: 200px; padding: 10px 0 10px 0">
-        <ul id="logos" style="list-style:none;">
-            <li style="margin-right:140px; margin-left:110px; border-right:1px">
-                <a href="{{ route("home") }}"><img src="{{asset('images/vonafeira.png')}}" style = "margin-left: 8px; margin-top:5px " height="170px" align = "left" ></a>
+    <div id="barra-logos" class-"container" style="background:#FFFFFF; margin-top: 1px; height: 200px; padding: 10px 0 10px 0">
+      <ul id="logos" style="list-style:none;">
+          <li style="margin-right:140px; margin-left:110px; border-right:1px">
+              <a href="{{ route("home") }}"><img src="{{asset('images/vonafeira.png')}}" style = "margin-left: 8px; margin-top:5px " height="170px" align = "left" ></a>
 
-                <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:65px " height="80" align = "right" ></a>
+              <a target="_blank" href="http://lmts.uag.ufrpe.br/"><img src="{{asset('images/lmts3.png')}}" style = "margin-left: 8px; margin-top:65px " height="80" align = "right" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
-                <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px; margin-top: 65px" height="80" width="70" align = "right" ></a>
+              <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+              <a target="_blank" href="http://ww3.uag.ufrpe.br/"><img src="{{asset('images/uag.png')}}" style = "margin-left: 10px; margin-top: 65px" height="80" width="70" align = "right" ></a>
 
-                <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
-                <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px; margin-top: 65px " height="80" width="70" align = "right"></a>
-            </li>
+              <img src="{{asset('images/separador.png')}}" style = "margin-left: 15px; margin-top: 65px" height="70" align = "right" >
+              <a target="_blank" href="http://www.ufrpe.br/"><img src="{{asset('images/ufrpe.png')}}" style = "margin-left: 15px; margin-right: -10px; margin-top: 65px " height="80" width="70" align = "right"></a>
+          </li>
+      </ul>
+    </div>
+
+    <!-- barra de menu -->
+    <nav class="navbar navbar-default" style="background-color: #1B2E4F; border-color: #d3e0e9" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" >
+        <ul class="nav navbar-nav">
+            @if(Auth::check())
+                <li><a class="menu-principal" href="{{ route("home") }}">Início</a></li>
+            @endif
         </ul>
-    </div>
+        <ul class="nav navbar-nav navbar-right">
+          @if(Auth::check())
+            <li class="dropdown">
+              <a href="{{ route("grupoConsumo.listar") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  Grupos de Consumo <span class="caret"></span>
+              </a>
 
+              <ul class="dropdown-menu" role="menu">
+                  <li>
+                      <a href="{{ route("grupoConsumo.listar") }}">Meus Grupos de Consumo</a>
+                  </li>
+                  <li>
+                      <a href="{{ route("consumidor.grupo.entrar") }}">Entrar em Grupo de Consumo</a>
+                  </li>
+              </ul>
+            </li>
 
-<!-- barra de menu -->
-<div id="app">
-    <div class="navbar navbar-default" style="background-color: #1B2E4F; border-color: #d3e0e9" role="navigation">
-        <div class="container col-md-10 col-md-offset-1" >
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="collapse navbar-collapse" >
+            <li class="dropdown">
+              <a href="{{ route("loja") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  Loja <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                  <li>
+                      <a href="{{ route("loja") }}">Comprar</a>
+                  </li>
+              </ul>
+            </li>
 
-                    <ul class="nav navbar-nav">
-                        @if(Auth::check())
-                            <li><a class="menu-principal" href="{{ route("home") }}">Início</a></li>
-                        @endif
-                    </ul>
+            <li class="dropdown">
+              <a href="#" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                  {{ Auth::user()->name }} <span class="caret"></span>
+              </a>
+              <ul style="" class="dropdown-menu" role="menu">
+                <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
+                <li>
+                  <a href="{{ route('logout') }}"
+                      onclick="event.preventDefault();
+                               document.getElementById('logout-form').submit();">
+                      Sair
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      {{ csrf_field() }}
+                  </form>
+                </li>
+              </ul>
+            </li>
+          @else
+            <li><a class="menu-principal" href="{{ route('login') }}">Entrar</a></li>
+            <li><a class="menu-principal" href="{{ route('register') }}">Cadastrar</a></li>
+          @endif
+        </ul>
+      </div>
+    </nav>
 
+  @php($url = str_replace(URL::to('/'),'',URL::current()))
 
+  @if(!($url == '/home'))
+  @if(!($url == '/login'))
+  @if(!($url == '/register'))
 
-                    <ul class="nav navbar-nav navbar-right">
-                        @if(Auth::check())
+  <div style="margin-top: -30px" class="container">
+      <hr>
+          <div class="row">
+              <div class="col-md-8 col-md-offset-2">
+                  <div class="collapse navbar-collapse" >
+                      <ul class="nav navbar-nav">
+                          @yield('navbar')
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      <hr>
+  </div>
 
-                        <li class="dropdown">
-                                <a href="{{ route("grupoConsumo.listar") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    Grupos de Consumo <span class="caret"></span>
-                                </a>
+  @endif
+  @endif
+  @endif
 
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route("grupoConsumo.listar") }}">Meus Grupos de Consumo</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route("consumidor.grupo.entrar") }}">Entrar em Grupo de Consumo</a>
-                                    </li>
-                                </ul>
-                            </li>
+  </div>
 
-                        <li class="dropdown">
-                            <a href="{{ route("loja") }}" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Loja <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ route("loja") }}">Comprar</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                                <a href="#" class="menu-principal dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-                                <ul style="" class="dropdown-menu" role="menu">
-                                    <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Sair
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @else
+      @yield('content')
+  </div>
 
-                        <li><a class="menu-principal" href="{{ route('login') }}">Entrar</a></li>
-                        |
-                        <li><a class="menu-principal" href="{{ route('register') }}">Cadastrar</a></li>
-
-                        @endif
-
-                    </ul>
-
-                </ul>
-
-            </div>
-        </div>
-    </div>
-
-    @php($url = str_replace(URL::to('/'),'',URL::current()))
-
-    @if(!($url == '/home'))
-    @if(!($url == '/login'))
-    @if(!($url == '/register'))
-
-    <div style="margin-top: -30px" class="container">
-        <hr>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="collapse navbar-collapse" >
-                        <ul class="nav navbar-nav">
-                            @yield('navbar')
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        <hr>
-    </div>
-
-    @endif
-    @endif
-    @endif
-
-    </div>
-
-        @yield('content')
-    </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+  <!-- Scripts -->
+  <script src="{{ asset('js/app.js') }}"></script>
 </body>
 <script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 </html>

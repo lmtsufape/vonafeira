@@ -33,28 +33,34 @@
                         @endif
 
                         @foreach($eventos as $evento)
-                          <div class="table-responsive">
+                          <div id="tabela" class="table-responsive">
                             <table class="table table-hover">
-                              <tr>
+                              <thead>
+                                <tr>
                                   <th>Data do Evento</th>
                                   <th>Data Fim Pedidos</th>
                                   <th>Local de Retirada</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td data-title="Data do Evento">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td></td>
+                                  <td data-title="Data Fim Pedidos">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td></td>
+                                  <td data-title="Local de Retirada">
+                                    @php($locais = \projetoGCA\LocalRetiradaEvento::where('evento_id','=',$evento->id)->get())
+                                    @foreach($locais as $local)
+                                        {{$local->localretirada()->withTrashed()->first()->nome}}
+                                    @endforeach
+                                  </td>
 
-                              </tr>
+                                  <td data-title="">
+                                    <a class="btn btn-success" href="{{ route("loja.evento", ["id" => $evento->id]) }}">
+                                      Entrar
+                                    </a>
+                                  </td>
 
-                              <tr>
-                                <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_evento, 'd/m/Y') }}</td></td>
-                                <td>{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($evento->data_fim_pedidos, 'd/m/Y') }}</td></td>
-                                <td>{{$evento->local_retirada}}</td>
-
-                                <td>
-                                  <a class="btn btn-success" href="{{ route("loja.evento", ["id" => $evento->id]) }}">
-                                    Comprar
-                                  </a>
-                                </td>
-
-                              </tr>
-
+                                </tr>
+                              </tbody>
                             </table>
                           </div>
                         @endforeach
