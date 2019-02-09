@@ -2,6 +2,7 @@
 
 namespace projetoGCA\Http\Controllers\Auth;
 
+use Jenssegers\Agent\Agent;
 use projetoGCA\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -35,5 +36,15 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function showLoginForm()
+    {
+        $agent = new Agent();
+        if($agent->isMobile()){
+            return view('_mobile.auth.login');
+        }else{
+            return view('auth.login');
+        }
     }
 }
