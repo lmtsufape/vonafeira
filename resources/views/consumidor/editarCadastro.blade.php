@@ -96,7 +96,7 @@
                             <label for="senha" class="col-md-4 control-label">Confirme sua senha</label>
 
                             <div class="col-md-6">
-                                <input type="text" name="senha" class="form-control">
+                                <input type="password" name="senha" class="form-control">
                             </div>
                         </div>
 
