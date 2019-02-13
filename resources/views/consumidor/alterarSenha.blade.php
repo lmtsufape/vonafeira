@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('nova_senha') ? ' has-error' : '' }}">
-                            <label for="nova_senha" class="col-md-4 control-label">Senha atual</label>
+                            <label for="nova_senha" class="col-md-4 control-label">Nova senha</label>
 
                             <div class="col-md-6">
                                 <input id="nova_senha" type="password" class="form-control" name="nova_senha" value="{{ old('nova_senha') }}" required>
