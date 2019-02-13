@@ -3,7 +3,7 @@
 namespace projetoGCA\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use \projetoGCA\Consumidor;
 use \projetoGCA\Pedido;
@@ -11,6 +11,7 @@ use \projetoGCA\ItemPedido;
 use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
+use Illuminate\Support\Facades\Hash;
 class ConsumidorController extends Controller
 {
     /**
@@ -174,5 +175,64 @@ class ConsumidorController extends Controller
 
         return back()
                 ->withInput();
+    }
+
+    public function editarCadastro() {
+      return view('consumidor.editarCadastro',['user' => (\Auth::user())]);
+    }
+
+    public function atualizarCadastro(Request $request){
+      $usuario = \Auth::user();
+
+      if (!(Hash::check($request->senha, $usuario->password))){
+        return redirect()->back()->with('fail','Senha incorreta.');
+      }
+
+      if($request->email != $usuario->email){
+        $validator = Validator::make($request->all(), [
+          'email' => 'unique:users'
+        ]);
+  
+        if($validator->fails()){
+          return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+      }
+
+      $usuario->name = $request->name;
+      $usuario->email = $request->email;
+      $usuario->telefone = $request->telefone;
+
+      $usuario->save();
+
+      return redirect()->back()->with('success','Dados cadastrais salvos.');
+    }
+
+    public function alterarSenha(){
+      return view('consumidor.alterarSenha');
+    }
+
+    public function atualizarSenha(Request $request){
+      $usuario = \Auth::user();
+
+      if (!(Hash::check($request->senha_atual, $usuario->password))){
+        return redirect()->back()->with('fail','Senha atual incorreta.');
+      }
+
+      if ($request->nova_senha != $request->nova_senha_confirm){
+        return redirect()->back()->with('fail','Nova senha e confirmação são diferentes.');
+      }
+
+      $validator = Validator::make($request->all(), [
+        'nova_senha' => 'min:6|max:16'
+      ]);
+
+      if($validator->fails()){
+        return redirect()->back()->withErrors($validator->errors())->withInput();
+      }
+
+      $usuario->password = bcrypt($request->nova_senha);
+      $usuario->save();
+
+      return redirect()->back()->with('success','Senha alterada com sucesso!');
     }
 }

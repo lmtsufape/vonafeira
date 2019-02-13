@@ -53,6 +53,10 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar')->name('consumidor.listar');
     Route::get('/entrarGrupo', 'ConsumidorController@entrarGrupo')->name('consumidor.grupo.entrar');
     Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar')->name('consumidor.cadastrar');
+    Route::get('/editarCadastro', 'ConsumidorController@editarCadastro')->name('consumidor.editarCadastro');
+    Route::post('/atualizarCadastro', 'ConsumidorController@atualizarCadastro')->name('consumidor.cadastro.atualizar');
+    Route::get('/alterarSenha', 'ConsumidorController@alterarSenha')->name('consumidor.alterarSenha');
+    Route::post('/atualizarSenha', 'ConsumidorController@atualizarSenha')->name('consumidor.atualizarSenha');
 
     // Rotas para pedidos do Consumidor
     Route::get('/meusPedidos', 'ConsumidorController@pedidos')->name('consumidor.meusPedidos');
