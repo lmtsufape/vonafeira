@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('titulo','Recuperação de Senha')
+@section('titulo','Alterar Senha')
 
 @section('navbar')
-    Recuperação de Senha
+    Alterar Senha
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
                             <strong>Sucesso!</strong>
                             {!! \Session::get('success') !!}
                         </div>
-                    
+
                     @elseif (\Session::has('fail'))
                     <br>
                     <div class="alert alert-danger">

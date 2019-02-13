@@ -4,10 +4,11 @@ namespace projetoGCA\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PdfController extends Controller
+class PlanilhaController extends Controller
 {
+
     public function criarRelatorioPedidosProdutores($evento_id){
-        $view = 'relatorios.pedidosProdutores';
+        $view = 'relatoriosPlanilha.pedidosProdutores';
 
         $itensPedidos = \projetoGCA\ItemPedido::whereHas('pedido', function ($query) use($evento_id){
             $query->where('evento_id', '=', $evento_id);
@@ -33,15 +34,22 @@ class PdfController extends Controller
         }
 
         $date = date('d/m/Y');
-        $view = \View::make($view, compact('date', 'itensPedidos', 'produtores', 'produtos'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('relatorio.pdf');
+
+        \Excel::create('Relatório de Pedidos para o Produtor', function($excel) use ($view, $evento_id, $date, $itensPedidos, $produtores, $produtos){
+
+            $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $date, $itensPedidos, $produtores, $produtos){
+
+                $sheet->loadView($view, array('date' => $date,
+                                              'itensPedidos' => $itensPedidos,
+                                              'produtores' => $produtores,
+                                              'produtos' => $produtos));
+            });
+
+        })->download('xlsx');
     }
 
-
     public function criarRelatorioMontagemPedidos($evento_id){
-        $view = 'relatorios.composicaoPedidos';
+        $view = 'relatoriosPlanilha.composicaoPedidos';
 
         $produtos = \projetoGCA\Produto::withTrashed()->get()->sortBy('nome');
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
@@ -62,15 +70,24 @@ class PdfController extends Controller
         }
 
         $data = date('d/m/Y');
-        $view = \View::make($view, compact('data', 'produtos','pedidos','itensPedido'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('relatorio.pdf');
+
+        \Excel::create('Relatório de Composição de Pedidos', function($excel) use ($view, $evento_id, $data, $produtos, $pedidos, $itensPedido){
+
+            $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $data, $produtos, $pedidos, $itensPedido){
+
+                $sheet->loadView($view, array('data' => $data,
+                                              'produtos' => $produtos,
+                                              'pedidos' => $pedidos,
+                                              'itensPedido' => $itensPedido));
+
+            });
+
+        })->download('xlsx');
 
     }
 
-    public function criarRelatorioPedidosConsumidores($evento_id){
-        $view = 'relatorios.pedidosConsumidores';
+    public function criarRelatorioPedidosConsumidoresExcel($evento_id){
+        $view = 'relatoriosPlanilha.pedidosConsumidores';
 
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
 
@@ -81,32 +98,17 @@ class PdfController extends Controller
                 array_push($consumidores,$consumidor);
             }
         }
-
         $data = date('d/m/Y');
-        $view = \View::make($view, compact('data', 'consumidores','pedidos'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('relatorio.pdf');
-    }
 
-    public function criarRelatorioPedidoCliente($evento_id){
-      $view = 'relatorio.pedidoCliente';
-      $data = \projetoGCA\Pedido::where('evento_id', '=', $evento_id)->get();
-      $evento = \projetoGCA\Evento::find($evento_id);
+        \Excel::create('Relatório de Pedidos para o Consumidor', function($excel) use ($view, $evento_id, $data, $consumidores, $pedidos){
 
-      $date = date('d/m/Y');
-      $view = \View::make($view, compact('data', 'date','evento'))->render();
-      $pdf = \App::make('dompdf.wrapper');
-      $pdf->loadHTML($view);
-      return $pdf->stream('relatorio.pdf');
-    }
+            $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $data, $consumidores, $pedidos){
 
-    public function termosDeUso(){
-        $view = 'termosDeUso';
+                $sheet->loadView($view, array('data' => $data,
+                                              'consumidores' => $consumidores,
+                                              'pedidos' => $pedidos));
+            });
 
-        $view = \View::make($view, compact('data', 'date','evento'))->render();
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        return $pdf->stream('termosDeUso.pdf');
+        })->download('xlsx');
     }
 }
