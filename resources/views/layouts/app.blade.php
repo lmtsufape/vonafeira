@@ -241,6 +241,7 @@
               </a>
               <ul style="" class="dropdown-menu" role="menu">
                 <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
+                <li><a href="{{ route("consumidor.editarCadastro") }}">Editar Cadastro</a></li>
                 <li>
                   <a href="{{ route('logout') }}"
                       onclick="event.preventDefault();
