@@ -39,6 +39,7 @@
                             <table class="table table-hover">
                                 <thead>
                                   <tr>
+                                      <th></th>
                                       <th>Nome</th>
                                       <th>Descrição</th>
                                       <th>Preço</th>
@@ -51,13 +52,16 @@
                                   @foreach($produtos as $produto)
                                   <input id="item_id" type="hidden" class="form-control" name="item_id[{{$produto->id}}]" value="{{ $produto->id }}" >
                                   <tr>
+                                      <td>
+                                        <input type="checkbox" onchange="Enable(this)" nome="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
+                                      </td>
                                       <td data-title="Nome">{{ $produto->nome }}</td>
                                       <td data-title="Descrição">{{ $produto->descricao }}</td>
                                       <td data-title="Preço">{{ 'R$ '.number_format($produto->preco,2)}}</td>
                                       @if(($produto->unidadeVenda->is_fracionado) == 1)
-                                        <td data-title="Quantidade"><input id="quantidade" style="width: 6em" type="number" min="0" step="0.5" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
+                                        <td data-title="Quantidade"><input disabled id="quantidade[{{$produto->id}}]" style="width: 6em" type="number" min="0" step="0.5" class="form-control" name="quantidade[{{$produto->id}}]" id="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
                                       @else
-                                          <td data-title="Quantidade"><input id="quantidade" style="width: 6em" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
+                                        <td data-title="Quantidade"><input disabled id="quantidade[{{$produto->id}}]" style="width: 6em" type="number" min="0" step="1" class="form-control" name="quantidade[{{$produto->id}}]" id="quantidade[{{$produto->id}}]" value="{{ old('quantidade') }}"></td>
                                       @endif
                                       <td data-title="Unidade">{{ $produto->unidadeVenda->nome }}</td>
                                       @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
@@ -98,7 +102,7 @@
 
       // Loop through all table rows, and hide those who don't match the search query
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -108,6 +112,23 @@
           }
         }
       }
+    }
+
+    Enable = function(checkbox)
+    {
+
+      var element_id = (checkbox.id).replace('checkbox_','');
+
+      var input = document.getElementById(("quantidade[").concat(element_id,"]"));
+
+      if(checkbox.checked == true){
+          input.disabled = false;
+      }else{
+          input.disabled = true;
+          input.value = "";
+      }
+
+      
     }
 </script>
 
