@@ -28,24 +28,27 @@
                       <div class="dropdown">
                         <button class="dropbtn">Relatório Montagem Pedido</button>
                         <div class="dropdown-content">
-                          <a target="_blank" href="{{ route("evento.relatorioPDF.montagem", ["evento_id" => $evento->id]) }}">Download em PDF</a>
-                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.montagem", ["evento_id" => $evento->id]) }}">Download em XLSX</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.montagem", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.montagem.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.montagem", ["evento_id" => $evento->id]) }}">Download em XLS</a>
                         </div>
                       </div>
 
                       <div class="dropdown">
                         <button class="dropbtn">Relatório Produtores</button>
                         <div class="dropdown-content">
-                          <a target="_blank" href="{{ route("evento.relatorioPDF.produtores", ["evento_id" => $evento->id]) }}">Download em PDF</a>
-                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.produtores", ["evento_id" => $evento->id]) }}">Download em XLSX</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.produtores", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.produtores.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.produtores", ["evento_id" => $evento->id]) }}">Download em XLS</a>
                         </div>
                       </div>
 
                       <div class="dropdown">
                         <button class="dropbtn">Relatório Consumidores</button>
                         <div class="dropdown-content">
-                          <a target="_blank" href="{{ route("evento.relatorioPDF.consumidores", ["evento_id" => $evento->id]) }}">Download em PDF</a>
-                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.consumidores", ["evento_id" => $evento->id]) }}">Download em XLSX</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.consumidores", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.consumidores.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.consumidores", ["evento_id" => $evento->id]) }}">Download em XLS</a>
                         </div>
                       </div>
                     @endif

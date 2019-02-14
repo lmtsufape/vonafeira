@@ -103,6 +103,10 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/pedidos/relatorioConsumidorPDF/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores')->name('evento.relatorioPDF.consumidores');
     Route::get('/evento/pedidos/relatorioComposicaoPDF/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos')->name('evento.relatorioPDF.montagem');
 
+    Route::get('/evento/pedidos/relatorioProdutorPDF/{evento_id}/download', 'PdfController@downloadRelatorioPedidosProdutores')->name('evento.relatorioPDF.produtores.download');
+    Route::get('/evento/pedidos/relatorioConsumidorPDF/{evento_id}/download', 'PdfController@downloadRelatorioPedidosConsumidores')->name('evento.relatorioPDF.consumidores.download');
+    Route::get('/evento/pedidos/relatorioComposicaoPDF/{evento_id}/download', 'PdfController@downloadRelatorioMontagemPedidos')->name('evento.relatorioPDF.montagem.download');
+
     Route::get('/evento/pedidos/relatorioProdutorPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioPedidosProdutores')->name('evento.relatorioPlanilha.produtores');
     Route::get('/evento/pedidos/relatorioConsumidorPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioPedidosConsumidoresExcel')->name('evento.relatorioPlanilha.consumidores');
     Route::get('/evento/pedidos/relatorioComposicaoPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioMontagemPedidos')->name('evento.relatorioPlanilha.montagem');
