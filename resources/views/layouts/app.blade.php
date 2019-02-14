@@ -159,6 +159,61 @@
         	#tabela td:before { content: attr(data-title); }
         }
 
+        .dropbtn {
+          background-color: #3097D1;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+        }
+
+        .dropbtndisabled {
+          background-color: #8eb4cb;;
+          color: white;
+          padding: 16px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+        }
+
+        /* The container <div> - needed to position the dropdown content */
+        .dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        /* Dropdown Content (Hidden by Default) */
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #8eb4cb;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+          color: black;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        /* Show the dropdown menu on hover */
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        /* Change the background color of the dropdown button when the dropdown content is shown */
+        .dropdown:hover .dropbtn {
+          background-color: #3097D1;
+        }
+
     </style>
 
 </head>
@@ -241,7 +296,7 @@
               </a>
               <ul style="" class="dropdown-menu" role="menu">
                 <li><a href="{{ route("consumidor.meusPedidos") }}">Meus Pedidos</a></li>
-                <li><a href="{{ route("consumidor.editarCadastro") }}">Editar Cadastro</a></li>
+                <li><a href="{{ route("consumidor.editarCadastro") }}">Meus Dados</a></li>
                 <li>
                   <a href="{{ route('logout') }}"
                       onclick="event.preventDefault();

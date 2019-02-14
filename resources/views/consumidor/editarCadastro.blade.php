@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Editar Cadastro: <strong>{{$user->name}}</strong></div>
+                <div class="panel-heading">Dados de: <strong>{{$user->name}}</strong></div>
 
                 @if (\Session::has('success'))
                     <br>
@@ -20,7 +20,7 @@
                         <strong>Sucesso!</strong>
                         {!! \Session::get('success') !!}
                     </div>
-                
+
                 @elseif (\Session::has('fail'))
                   <br>
                   <div class="alert alert-danger">
@@ -96,7 +96,7 @@
                             <label for="senha" class="col-md-4 control-label">Confirme sua senha</label>
 
                             <div class="col-md-6">
-                                <input type="password" name="senha" class="form-control">
+                                <input type="password" name="senha" required class="form-control">
                             </div>
                         </div>
 
@@ -106,7 +106,7 @@
                                 <button type="submit" class="btn btn-success">Atualizar</button>
                             </div>
                         </div>
-                        
+
                         <hr>
                         <div class="form-group">
                           <div class="col-md-6 col-md-offset-4">
@@ -123,5 +123,3 @@
     </div>
 </div>
 @endsection
-
-
