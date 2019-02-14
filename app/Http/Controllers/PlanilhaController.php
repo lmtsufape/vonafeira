@@ -35,7 +35,9 @@ class PlanilhaController extends Controller
 
         $date = date('d/m/Y');
 
-        \Excel::create('Relatório de Pedidos para o Produtor', function($excel) use ($view, $evento_id, $date, $itensPedidos, $produtores, $produtos){
+        $evento = \projetoGCA\Evento::find($evento_id);
+        $filename = 'RelatorioProdutores_Grupo'.$evento->grupoconsumo_id.'_Evento'.$evento->id.'_'.$date;
+        \Excel::create($filename, function($excel) use ($view, $evento_id, $date, $itensPedidos, $produtores, $produtos){
 
             $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $date, $itensPedidos, $produtores, $produtos){
 
@@ -45,7 +47,7 @@ class PlanilhaController extends Controller
                                               'produtos' => $produtos));
             });
 
-        })->download('xlsx');
+        })->download('xls');
     }
 
     public function criarRelatorioMontagemPedidos($evento_id){
@@ -71,7 +73,9 @@ class PlanilhaController extends Controller
 
         $data = date('d/m/Y');
 
-        \Excel::create('Relatório de Composição de Pedidos', function($excel) use ($view, $evento_id, $data, $produtos, $pedidos, $itensPedido){
+        $evento = \projetoGCA\Evento::find($evento_id);
+        $filename = 'RelatorioProdutores_Grupo'.$evento->grupoconsumo_id.'_Evento'.$evento->id.'_'.$data;
+        \Excel::create($filename, function($excel) use ($view, $evento_id, $data, $produtos, $pedidos, $itensPedido){
 
             $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $data, $produtos, $pedidos, $itensPedido){
 
@@ -82,7 +86,7 @@ class PlanilhaController extends Controller
 
             });
 
-        })->download('xlsx');
+        })->download('xls');
 
     }
 
@@ -100,7 +104,9 @@ class PlanilhaController extends Controller
         }
         $data = date('d/m/Y');
 
-        \Excel::create('Relatório de Pedidos para o Consumidor', function($excel) use ($view, $evento_id, $data, $consumidores, $pedidos){
+        $evento = \projetoGCA\Evento::find($evento_id);
+        $filename = 'RelatorioProdutores_Grupo'.$evento->grupoconsumo_id.'_Evento'.$evento->id.'_'.$data;
+        \Excel::create($filename, function($excel) use ($view, $evento_id, $data, $consumidores, $pedidos){
 
             $excel->sheet('Evento '.$evento_id, function($sheet) use ($view, $data, $consumidores, $pedidos){
 
@@ -109,6 +115,6 @@ class PlanilhaController extends Controller
                                               'pedidos' => $pedidos));
             });
 
-        })->download('xlsx');
+        })->download('xls');
     }
 }
