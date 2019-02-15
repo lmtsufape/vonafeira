@@ -17,6 +17,44 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Pedidos</div>
                 <div class="panel-body">
+                  <center>
+                    @if($evento->estaAberto)
+                      <button disabled class="dropbtndisabled">Relatório Montagem Pedido</button>
+                      <button disabled class="dropbtndisabled">Relatório Produtor</button>
+                      <button disabled class="dropbtndisabled">Relatório Consumidor</button>
+
+                    @else
+
+                      <div class="dropdown">
+                        <button class="dropbtn">Relatório Montagem Pedido</button>
+                        <div class="dropdown-content">
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.montagem", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.montagem.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.montagem", ["evento_id" => $evento->id]) }}">Download em XLS</a>
+                        </div>
+                      </div>
+
+                      <div class="dropdown">
+                        <button class="dropbtn">Relatório Produtores</button>
+                        <div class="dropdown-content">
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.produtores", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.produtores.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.produtores", ["evento_id" => $evento->id]) }}">Download em XLS</a>
+                        </div>
+                      </div>
+
+                      <div class="dropdown">
+                        <button class="dropbtn">Relatório Consumidores</button>
+                        <div class="dropdown-content">
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.consumidores", ["evento_id" => $evento->id]) }}">Exibir PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPDF.consumidores.download", ["evento_id" => $evento->id]) }}">Download em PDF</a>
+                          <a target="_blank" href="{{ route("evento.relatorioPlanilha.consumidores", ["evento_id" => $evento->id]) }}">Download em XLS</a>
+                        </div>
+                      </div>
+                    @endif
+                </center>
+                </div>
+                <div class="panel-body">
                   <div id="tabela" class="table-responsive">
                     <table class="table table-hover">
                       <thead>
@@ -61,24 +99,11 @@
                 </div>
                 <div class="panel-footer">
 
-                    <a class="btn btn-danger" href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
-                      Voltar
-                    </a>
-                    @if($evento->estaAberto)
-                        <a class="btn btn-primary" disabled>Relatório Montagem Pedido</a>
-                        <a class="btn btn-primary" disabled>Relatório Produtor</a>
-                        <a class="btn btn-primary" disabled>Relatório Consumidor</a>
-                    @else
-                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.montagem", ["evento_id" => $evento->id]) }}">
-                          Relatório Montagem Pedido
-                        </a>
-                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.produtores", ["evento_id" => $evento->id]) }}">
-                          Relatório Produtores
-                        </a>
-                        <a class="btn btn-primary" target="_blank" href="{{ route("evento.relatorio.consumidores", ["evento_id" => $evento->id]) }}">
-                          Relatório Consumidores
-                        </a>
-                    @endif
+
+                  <a class="btn btn-danger" href="{{ route("evento.listar", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
+                    Voltar
+                  </a>
+
                 </div>
             </div>
         </div>

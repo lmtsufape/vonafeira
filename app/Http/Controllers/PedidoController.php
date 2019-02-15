@@ -16,48 +16,46 @@ class PedidoController extends Controller
 {
 
     public function confirmar(Request $request) {
-
         $input = $request->input();
+        
+        if(!(array_key_exists("quantidade",$input))){
+            return redirect()->back()->with('fail','Necessária a seleção de um ou mais itens.');
+        }
+
         $grupoConsumo = GrupoConsumo::find($input['grupo_consumo_id']);
 
-
-        $array_of_item_ids = $input['item_id'];
         $quantidades = $input['quantidade'];
-
+        $array_of_item_ids = array_keys($quantidades);
+        
         $thereAre_itens = false;
-
+        
         foreach ($quantidades as $quantidade) {
             //dd($quantidade);
             if($quantidade != 0 && $quantidade != null){
                 $thereAre_itens = true;
             }
         }
-
+        
         if(!$thereAre_itens){
             return redirect()->back()->with('fail','Necessário que a quantidade de itens seja superior à 0.');
         }
-
-
-
+        
         $produtos = Produto::whereIn('id', $array_of_item_ids)->orderBy('nome')->get();
         $itens = array();
-
-
-
+        
         $total = 0;
         $produtos_comprados = [];
-
+        
         foreach($produtos as $produto){
-          if($quantidades[$produto->id] <= 0){
-            unset($quantidades[$produto->id]);
-          }else{
-            array_push($produtos_comprados,$produto);
-
-              $total += $produto->preco*$quantidades[$produto->id];
-          }
+            if($quantidades[$produto->id] <= 0){
+                unset($quantidades[$produto->id]);
+            }else{
+                array_push($produtos_comprados,$produto);
+                
+                $total += $produto->preco*$quantidades[$produto->id];
+            }
         }
-
-
+        
         $produtos_array = $produtos->toArray();
         /*if(!$is_produtos){
             return back()->withInput();

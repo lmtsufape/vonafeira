@@ -53,6 +53,10 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar')->name('consumidor.listar');
     Route::get('/entrarGrupo', 'ConsumidorController@entrarGrupo')->name('consumidor.grupo.entrar');
     Route::post('/cadastrarConsumidor', 'ConsumidorController@cadastrar')->name('consumidor.cadastrar');
+    Route::get('/editarCadastro', 'ConsumidorController@editarCadastro')->name('consumidor.editarCadastro');
+    Route::post('/atualizarCadastro', 'ConsumidorController@atualizarCadastro')->name('consumidor.cadastro.atualizar');
+    Route::get('/alterarSenha', 'ConsumidorController@alterarSenha')->name('consumidor.alterarSenha');
+    Route::post('/atualizarSenha', 'ConsumidorController@atualizarSenha')->name('consumidor.atualizarSenha');
 
     // Rotas para pedidos do Consumidor
     Route::get('/meusPedidos', 'ConsumidorController@pedidos')->name('consumidor.meusPedidos');
@@ -95,9 +99,17 @@ Route::middleware('autorizacao')->group(function() {
     });
 
     // Rotas para relatorios
-    Route::get('/evento/pedidos/relatorioProdutor/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores')->name('evento.relatorio.produtores');
-    Route::get('/evento/pedidos/relatorioConsumidor/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores')->name('evento.relatorio.consumidores');
-    Route::get('/evento/pedidos/relatorioComposicao/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos')->name('evento.relatorio.montagem');
+    Route::get('/evento/pedidos/relatorioProdutorPDF/{evento_id}', 'PdfController@criarRelatorioPedidosProdutores')->name('evento.relatorioPDF.produtores');
+    Route::get('/evento/pedidos/relatorioConsumidorPDF/{evento_id}', 'PdfController@criarRelatorioPedidosConsumidores')->name('evento.relatorioPDF.consumidores');
+    Route::get('/evento/pedidos/relatorioComposicaoPDF/{evento_id}', 'PdfController@criarRelatorioMontagemPedidos')->name('evento.relatorioPDF.montagem');
+
+    Route::get('/evento/pedidos/relatorioProdutorPDF/{evento_id}/download', 'PdfController@downloadRelatorioPedidosProdutores')->name('evento.relatorioPDF.produtores.download');
+    Route::get('/evento/pedidos/relatorioConsumidorPDF/{evento_id}/download', 'PdfController@downloadRelatorioPedidosConsumidores')->name('evento.relatorioPDF.consumidores.download');
+    Route::get('/evento/pedidos/relatorioComposicaoPDF/{evento_id}/download', 'PdfController@downloadRelatorioMontagemPedidos')->name('evento.relatorioPDF.montagem.download');
+
+    Route::get('/evento/pedidos/relatorioProdutorPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioPedidosProdutores')->name('evento.relatorioPlanilha.produtores');
+    Route::get('/evento/pedidos/relatorioConsumidorPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioPedidosConsumidoresExcel')->name('evento.relatorioPlanilha.consumidores');
+    Route::get('/evento/pedidos/relatorioComposicaoPlanilha/{evento_id}', 'PlanilhaController@criarRelatorioMontagemPedidos')->name('evento.relatorioPlanilha.montagem');
 
     //Rotas para emails
     Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar.post');

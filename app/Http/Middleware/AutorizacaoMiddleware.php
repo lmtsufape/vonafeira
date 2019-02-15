@@ -64,10 +64,15 @@ class AutorizacaoMiddleware
             ];
 
             $rotas_relatorios = [
-                'evento/pedidos/relatorioProdutor/{evento_id}',
-                'evento/pedidos/relatorioConsumidor/{evento_id}',
-                'evento/pedidos/relatorioComposicao/{evento_id}'
-
+                'evento/pedidos/relatorioProdutorPDf/{evento_id}',
+                'evento/pedidos/relatorioConsumidorPDf/{evento_id}',
+                'evento/pedidos/relatorioComposicaoPDf/{evento_id}',
+                'evento/pedidos/relatorioProdutorPDf/{evento_id}/download',
+                'evento/pedidos/relatorioConsumidorPDf/{evento_id}/download',
+                'evento/pedidos/relatorioComposicaoPDf/{evento_id}',
+                'evento/pedidos/relatorioProdutorPlanilha/{evento_id}',
+                'evento/pedidos/relatorioConsumidorPlanilha/{evento_id}',
+                'evento/pedidos/relatorioComposicaoPlanilha/{evento_id}'
             ];
 
             $rotas_produto_coordenador = [
