@@ -12,6 +12,8 @@ use \projetoGCA\Pedido;
 use \projetoGCA\Consumidor;
 use \projetoGCA\ItemPedido;
 use \projetoGCA\Evento;
+use Mail;
+
 class PedidoController extends Controller
 {
 
@@ -100,7 +102,37 @@ class PedidoController extends Controller
           }
         }
 
-        return redirect("/visualizarPedido/$pedido->id");
+        //PDF
+
+        $view = 'relatorios.finalizaPedido';
+
+        $view = \View::make($view, compact('pedido'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        $filename = 'Confirmação Pedido #'.$pedido->id;
+
+        //PDF END
+
+        $usuario = $pedido->consumidor->usuario;
+        $to_name = $usuario->name;
+        $to_email = $usuario->email;
+
+        $data = array(
+            'pedido' => $pedido,
+            'to_name' => $to_name,
+        );
+
+        $subject = 'Feira Solidária - Grupo Consumo ';
+        $pdf_name = 'pedido_#'.$pedido->id.'.pdf';
+
+        Mail::send('emails.mail_pedido', $data, function($message) use ($to_name, $to_email, $subject, $pdf, $pdf_name) {
+            $message->to($to_email, $to_name)
+                    ->attachData($pdf->output(),$pdf_name)
+                    ->subject($subject);
+            $message->from('naoresponder.lmts@gmail.com','Feira Solidária');
+        });
+
+        return redirect("/visualizarPedido/$pedido->id")->with('success','Uma cópia do pedido foi enviada pra seu e-mail cadastrado');
     }
 
     public function visualizar($id){
