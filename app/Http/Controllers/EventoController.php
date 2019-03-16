@@ -152,9 +152,8 @@ class EventoController extends Controller
             }
         }
 
-        return redirect()
-                ->action('EventoController@listar', $request->id_grupo_consumo)
-                ->withInput();
+        return redirect("/evento/produtores/".$grupoConsumo->id);
+
     }
 
     public function listar($idGrupoConsumo){
@@ -199,6 +198,39 @@ class EventoController extends Controller
         $evento->estaAberto = False;
         $evento->update();
         return back()->with('success','Evento '.$evento->id.' fechado.');
+    }
+
+    public function listarProdutores($idGrupoConsumo){
+
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+
+      $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->orderBy('nome')->get();
+
+      foreach ($produtores as $produtor) {
+        $produtor->ativo = True;
+        $produtor->update();
+      }
+
+      return view("evento.produtores", ['produtores' => $produtores,
+                                        'grupoConsumo' => $grupoConsumo]);
+    }
+
+    public function desativarProdutores(Request $request){
+      $input = $request->input();
+
+      $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$input['idGrupoConsumo'])->get()->toArray();
+
+      foreach ($produtores as $produtor) {
+        if(!in_array($produtor['id'], $input['checkbox'])){
+          $produtor = \projetoGCA\Produtor::find($produtor['id']);
+          $produtor->ativo = False;
+          $produtor->update();
+        }
+      }
+
+      return redirect()
+              ->action('EventoController@listar', $request->idGrupoConsumo)
+              ->withInput();
     }
 
 }

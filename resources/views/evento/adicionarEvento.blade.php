@@ -67,7 +67,7 @@
                                 @endif
                                 <input type="checkbox" name="checkbox_outro" onchange="Enable(this)">Outro<br>
                                 <input id="input" name="input_outro" type="text" style="display: none">
-                                
+
                                 @if ($errors->has('input_outro'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('input_outro') }}</strong>
@@ -86,7 +86,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
                                 <button type="submit" class="btn btn-success">
-                                    Cadastrar
+                                    Continuar
                                 </button>
                             </div>
                         </div>

@@ -81,6 +81,8 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/pedidos/{evento_id}', 'EventoController@pedidos')->name('evento.pedidos');
     Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido')->name('evento.pedido.itens');
     Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento')->name('evento.fechar');
+    Route::get('/evento/produtores/{idGrupoConsumo}',  'EventoController@listarProdutores')->name('evento.produtores');
+    Route::post('/evento/desativarProdutores',  'EventoController@desativarProdutores')->name('evento.produtores.desativar');
     Route::post('/cadastrarEvento', 'EventoController@cadastrar')->name('evento.cadastrar');
 
     // Rotas para Loja
