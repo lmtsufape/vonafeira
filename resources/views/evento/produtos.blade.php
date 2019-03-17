@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('titulo','Produtores do Evento')
+@section('titulo','Produtos do Evento')
 
 @section('navbar')
   <a href="{{ route("home") }}">Início</a> >
@@ -15,43 +15,47 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Produtores Participantes do Evento</div>
+                <div class="panel-heading">Produtos Participantes do Evento</div>
 
                 <div class="panel-body">
-                  @if(count($produtores) == 0)
+                  @if(count($produtos) == 0)
                     <div class="alert alert-danger">
-                      Não existem produtores cadastrados neste grupo de consumo.
+                      Não existem produtos cadastrados para este grupo de consumo.
                     </div>
                   @else
                     <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
 
                     <div id="tabela" class="table-responsive">
-                      <table id="tabela" class="table table-hover">
+                      <table class="table table-hover">
                         <thead>
                           <tr>
-                              <th>Nome do Produtor</th>
-                              <th>Endereço</th>
-                              <th>Telefone</th>
+                              <th>Nome</th>
+                              <th>Produtor</th>
+                              <th>Descrição</th>
+                              <th>Preço</th>
+                              <th>Unidade de Venda</th>
                               <th>Ativo</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <form class="form-horizontal" method="POST" action="{{ route("evento.produtores.desativar") }}">
+                          <form class="form-horizontal" method="POST" action="{{ route("evento.produtos.desativar") }}">
 
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <input id="idGrupoConsumo" type="hidden" class="form-control" name="idGrupoConsumo" value="{{ $grupoConsumo->id }}" >
 
-                          @foreach ($produtores as $produtor)
+                          @foreach ($produtos as $produto)
                             <tr>
-                              <td data-title="Nome do Produtor">{{ $produtor->nome}}</td>
-                              <td data-title="Endereço">{{ $produtor->endereco}}</td>
-                              <td data-title="Telefone">{{ $produtor->telefone}}</td>
+                              @php($produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first())
+                              <td data-title="Nome">{{ $produto->nome }}</td>
+                              <td data-title="Produtor">{{ $produtor->nome}}</td>
+                              <td data-title="Descrição">{{ $produto->descricao }}</td>
+                              <td data-title="Preço">{{ 'R$ '.number_format($produto->preco, 2 )}}</td>
+                              <td data-title="Unidade de Venda">{{ $produto->unidadeVenda->nome }}</td>
                               <td>
-                                <input class="form-check-input position-static" checked type="checkbox" value="{{$produtor->id}}" id="checkbox{{$produtor->id}}" name="checkbox[{{$produtor->id}}]">
+                                <input class="form-check-input position-static" checked type="checkbox" value="{{$produto->id}}" id="checkbox{{$produto->id}}" name="checkbox[{{$produto->id}}]">
                               </td>
                             </tr>
                           @endforeach
-
                         </tbody>
                       </table>
                     </div>
@@ -59,19 +63,13 @@
                 </div>
                 <div class="panel-footer">
                   <button type="submit" class="btn btn-primary">
-                    continuar
+                    cadastrar
                   </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    function oi(){
-    alert("Oi");
-    }
-</script>
 
 <script type="text/javascript">
     function buscar() {
@@ -96,7 +94,6 @@
         }
       }
     }
-
 </script>
 
 @endsection

@@ -42,6 +42,7 @@ class AutorizacaoMiddleware
                 'adicionarEvento/{idGrupoConsumo}',
                 'eventos/{idGrupoConsumo}',
                 'evento/produtores/{idGrupoConsumo}'.
+                'evento/produtos/{idGrupoConsumo}'.
                 //Locais de Retirada
                 'grupoconsumo/{grupoconsumo_id}/locaisretirada/listar',
                 'grupoconsumo/{grupoconsumo_id}/locaisretirada/adicionar',
