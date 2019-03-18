@@ -44,17 +44,9 @@ class LojaController extends Controller
       $produtoresDesativados = Produtor::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
                                        ->where('ativo', '=', False)->get();
 
-      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)->orderBy('nome')->get();
-
-
-      foreach ($produtoresDesativados as $produtor) {
-        foreach ($produtos as $key => $produto) {
-          if($produtor->id == $produto->produtor_id) {
-            unset($produtos[$key]);
-          }
-        }
-      }
-      // dd($produtos);
+      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
+                         ->where('ativo', '=', True)
+                         ->orderBy('nome')->get();
 
       return view("loja.lojaProdutos", ['grupoConsumo' => $grupoConsumo,
                                         'evento' => $evento,

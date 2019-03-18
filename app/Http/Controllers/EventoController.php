@@ -206,9 +206,16 @@ class EventoController extends Controller
 
       $produtores = \projetoGCA\Produtor::where('grupoconsumo_id','=',$idGrupoConsumo)->orderBy('nome')->get();
 
+      $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+
       foreach ($produtores as $produtor) {
         $produtor->ativo = True;
         $produtor->update();
+      }
+
+      foreach ($produtos as $produto) {
+        $produto->ativo = True;
+        $produto->update();
       }
 
       return view("evento.produtores", ['produtores' => $produtores,
@@ -225,6 +232,51 @@ class EventoController extends Controller
           $produtor = \projetoGCA\Produtor::find($produtor['id']);
           $produtor->ativo = False;
           $produtor->update();
+
+          $produtos = \projetoGCA\Produto::where('produtor_id', '=', $produtor->id)->get();
+
+          foreach ($produtos as $produto) {
+            $produto->ativo = False;
+            $produto->update();
+          }
+        }
+      }
+
+      return redirect("/evento/produtos/".$input['idGrupoConsumo']);
+    }
+
+    public function listarProdutos($idGrupoConsumo){
+
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+
+      $produtoresDesativados = \projetoGCA\Produtor::where('grupoconsumo_id', '=', $idGrupoConsumo)
+                                       ->where('ativo', '=', False)->get();
+
+      $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('nome')->get();
+
+      foreach ($produtoresDesativados as $produtor) {
+        foreach ($produtos as $key => $produto) {
+          if($produtor->id == $produto->produtor_id) {
+            unset($produtos[$key]);
+          }
+        }
+      }
+
+      return view("evento.produtos", ['produtos' => $produtos,
+                                      'grupoConsumo' => $grupoConsumo]);
+    }
+
+    public function desativarProdutos(Request $request){
+      $input = $request->input();
+
+      $produtos= \projetoGCA\Produto::where('grupoconsumo_id','=',$input['idGrupoConsumo'])
+                                    ->where('ativo','=',True)->get();
+
+      foreach ($produtos as $produto) {
+        if(!in_array($produto['id'], $input['checkbox'])){
+          $produto = \projetoGCA\Produto::find($produto['id']);
+          $produto->ativo = False;
+          $produto->update();
         }
       }
 
