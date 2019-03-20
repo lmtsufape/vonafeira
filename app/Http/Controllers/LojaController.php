@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \projetoGCA\GrupoConsumo;
 use \projetoGCA\Evento;
 use \projetoGCA\Produto;
+use \projetoGCA\Produtor;
 
 class LojaController extends Controller
 {
@@ -39,7 +40,13 @@ class LojaController extends Controller
 
       $evento = Evento::find($idEvento);
       $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
-      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)->orderBy('nome')->get();
+
+      $produtoresDesativados = Produtor::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
+                                       ->where('ativo', '=', False)->get();
+
+      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
+                         ->where('ativo', '=', True)
+                         ->orderBy('nome')->get();
 
       return view("loja.lojaProdutos", ['grupoConsumo' => $grupoConsumo,
                                         'evento' => $evento,
