@@ -23,20 +23,23 @@ class ConsumidorController extends Controller
         return view("consumidor.adicionarConsumidor", ['users' => $user], ['gruposConsumo' => $grupoConsumo]);
     }
 
-    public function cadastrar(Request $request){
+    public function cadastrar($grupoConsumoid){
 
         $query = Consumidor::where([
-                          ['grupo_consumo_id', '=', $request->grupoConsumo],
+                          ['grupo_consumo_id', '=', $grupoConsumoid],
                           ['user_id', '=', Auth::user()->id]
                         ])->first();
 
         if(is_null($query)){
           $consumidor = new Consumidor();
           $consumidor->user_id = Auth::user()->id;
-          $consumidor->grupo_consumo_id = $request->grupoConsumo;
+          $consumidor->grupo_consumo_id = $grupoConsumoid;
           $consumidor->save();
         }
-        return redirect("/home");
+
+        $grupoConsumo = GrupoConsumo::find($grupoConsumoid);
+        
+        return redirect("/home")->with('success','Você agora está participando do grupo: '.$grupoConsumo->name);
 
     }
 
@@ -75,16 +78,8 @@ class ConsumidorController extends Controller
 
     public function entrarGrupo(){
 
-        $gruposConsumoTodos = GrupoConsumo::all();
-
-        $gruposConsumoParticipante = GrupoConsumo::whereHas('consumidores', function($query){
-            $query->where('user_id', '=', Auth::user()->id);
-        })->get();
-
-        $gruposConsumo = $gruposConsumoTodos->diff($gruposConsumoParticipante);
-
-        return view('consumidor.entrarGrupo',
-                   ['gruposConsumo' => $gruposConsumo]);
+      return view('consumidor.entrarGrupo', ['gruposConsumo' => [],
+                                             'termo' => [] ]);
     }
 
     public function pedidos(){
@@ -192,7 +187,7 @@ class ConsumidorController extends Controller
         $validator = Validator::make($request->all(), [
           'email' => 'unique:users'
         ]);
-  
+
         if($validator->fails()){
           return redirect()->back()->withErrors($validator->errors())->withInput();
         }

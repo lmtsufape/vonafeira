@@ -72,7 +72,7 @@
                               @if($grupoConsumo->coordenador_id != Auth::user()->id)
                                 <tr>
                                     <td data-title="Nome">{{ $grupoConsumo->name }}</td>
-                                    <td data-title="Descrição"{{ $grupoConsumo->descricao }}</td>
+                                    <td data-title="Descrição">{{ $grupoConsumo->descricao }}</td>
                                     <td data-title="Cidade">{{ $grupoConsumo->cidade }}</td>
                                     <td data-title="Estado">{{ $grupoConsumo->estado }}</td>
                                     <td data-title="Período">{{ $grupoConsumo->periodo }}</td>

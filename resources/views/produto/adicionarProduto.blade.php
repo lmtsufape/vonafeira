@@ -51,9 +51,6 @@
                                   </span>
                               @endif
                             </div>
-                            <a href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}" class="btn btn-primary">
-                              Novo
-                            </a>
                         </div>
                         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
                             <label for="nome" class="col-md-4 control-label">Nome do Produto</label>
@@ -117,10 +114,6 @@
                                     </span>
                                 @endif
                             </div>
-
-                            <a href="{{ route("unidadeVenda.novo", ["grupoConsumoId" => $grupoConsumo->id]) }}" class="btn btn-primary">
-                              Nova
-                            </a>
                         </div>
 
                         <div class="form-group">
