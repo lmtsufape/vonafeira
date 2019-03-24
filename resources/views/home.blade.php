@@ -20,6 +20,12 @@
                         </div>
                     @endif
 
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                          {{ session('success') }}
+                        </div>
+                    @endif
+
                     <div class="panel-footer">
                         <div class="form-group" align="center">
                             <a href="{{ route("grupoConsumo.listar") }}" class="btn btn-primary " role="button" aria-pressed="true">Meus grupos de consumo</a>

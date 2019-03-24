@@ -5,6 +5,7 @@ namespace projetoGCA\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\User;
+use \projetoGCA\GrupoConsumo;
 use Illuminate\Support\Facades\Auth;
 
 class GrupoConsumoController extends Controller
@@ -176,5 +177,38 @@ class GrupoConsumoController extends Controller
             'grupoConsumo' => $grupoConsumo,
             'coordenador' => $coordenador,]
         );
+    }
+
+    public function buscar(Request $request){
+      $termo = $request->termo;
+
+      if(!is_null($termo)){
+        $gruposConsumo = GrupoConsumo::orWhere('name', 'ilike', '%'.$termo.'%')
+                                     ->orWhere('estado', 'ilike', '%'.$termo.'%')
+                                     ->orWhere('cidade', 'ilike', '%'.$termo.'%')
+                                     ->orWhereHas('coordenador', function ($query) use ($termo) {
+                                        $query->where('name', 'ilike', '%'.$termo.'%');
+                                     })->get();
+      }
+
+      foreach ($gruposConsumo as $key => $grupo) {
+        if($grupo->coordenador_id == Auth::user()->id) {
+          unset($gruposConsumo[$key]);
+        }
+      }
+
+      $gruposConsumoParticipante = GrupoConsumo::whereHas('consumidores', function($query){
+            $query->where('user_id', '=', Auth::user()->id);
+        })->get();
+
+      $gruposConsumo = $gruposConsumo->diff($gruposConsumoParticipante);
+
+      return view("consumidor.entrarGrupo", ['gruposConsumo' => $gruposConsumo, 'termo' => $termo]);
+    }
+
+    public function exibir($grupoConsumoId){
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+
+      return view("grupoConsumo.exibir", ['grupoConsumo' => $grupoConsumo]);
     }
 }
