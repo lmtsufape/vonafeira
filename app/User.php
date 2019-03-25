@@ -2,6 +2,7 @@
 
 namespace projetoGCA;
 
+use \projetoGCA\Notifications\ResetPassword;    
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -33,5 +34,9 @@ class User extends Authenticatable
 
     public function consumidores(){
         return $this->hasMany(Consumidor::class, 'user_id', 'id');
+    }
+
+    public function sendPasswordResetNotification($token){
+        $this->notify(new ResetPassword($token));
     }
 }
