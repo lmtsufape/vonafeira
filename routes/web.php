@@ -72,7 +72,8 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/gruposConsumo', 'GrupoConsumoController@listar')->name('grupoConsumo.listar');
     Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar')->name('grupoConsumo.gerenciar');
     Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair')->name('grupoConsumo.sair');
-    Route::get('/grupoConsumo/busca/{termo}/exibir/{grupoConsumoId}', 'GrupoConsumoController@exibir')->name('grupoConsumo.exibir');
+    Route::get('/grupoConsumo/busca/{termo}/exibir/{grupoConsumoId}', 'GrupoConsumoController@exibirBusca')->name('grupoConsumo.exibirBusca');
+    Route::get('/grupoConsumo/exibir/{grupoConsumoId}', 'GrupoConsumoController@exibir')->name('grupoConsumo.exibir');
     Route::post('/cadastrarGrupoConsumo', 'GrupoConsumoController@cadastrar')->name('grupoConsumo.cadastrar');
     Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar")->name('grupoConsumo.atualizar');
     Route::post('/buscarGrupo', "GrupoConsumoController@buscar")->name('grupoConsumo.buscar');
