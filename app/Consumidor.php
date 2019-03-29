@@ -24,4 +24,8 @@ class Consumidor extends Model
     public function nome(){
         return $this->usuario->name;
     }
+
+    public function id(){
+        return $this->usuario->id;
+    }
 }
