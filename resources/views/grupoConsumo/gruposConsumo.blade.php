@@ -52,7 +52,7 @@
                                   <td data-title="Coordenador">{{ $grupoConsumo->coordenador->name }}</td>
                                   <td data-title="Local">{{ $grupoConsumo->cidade }} - {{ $grupoConsumo->estado }}</td>
                                   <td>
-                                    <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
+                                    <a class="btn btn-primary" style="width:103px"href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
                                       Gerenciar
                                     </a>
                                   </td>
@@ -70,8 +70,6 @@
                                       <a class="btn btn-success" href="{{ route("grupoConsumo.exibir", ["grupoConsumoId" => $grupoConsumo->id]) }}">
                                         Ver
                                       </a>
-                                    </td>
-                                    <td>
                                       <a class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja sair do grupo de consumo {{$grupoConsumo->name}}?')" href="{{ route("grupoConsumo.sair", ["grupoConsumoId" => $grupoConsumo->id]) }}">
                                         Sair
                                       </a>
