@@ -43,15 +43,12 @@
                         </thead>
                         <tbody>
                           @foreach ($gruposConsumo as $grupoConsumo)
-                            <?php
-                              $user = \projetoGCA\User::find($grupoConsumo->coordenador_id);
-                            ?>
                             <tr>
                               <td data-title="Nome">{{ $grupoConsumo->name }}</td>
-                              <td data-title="Coordenador">{{ $user->name }}</td>
+                              <td data-title="Coordenador">{{ $grupoConsumo->coordenador->name }}</td>
                               <td data-title="Local">{{ $grupoConsumo->cidade }} - {{ $grupoConsumo->estado }}</td>
                               <td>
-                                <a class="btn btn-primary" href="{{ route("grupoConsumo.exibir", ["termo" => $termo, "grupoConsumoId" => $grupoConsumo->id]) }}">
+                                <a class="btn btn-primary" href="{{ route("grupoConsumo.exibirBusca", ["termo" => $termo, "grupoConsumoId" => $grupoConsumo->id]) }}">
                                   Ver
                                 </a>
                               </td>
