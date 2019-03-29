@@ -98,7 +98,7 @@ class AutorizacaoMiddleware
                     }
                 }
                 if($grupoConsumo == NULL || \Auth::user()->id != $grupoConsumo->coordenador_id){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
             }else if(in_array($request->route()->uri,$rotas_pedidos)){
@@ -111,11 +111,11 @@ class AutorizacaoMiddleware
                     }
                 }
                 if($pedido == NULL){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }else{
                     $user = \projetoGCA\User::find($pedido->consumidor->user_id);
                     if($user->id != \Auth::user()->id){
-                        return redirect("/home");
+                        return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                     }
                 }
 
@@ -130,17 +130,17 @@ class AutorizacaoMiddleware
                 }
 
                 if($pedido == NULL){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
                 $evento = \projetoGCA\Evento::find($pedido->evento_id);
 
                 if($evento->estaAberto == False){
-                  return redirect("/home");
+                  return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }else{
                   $user = \projetoGCA\User::find($pedido->consumidor->user_id);
                   if($user->id != \Auth::user()->id){
-                      return redirect("/home");
+                      return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                   }
                 }
 
@@ -174,11 +174,11 @@ class AutorizacaoMiddleware
 
                 $unidadeVenda = \projetoGCA\UnidadeVenda::find($request->route('id'));
                 if($unidadeVenda == NULL){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
                 $grupoConsumo = \projetoGCA\GrupoConsumo::find($unidadeVenda->grupoConsumoId);
                 if($grupoConsumo == NULL || \Auth::user()->id != $grupoConsumo->coordenador_id){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
             }elseif($request->route()->uri == 'removerProdutoPedido/{idItemPedido}'){
@@ -189,11 +189,11 @@ class AutorizacaoMiddleware
                     $pedido = \projetoGCA\Pedido::find($itemPedido->pedido_id);
                 }
                 if($pedido == NULL){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }else{
                     $consumidor = \projetoGCA\Consumidor::find($pedido->consumidor_id);
                     if($consumidor->user_id != \Auth::user()->id){
-                        return redirect("/home");
+                        return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                     }
                 }
 
@@ -207,7 +207,7 @@ class AutorizacaoMiddleware
                     }
                 }
                 if($is_consumidor == false){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
             }elseif($request->route()->uri == 'evento/pedidos/itens/{pedido_id}'){
@@ -246,7 +246,7 @@ class AutorizacaoMiddleware
                 }
                 if($is_consumidor == false){
                     dd('redirect');
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
             }elseif(in_array($request->route()->uri,$rotas_produto_coordenador)){
@@ -258,7 +258,7 @@ class AutorizacaoMiddleware
                 }
 
                 if(\Auth::user()->id != $produto->grupoConsumo->coordenador_id){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
             }elseif(in_array($request->route()->uri,$rotas_produtor_coordenador)){
 
@@ -269,7 +269,7 @@ class AutorizacaoMiddleware
                 }
 
                 if(\Auth::user()->id != $produtor->grupoConsumo->coordenador_id){
-                    return redirect("/home");
+                    return redirect("/home")->with('denied','Você tentou acessar uma página que você não tem permissão.');
                 }
 
             }

@@ -39,7 +39,7 @@
                             <table class="table table-hover">
                                 <thead>
                                   <tr>
-                                      <th></th>
+                                      <th>Comprar?</th>
                                       <th>Nome</th>
                                       <th>Descrição</th>
                                       <th>Preço</th>
@@ -52,7 +52,7 @@
                                   @foreach($produtos as $produto)
                                   <input id="item_id" type="hidden" class="form-control" name="item_id[{{$produto->id}}]" value="{{ $produto->id }}" >
                                   <tr>
-                                      <td>
+                                      <td data-title="Comprar?">
                                         <input type="checkbox" onchange="Enable(this)" nome="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
                                       </td>
                                       <td data-title="Nome">{{ $produto->nome }}</td>
