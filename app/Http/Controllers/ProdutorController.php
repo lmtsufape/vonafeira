@@ -25,7 +25,7 @@ class ProdutorController extends Controller
 
   public function cadastrar(Request $request){
       $validator = Validator::make($request->all(), [
-          'nome' => 'required|min:3|max:191',
+          'nome' => 'required|min:2|max:191',
           'endereco' => 'required|min:4|max:191',
       ]);
 
@@ -76,6 +76,15 @@ class ProdutorController extends Controller
 
   public function atualizar(Request $request){
       $produtor = \projetoGCA\Produtor::find($request->id);
+
+      $validator = Validator::make($request->all(), [
+          'nome' => 'required|min:2|max:191',
+          'endereco' => 'required|min:4|max:191',
+      ]);
+
+      if($validator->fails()){
+          return redirect()->back()->withErrors($validator->errors())->withInput();
+      }
 
       $produtor->nome = $request->nome;
       $produtor->endereco = $request->endereco;

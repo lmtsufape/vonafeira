@@ -3,6 +3,8 @@
 @section('titulo','Alterar Senha')
 
 @section('navbar')
+    <a href="{{ route("home") }}">Início</a> >
+    <a href="{{ route("consumidor.editarCadastro") }}">Meus Dados</a> >
     Alterar Senha
 @endsection
 
@@ -77,6 +79,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
+                                <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
                                 <button type="submit" class="btn btn-primary">
                                     Alterar Senha
                                 </button>

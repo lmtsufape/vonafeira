@@ -206,6 +206,13 @@ class GrupoConsumoController extends Controller
       return view("consumidor.entrarGrupo", ['gruposConsumo' => $gruposConsumo, 'termo' => $termo]);
     }
 
+    public function exibirBusca($termo, $grupoConsumoId){
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+
+      return view("grupoConsumo.exibirBusca", ['grupoConsumo' => $grupoConsumo,
+                                          'termo' => $termo]);
+    }
+
     public function exibir($grupoConsumoId){
       $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
 

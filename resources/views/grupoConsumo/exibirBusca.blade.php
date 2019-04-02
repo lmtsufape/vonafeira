@@ -4,7 +4,7 @@
 
 @section('navbar')
     <a href="{{ route("home") }}">Início</a> >
-    <a href="{{ route("grupoConsumo.listar") }}">Grupos de Consumo</a> >
+    <a href="{{ route("consumidor.grupo.buscar") }}">Buscar Grupos de Consumo</a> >
     Informações do Grupo: {{$grupoConsumo->name}}
 @endsection
 
@@ -24,12 +24,8 @@
                         <div style="width: 50%; float: left" class="column col-md-8">
                             <strong>Coordenador</strong>
                             <p>{{$grupoConsumo->coordenador->name}}</p>
-                            <strong>Contato</strong>
-                            <p>
-                              Email: {{$grupoConsumo->coordenador->email}}
-                              <br>
-                              Telefone: {{$grupoConsumo->coordenador->telefone}}
-                            </p>
+                            <strong>Email</strong>
+                            <p>{{$grupoConsumo->coordenador->email}}</p>
                             <strong>Descrição</strong>
                             @if($grupoConsumo->descricao == NULL)
                               <p>Não há descrição.</p>
@@ -50,7 +46,14 @@
                     <hr>
 
                     <div class="panel-footer">
-                      <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                        <form class="form-horizontal" method="POST" action="{{ route("grupoConsumo.buscar") }}">
+                          {{ csrf_field() }}
+                          <input hidden type="text" name="termo" value="{{$termo}}">
+                          <button type="submit" class="btn btn-danger">
+                            Voltar
+                          </button>
+                          <a class="btn btn-success" href="{{ route('consumidor.cadastrar', ['grupoConsumoid' => $grupoConsumo->id]) }}">Entrar</a>
+                        </form>
                     </div>
                 </div>
             </div>

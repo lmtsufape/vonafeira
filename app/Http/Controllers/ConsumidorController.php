@@ -38,7 +38,7 @@ class ConsumidorController extends Controller
         }
 
         $grupoConsumo = GrupoConsumo::find($grupoConsumoid);
-        
+
         return redirect("/home")->with('success','Você agora está participando do grupo: '.$grupoConsumo->name);
 
     }
@@ -76,7 +76,7 @@ class ConsumidorController extends Controller
         return view("/home");
     }
 
-    public function entrarGrupo(){
+    public function buscarGrupo(){
 
       return view('consumidor.entrarGrupo', ['gruposConsumo' => [],
                                              'termo' => [] ]);

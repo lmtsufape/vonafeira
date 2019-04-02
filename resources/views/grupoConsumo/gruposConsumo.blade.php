@@ -4,7 +4,7 @@
 
 @section('navbar')
     <a href="{{ route("home") }}">Início</a> >
-    Meus Grupos de Consumo
+    Grupos de Consumo
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 @if (\Session::has('success'))
                 <br>
                     <div class="alert alert-success">
-                        <strong>Sucessos!</strong>
+                        <strong>Sucesso!</strong>
                         {!! \Session::get('success') !!}
                     </div>
                 @endif
@@ -40,31 +40,23 @@
                           <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Descrição</th>
-                                <th>Cidade</th>
-                                <th>Estado</th>
-                                <th>Período</th>
-                                <th>Dia da Semana</th>
-                                <th>Limite para pedidos</th>
-                                <th colspan="2">Ação</th>
+                                <th>Coordenador</th>
+                                <th>Local</th>
+                                <th colspan="2">Ações</th>
                             </tr>
                           </thead>
                           <tbody>
                             @foreach ($gruposConsumo as $grupoConsumo)
                               <tr>
                                   <td data-title="Nome">{{ $grupoConsumo->name }}</td>
-                                  <td data-title="Descrição">{{ $grupoConsumo->descricao }}</td>
-                                  <td data-title="Cidade">{{ $grupoConsumo->cidade }}</td>
-                                  <td data-title="Estado">{{ $grupoConsumo->estado }}</td>
-                                  <td data-title="Período">{{ $grupoConsumo->periodo }}</td>
-                                  <td data-title="Dia da Semana">{{ $grupoConsumo->dia_semana }}</td>
-                                  <td data-title="Limite para pedidos">{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-
+                                  <td data-title="Coordenador">{{ $grupoConsumo->coordenador->name }}</td>
+                                  <td data-title="Local">{{ $grupoConsumo->cidade }} - {{ $grupoConsumo->estado }}</td>
                                   <td>
-                                    <a class="btn btn-primary" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
+                                    <a class="btn btn-primary" style="width:103px"href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">
                                       Gerenciar
                                     </a>
                                   </td>
+                                  <td></td>
                               </tr>
                             @endforeach
 
@@ -72,14 +64,12 @@
                               @if($grupoConsumo->coordenador_id != Auth::user()->id)
                                 <tr>
                                     <td data-title="Nome">{{ $grupoConsumo->name }}</td>
-                                    <td data-title="Descrição">{{ $grupoConsumo->descricao }}</td>
-                                    <td data-title="Cidade">{{ $grupoConsumo->cidade }}</td>
-                                    <td data-title="Estado">{{ $grupoConsumo->estado }}</td>
-                                    <td data-title="Período">{{ $grupoConsumo->periodo }}</td>
-                                    <td data-title="Dia da Semana">{{ $grupoConsumo->dia_semana }}</td>
-                                    <td data-title="Limite para pedidos">{{ $grupoConsumo->prazo_pedidos }} dias antes do evento</td>
-
+                                    <td data-title="Coordenador">{{ $grupoConsumo->coordenador->name }}</td>
+                                    <td data-title="Local">{{ $grupoConsumo->cidade }} - {{ $grupoConsumo->estado }}</td>
                                     <td>
+                                      <a class="btn btn-success" href="{{ route("grupoConsumo.exibir", ["grupoConsumoId" => $grupoConsumo->id]) }}">
+                                        Ver
+                                      </a>
                                       <a class="btn btn-danger" onclick="return confirm('Você tem certeza que deseja sair do grupo de consumo {{$grupoConsumo->name}}?')" href="{{ route("grupoConsumo.sair", ["grupoConsumoId" => $grupoConsumo->id]) }}">
                                         Sair
                                       </a>

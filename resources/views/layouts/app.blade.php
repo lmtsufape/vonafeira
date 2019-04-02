@@ -274,7 +274,7 @@
                       <a href="{{ route("grupoConsumo.listar") }}">Meus Grupos de Consumo</a>
                   </li>
                   <li>
-                      <a href="{{ route("consumidor.grupo.entrar") }}">Entrar em Grupo de Consumo</a>
+                      <a href="{{ route("consumidor.grupo.buscar") }}">Entrar em Grupo de Consumo</a>
                   </li>
               </ul>
             </li>

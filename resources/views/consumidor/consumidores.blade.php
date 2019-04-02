@@ -33,9 +33,11 @@
                       </thead>
                       <tbody>
                         @foreach ($consumidores as $consumidor)
-                        <tr>
-                            <td data-title="Usuario">{{ $consumidor->name }}</td>
-                        </tr>
+                          @if($consumidor->id != $grupoConsumo->coordenador->id)
+                            <tr>
+                                <td data-title="Usuario">{{ $consumidor->name }}</td>
+                            </tr>
+                          @endif
                         @endforeach
                       </tbody>
                     </table>

@@ -51,7 +51,7 @@ Route::middleware('autorizacao')->group(function() {
 
     // Rotas para Consumidor
     Route::get('/consumidores/{idGrupoConsumo}', 'ConsumidorController@listar')->name('consumidor.listar');
-    Route::get('/entrarGrupo', 'ConsumidorController@entrarGrupo')->name('consumidor.grupo.entrar');
+    Route::get('/buscarGrupo', 'ConsumidorController@buscarGrupo')->name('consumidor.grupo.buscar');
     Route::get('/cadastrarConsumidor/{grupoConsumoid}', 'ConsumidorController@cadastrar')->name('consumidor.cadastrar');
     Route::get('/editarCadastro', 'ConsumidorController@editarCadastro')->name('consumidor.editarCadastro');
     Route::post('/atualizarCadastro', 'ConsumidorController@atualizarCadastro')->name('consumidor.cadastro.atualizar');
@@ -72,10 +72,11 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/gruposConsumo', 'GrupoConsumoController@listar')->name('grupoConsumo.listar');
     Route::get('/gerenciar/{id}', 'GrupoConsumoController@gerenciar')->name('grupoConsumo.gerenciar');
     Route::get('/grupoconsumo/sair/{grupoConsumoId}', 'GrupoConsumoController@sair')->name('grupoConsumo.sair');
+    Route::get('/grupoConsumo/busca/{termo}/exibir/{grupoConsumoId}', 'GrupoConsumoController@exibirBusca')->name('grupoConsumo.exibirBusca');
     Route::get('/grupoConsumo/exibir/{grupoConsumoId}', 'GrupoConsumoController@exibir')->name('grupoConsumo.exibir');
     Route::post('/cadastrarGrupoConsumo', 'GrupoConsumoController@cadastrar')->name('grupoConsumo.cadastrar');
     Route::post('/atualizarGrupoConsumo', "GrupoConsumoController@atualizar")->name('grupoConsumo.atualizar');
-    Route::post('/buscarGrupoConsumo', "GrupoConsumoController@buscar")->name('grupoConsumo.buscar');
+    Route::post('/buscarGrupo', "GrupoConsumoController@buscar")->name('grupoConsumo.buscar');
 
     // Rotas para Eventos
     Route::get('/adicionarEvento/{idGrupoConsumo}',  'EventoController@novo')->name('evento.novo');
