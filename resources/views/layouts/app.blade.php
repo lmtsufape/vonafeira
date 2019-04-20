@@ -19,28 +19,28 @@
 
     <script type="text/javascript">
         /* Máscaras ER */
-        function mascara(o,f){
-            v_obj=o
-            v_fun=f
-            setTimeout("execmascara()",1)
-        }
-        function execmascara(){
-            v_obj.value=v_fun(v_obj.value)
-        }
-        function mtel(v){
-            v=v.replace(/\D/g,"");             //Remove tudo o que não é dígito
-            v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-            v=v.replace(/(\d)(\d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
-            return v;
-        }
-        function id( el ){
-            return document.getElementById( el );
-        }
-        window.onload = function(){
-            id('telefone').onkeypress = function(){
-                mascara( this, mtel );
-            }
-        }
+        // function mascara(o,f){
+        //     v_obj=o
+        //     v_fun=f
+        //     setTimeout("execmascara()",1)
+        // }
+        // function execmascara(){
+        //     v_obj.value=v_fun(v_obj.value)
+        // }
+        // function mtel(v){
+        //     v=v.replace(/\D/g,"");             //Remove tudo o que não é dígito
+        //     v=v.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+        //     v=v.replace(/(\d)(\d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+        //     return v;
+        // }
+        // function id( el ){
+        //     return document.getElementById( el );
+        // }
+        // window.onload = function(){
+        //     id('telefone').onkeypress = function(){
+        //         mascara( this, mtel );
+        //     }
+        // }
     </script>
 
     <style type="text/css">
@@ -104,6 +104,17 @@
             background-color: #fff;
         }
 
+        #footer-brasil {
+           background: none repeat scroll 0% 0% #1B2E4F;
+           padding: 1em 0px;
+           max-width: 100%;
+        }
+
+        .footer{
+          margin: -0% -1%;
+          margin-bottom: -1%;
+        }
+
         @media (max-width: 1024px) {
           #barra-logos{display: none;}
           .btn-toggle{display: block;}
@@ -153,6 +164,7 @@
         		text-align:left;
         		font-weight: bold;
         	}
+
 
         	/*
         	Label the data
@@ -219,6 +231,8 @@
 
 </head>
 <body>
+
+
     <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
       <ul id="menu-barra-temp" style="list-style:none;">
           <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
@@ -342,13 +356,18 @@
   @endif
   @endif
 
-  </div>
-
+  <div style="min-height:500px">
       @yield('content')
   </div>
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
+
+<div class="footer">
+  <div id="footer-brasil"></div>
+</div>
+
 <script defer="defer" src="//barra.brasil.gov.br/barra.js" type="text/javascript"></script>
 </html>
