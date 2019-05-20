@@ -22,6 +22,11 @@
                     <div class="alert alert-danger">
                       Não existem produtos cadastrados para este grupo de consumo.
                     </div>
+                    <div class="panel-footer">
+                      <button type="submit" disabled class="btn btn-primary">
+                        Cadastrar
+                      </button>
+                    </div>
                   @else
                     <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
 
@@ -59,12 +64,12 @@
                         </tbody>
                       </table>
                     </div>
+                    <div class="panel-footer">
+                      <button type="submit" class="btn btn-primary">
+                        Cadastrar
+                      </button>
+                    </div>
                   @endif
-                </div>
-                <div class="panel-footer">
-                  <button type="submit" class="btn btn-primary">
-                    cadastrar
-                  </button>
                 </div>
             </div>
         </div>
