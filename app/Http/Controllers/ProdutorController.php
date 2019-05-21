@@ -26,6 +26,7 @@ class ProdutorController extends Controller
   public function cadastrar(Request $request){
       $validator = Validator::make($request->all(), [
           'nome' => 'required|min:2|max:191',
+          'telefone' => 'numeric',
           'endereco' => 'required|min:4|max:191',
       ]);
 
@@ -79,6 +80,7 @@ class ProdutorController extends Controller
 
       $validator = Validator::make($request->all(), [
           'nome' => 'required|min:2|max:191',
+          'telefone' => 'numeric',
           'endereco' => 'required|min:4|max:191',
       ]);
 
