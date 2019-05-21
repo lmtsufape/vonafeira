@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/relatorios.css') }}" rel="stylesheet">
-    <title>Vô na Feira - Temos de Uso.pdf</title>
+    <title>Vô na Feira - Termos de Uso.pdf</title>
 </head>
 <body>
-    <h3>Vô na Feira - Temos de Uso</h3>
+    <h3>Vô na Feira - Termos de Uso</h3>
     <h5>Última atualização: 12 de Maio de 2019</h5>
 
     <div class="container">
