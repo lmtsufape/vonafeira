@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Versão 19.0528-1625 -->
+<!-- Versão 19.0617-1526 -->
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
