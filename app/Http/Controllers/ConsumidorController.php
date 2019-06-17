@@ -179,18 +179,29 @@ class ConsumidorController extends Controller
     public function atualizarCadastro(Request $request){
       $usuario = \Auth::user();
 
-      if (!(Hash::check($request->senha, $usuario->password))){
-        return redirect()->back()->with('fail','Senha incorreta.');
-      }
-
       if($request->email != $usuario->email){
         $validator = Validator::make($request->all(), [
-          'email' => 'unique:users'
+          'email' => 'unique:users|email'
         ]);
 
         if($validator->fails()){
           return redirect()->back()->withErrors($validator->errors())->withInput();
         }
+      }
+
+      $validator = Validator::make($request->all(),[
+        'name' => 'required',
+        'telefone' => 'required|min:10'
+      ]);
+
+      if($validator->fails()){
+        return redirect()->back()->withErrors($validator->errors())->withInput();
+      }  
+
+      if (!(Hash::check($request->senha, $usuario->password))){
+        $validator = Validator::make([],[]);
+        $validator->errors()->add('senha', 'Senha incorreta.');;
+        return redirect()->back()->withErrors($validator->errors())->withInput();
       }
 
       $usuario->name = $request->name;
