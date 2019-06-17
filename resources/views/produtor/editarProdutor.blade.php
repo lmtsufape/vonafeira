@@ -61,7 +61,7 @@
                             <label for="telefone" class="col-md-4 control-label">Telefone</label>
 
                             <div class="col-md-6">
-                                <input  type="text" name="telefone" id="telefone" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{3,4}$" placeholder="(87) 91111-1111" class="form-control" maxlength="15" value="{{$produtor->telefone}}">
+                                <input  type="digit" name="telefone" id="telefone" minlength="10" placeholder="DDD+Telefone" class="form-control"  maxlength="11" value="{{$produtor->telefone}}" >
 
                                 @if ($errors->has('telefone'))
                                     <span class="help-block">
