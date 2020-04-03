@@ -17,6 +17,8 @@
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2-bootstrap.min.css') }}" rel="stylesheet">
 
+    <!-- Scripts -->
+   
     <script type="text/javascript">
         /* Máscaras ER */
         // function mascara(o,f){
@@ -376,6 +378,10 @@
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
 
+  @hasSection ('javascript')
+    @yield('javascript')
+    @else
+    @endif
 </body>
 
 
