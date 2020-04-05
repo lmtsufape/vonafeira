@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function endereco(){
+        return $this->hasOne(Endereco::class, 'user_id', 'id');
+    }
+
     public function contato(){
         return $this->hasOne('projetoGCA\Contato');
     }

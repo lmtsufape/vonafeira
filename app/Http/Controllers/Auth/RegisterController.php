@@ -6,6 +6,7 @@ use projetoGCA\User;
 use projetoGCA\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use projetoGCA\Endereco;
 
 class RegisterController extends Controller
 {
@@ -63,6 +64,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
+        
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);  
+        $user->telefone = $data['telefone'];
+        $user->save();
+
         // endereço
         $end = new Endereco();
         $end->rua = $data['rua'];
@@ -71,16 +81,9 @@ class RegisterController extends Controller
         $end->cidade = $data['cidade'];
         $end->uf = $data['uf'];
         $end->cep = $data['cep'];
+        $end->user_id = $user->id;
 
         $end->save();
-        
-        $user = new User();
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->password = bcrypt($data['password']);  
-        $user->telefone = $data['telefone'];
-        $user->enderecoId = $end->id;
-        $user->save();
 
         return $user;
       
