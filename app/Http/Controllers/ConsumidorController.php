@@ -12,6 +12,8 @@ use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
 use Illuminate\Support\Facades\Hash;
+use projetoGCA\Endereco;
+
 class ConsumidorController extends Controller
 {
     /**
@@ -207,6 +209,20 @@ class ConsumidorController extends Controller
       $usuario->name = $request->name;
       $usuario->email = $request->email;
       $usuario->telefone = $request->telefone;
+
+      // endereço
+      if($request->cep != null){
+        $endereco = new Endereco();
+        $endereco->rua = $request['rua'];
+        $endereco->numero = $request['numero'];
+        $endereco->bairro = $request['bairro'];
+        $endereco->cidade = $request['cidade'];
+        $endereco->uf = $request['uf'];
+        $endereco->cep = $request['cep'];
+        $endereco->save();
+       
+        $usuario->endereco()->associate($endereco);
+      }
 
       $usuario->save();
 

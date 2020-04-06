@@ -65,25 +65,27 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         
-        
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);  
         $user->telefone = $data['telefone'];
-        $user->save();
-
-        // endereço
-        $end = new Endereco();
-        $end->rua = $data['rua'];
-        $end->numero = $data['numero'];
-        $end->bairro = $data['bairro'];
-        $end->cidade = $data['cidade'];
-        $end->uf = $data['uf'];
-        $end->cep = $data['cep'];
-        $end->user_id = $user->id;
-
-        $end->save();
+        
+        if($data['cep'] != null){
+            // endereço
+            $end = new Endereco();
+            $end->rua = $data['rua'];
+            $end->numero = $data['numero'];
+            $end->bairro = $data['bairro'];
+            $end->cidade = $data['cidade'];
+            $end->uf = $data['uf'];
+            $end->cep = $data['cep'];
+            
+            $end->save();
+            $end->users()->save($user);
+        }else{
+            $user->save();
+        }
 
         return $user;
       

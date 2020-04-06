@@ -15,7 +15,7 @@ class CreateEnderecosTable extends Migration
     {
         //
         Schema::create('enderecos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->timestamps();
 
             $table->string('rua');
@@ -25,8 +25,6 @@ class CreateEnderecosTable extends Migration
             $table->string('uf');
             $table->string('cep');
 
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

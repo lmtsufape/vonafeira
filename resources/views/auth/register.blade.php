@@ -59,7 +59,7 @@
                     <div class="form-group row">
                     <div class="col-md-2">
                         <label for="cep" class="col-form-label">{{ __('CEP') }}</label>
-                        <input value="{{old('cep')}}" onblur="pesquisacep(this.value);" id="cep" type="text" required autocomplete="cep" name="cep" autofocus class="form-control field__input a-field__input" placeholder="CEP" size="10" maxlength="9" >
+                        <input value="{{old('cep')}}" onblur="pesquisacep(this.value);" id="cep" type="text" autocomplete="cep" name="cep" autofocus class="form-control field__input a-field__input" placeholder="CEP" size="10" maxlength="9" >
                         @error('cep')
                             <span class="invalid-feedback" role="alert">
                                 <strong>messagem</strong>
@@ -71,7 +71,7 @@
 
                         <div class="col-md-6">
                             <label for="rua" class="col-form-label">{{ __('Rua') }}</label>
-                            <input value="{{old('rua')}}" id="rua" type="text" class="form-control @error('rua') is-invalid @enderror" name="rua" required autocomplete="new-password">
+                            <input value="{{old('rua')}}" id="rua" type="text" class="form-control @error('rua') is-invalid @enderror" name="rua" autocomplete="new-password">
 
                             @error('rua')
                                 <span class="invalid-feedback" role="alert">
@@ -93,7 +93,7 @@
 
                         <div class="col-md-4">
                             <label for="bairro" class="col-form-label">{{ __('Bairro') }}</label>
-                            <input value="{{old('bairro')}}" id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" required autocomplete="bairro">
+                            <input value="{{old('bairro')}}" id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" autocomplete="bairro">
 
                             @error('bairro')
                                 <span class="invalid-feedback" role="alert">
@@ -109,7 +109,7 @@
 
                         <div class="col-md-6">
                             <label for="cidade" class="col-form-label">{{ __('Cidade') }}</label>
-                            <input value="{{old('cidade')}}" id="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" name="cidade" required autocomplete="cidade">
+                            <input value="{{old('cidade')}}" id="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" name="cidade" autocomplete="cidade">
 
                             @error('cidade')
                                 <span class="invalid-feedback" role="alert">
@@ -120,9 +120,9 @@
 
                         <div class="col-sm-6">
                             <label for="uf" class="col-form-label">{{ __('UF') }}</label>
-                            {{-- <input id="uf" type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" value="{{ old('uf') }}" required autocomplete="uf" autofocus> --}}
+                            {{-- <input id="uf" type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" value="{{ old('uf') }}" autocomplete="uf" autofocus> --}}
                             <select class="form-control @error('uf') is-invalid @enderror" id="uf" name="uf">
-                                <option value="" disabled selected hidden>-- UF --</option>
+                                <option value="" selected hidden>-- UF --</option>
                                 <option @if(old('uf') == 'AC') selected @endif value="AC">Acre</option>
                                 <option @if(old('uf') == 'AL') selected @endif value="AL">Alagoas</option>
                                 <option @if(old('uf') == 'AP') selected @endif value="AP">Amapá</option>
