@@ -16,8 +16,10 @@ class CreateLocalRetiradasTable extends Migration
         Schema::create('local_retiradas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
+
             $table->integer('grupoconsumo_id')->unsigned();
             $table->foreign('grupoconsumo_id')->references('id')->on('grupo_consumos');
+            
             $table->timestamps();
             $table->softDeletes();
         });

@@ -17,8 +17,10 @@ class CreateLocalRetiradaEventosTable extends Migration
             $table->increments('id');
             $table->integer('evento_id');
             $table->integer('localretirada_id');
+
             $table->foreign('evento_id')->references('id')->on('eventos');
             $table->foreign('localretirada_id')->references('id')->on('local_retiradas');
+            
             $table->timestamps();
         });
     }

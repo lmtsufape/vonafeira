@@ -380,8 +380,8 @@
 
   @hasSection ('javascript')
     @yield('javascript')
-    @else
-    @endif
+  @else
+  @endif
 </body>
 
 

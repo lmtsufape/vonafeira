@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsers extends Migration
+class UpdatePedidos extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,10 @@ class UpdateUsers extends Migration
     public function up()
     {
         //
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('endereco_id')->unsigned()->nullable()->unique();
+        Schema::table('pedidos', function (Blueprint $table) {
+            $table->integer('endereco_consumidor_id')->unsigned()->nullable();
 
-            $table->foreign('endereco_id')->references('id')->on('enderecos');
+            $table->foreign('endereco_consumidor_id')->references('endereco_id')->on('users');
         });
     }
 
@@ -30,9 +30,9 @@ class UpdateUsers extends Migration
     {
         //
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['endereco_id']);
+            $table->dropForeign(['endereco_consumidor_id']);
 
-            $table->dropColumn('endereco_id');
+            $table->dropColumn('endereco_consumidor_id');
         });
     }
 }

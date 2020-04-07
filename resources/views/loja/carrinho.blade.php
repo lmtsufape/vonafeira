@@ -56,17 +56,37 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
+                            <!-- onchange="Enable(this)" -->
+                              <input type="radio" onchange="check()" id="radio_retirada" name="destino" value="retirada">
+                              <label for="retirada">Retirar em local</label><br>
+                              
+                              <input type="radio"  onchange="check()" id="radio_entrega" name="destino"  value="entrega">
+                              <label for="entrega">Entregar a meu endereço</label><br>
+                              
 
-                                <select class="form-control" name="localretiradaevento" required>
+                                <select  class="form-control" id="select_retirada" name="localretiradaevento" required>
                                     <option value="" selected disabled hidden>Escolha local de retirada</option>
                                     @php($evento = \projetoGCA\Evento::find($evento))
                                     @foreach ($evento->locaisretiradaevento as $local)
                                         @if (old('localretiradaevento') == $local->id)
-                                            <option value="{{$local->id}}" selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
+                                            <option value="{{$local->id}}"  selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @else
-                                            <option value="{{$local->id}}">{{$local->localretirada()->withTrashed()->first()->nome}}</option>
+                                            <option value="{{$local->id}}" >{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @endif
                                     @endforeach
+                                </select>
+
+                                <select class="form-control" id="select_entrega" name="entrega_endereco"> -->
+                                  <option value="" selected disabled hidden>Entrega a seu endereço</option>
+                                  
+                                    @if(\Auth::user()->endereco != null )
+                                      @if (old('endereco') == $local->id)
+                                      <option value="{{ \Auth::user()->endereco }}" selected> {{\Auth::user()->endereco->rua}}</option>
+                                      @else
+                                          <option value="{{ \Auth::user()->endereco }}">{{\Auth::user()->endereco->rua}}</option>
+                                      @endif
+                                    @endif
+                                   
                                 </select>
 
                                 <br>
@@ -84,3 +104,44 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+
+<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  // do your stuff here
+  document.getElementById("select_retirada").style.display = "none";
+  document.getElementById("select_entrega").style.display = "none";
+});
+
+ 
+check = function()
+ {
+   //console.log(document.getElementById("radio_retirada"));
+      // if(document.getElementById("radio_retirada").checked == true){
+
+      //   var options = document.getElementById("select_retirada").options;
+
+      //   console.log(options);
+      // }
+      if(document.getElementById("radio_retirada").checked == true){
+        console.log("true");
+        // var options = 
+        document.getElementById("select_retirada").style.display = "block";
+        document.getElementById("select_entrega").style.display = "none";
+        // .options;
+        // for(opcao in options){
+        //   opcao.removeAttribute("hidden");
+        // }   
+      }
+       if(document.getElementById("radio_entrega").checked == true){
+        console.log("true 2");
+        document.getElementById("select_entrega").style.display = "block";
+        document.getElementById("select_retirada").style.display = "none";
+      }
+  }
+
+</script>
+@endsection
+

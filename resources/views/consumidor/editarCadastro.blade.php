@@ -184,11 +184,6 @@
             </div>
             <div class="col-sm-4">
                 <label for="uf" class="col-form-label">{{ __('UF') }}</label>
-                @if(old('uf',NULL) != NULL)
-                    {{-- <input id="uf" type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" value="{{ old('uf') }}"  autocomplete="uf" autofocus> --}}
-                @else
-                    {{-- <input id="uf" type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" value="{{ $user->endereco->uf }}"  autocomplete="uf" autofocus> --}}
-                @endif
                 <select class="form-control @error('uf') is-invalid @enderror" id="uf" name="uf" ">
                     <option value="" disabled selected hidden>-- UF --</option>
                     <option value="AC" {{ ($user->endereco != null && $user->endereco->uf == "AC") ? "selected" : ""}}>Acre</option>
