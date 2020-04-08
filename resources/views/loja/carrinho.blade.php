@@ -147,7 +147,7 @@ show_drop_down = function()
     }
 
     function checkValidity() {
-        const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
+        const errorMessage = !isChecked() ? 'Escolha uma opção' : '';
         if(select_retirada.style.display == "none"){
           select_entrega.setCustomValidity(errorMessage);
           select_retirada.setCustomValidity("");
