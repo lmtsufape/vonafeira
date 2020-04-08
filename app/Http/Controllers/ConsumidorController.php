@@ -216,9 +216,11 @@ class ConsumidorController extends Controller
       $usuario->email = $request->email;
       $usuario->telefone = $request->telefone;
 
+      $usuario->save();
 
       if($request->cep != null){
-        $endereco = $usuario->endereco;
+        $endereco = $usuario->endereco == null ? new Endereco() : $usuario->endereco;
+        
         $endereco->rua = $request['rua'];
         $endereco->numero = $request['numero'];
         $endereco->bairro = $request['bairro'];
@@ -226,10 +228,17 @@ class ConsumidorController extends Controller
         $endereco->uf = $request['uf'];
         $endereco->cep = $request['cep'];
        
-        $endereco->save();
+        if($usuario->endereco == null){
+          $usuario->endereco()->save($endereco);
+        }else{
+          $endereco->save();
+        }
+        
       }
 
-      $usuario->save();
+     
+
+      
 
       return redirect()->back()->with('success','Dados cadastrais salvos.');
     }

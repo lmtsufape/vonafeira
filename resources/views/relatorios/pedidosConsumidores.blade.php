@@ -22,7 +22,7 @@
                     @php($total=0)
                     @foreach($pedidos as $pedido)
                         @if($pedido->consumidor->user_id == $consumidor->id)
-                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}</th></tr>
+                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento != null ? $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome : "-"}}</th></tr>
                             <tr>
                                 <th>Qtd.</th>
                                 <th>Und. Venda</th>
