@@ -8,7 +8,11 @@ class Endereco extends Model
 {
     //
 
-    public function users(){
-        return $this->hasMany(User::class, 'endereco_id', 'id');
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function pedidos(){
+        return $this->hasMany(Pedido::class, 'endereco_consumidor_id', 'id');
     }
 }

@@ -70,7 +70,6 @@ class PedidoController extends Controller
 
 
     public function finalizar(Request $request){
-        //dd($request);
         
         $input = $request->input();
         $array_of_item_ids = $input['produto_id'];

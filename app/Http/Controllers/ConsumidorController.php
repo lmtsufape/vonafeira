@@ -216,18 +216,17 @@ class ConsumidorController extends Controller
       $usuario->email = $request->email;
       $usuario->telefone = $request->telefone;
 
-      // endereço
+
       if($request->cep != null){
-        $endereco = new Endereco();
+        $endereco = $usuario->endereco;
         $endereco->rua = $request['rua'];
         $endereco->numero = $request['numero'];
         $endereco->bairro = $request['bairro'];
         $endereco->cidade = $request['cidade'];
         $endereco->uf = $request['uf'];
         $endereco->cep = $request['cep'];
-        $endereco->save();
        
-        $usuario->endereco()->associate($endereco);
+        $endereco->save();
       }
 
       $usuario->save();

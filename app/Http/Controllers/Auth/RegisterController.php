@@ -77,6 +77,7 @@ class RegisterController extends Controller
         $user->email = $data['email'];
         $user->password = bcrypt($data['password']);  
         $user->telefone = $data['telefone'];
+        $user->save();
         
         if($data['cep'] != null){
             // endereço
@@ -88,10 +89,8 @@ class RegisterController extends Controller
             $end->uf = $data['uf'];
             $end->cep = $data['cep'];
             
-            $end->save();
-            $end->users()->save($user);
-        }else{
-            $user->save();
+            
+            $user->endereco()->save($end);
         }
 
         return $user;

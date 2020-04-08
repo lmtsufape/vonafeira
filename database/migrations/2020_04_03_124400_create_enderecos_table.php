@@ -25,6 +25,9 @@ class CreateEnderecosTable extends Migration
             $table->string('uf');
             $table->string('cep');
 
+            $table->integer('user_id')->unsigned()->nullable()->unique();
+            $table->foreign('user_id')->references('id')->on('users');
+
         });
     }
 

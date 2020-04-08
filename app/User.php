@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     public function endereco(){
-        return $this->belongsTo(Endereco::class, 'endereco_id', 'id');
+        return $this->hasOne(Endereco::class, 'user_id', 'id');
     }
 
     public function contato(){

@@ -98,6 +98,8 @@
                                 @endif
                             </div>
 
+                <!-- ADICIONANDO ENDEREÇO AO USUARIO -->
+
                             <div class="col-md-4 ">
                                 <label for="cep" class="col-md control-label">{{ __('CEP') }}</label>
 
@@ -116,11 +118,7 @@
                             
                             </div>
                         </div>
-                        
 
-        <!-- ADICIONANDO ENDEREÇO AO USUARIO -->
-
-                        {{-- Endereço --}}
                         <div class="form-group row justify-content-center {{  $errors->has('rua') || $errors->has('numero') ? ' has-error' : '' }}">
 
                             

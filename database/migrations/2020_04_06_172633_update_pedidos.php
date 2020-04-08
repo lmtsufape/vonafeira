@@ -18,7 +18,7 @@ class UpdatePedidos extends Migration
             $table->integer('localretiradaevento_id')->nullable()->change();
 
             $table->integer('endereco_consumidor_id')->unsigned()->nullable();
-            $table->foreign('endereco_consumidor_id')->references('endereco_id')->on('users');
+            $table->foreign('endereco_consumidor_id')->references('id')->on('enderecos');
         });
     }
 
