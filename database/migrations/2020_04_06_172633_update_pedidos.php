@@ -15,8 +15,9 @@ class UpdatePedidos extends Migration
     {
         //
         Schema::table('pedidos', function (Blueprint $table) {
-            $table->integer('endereco_consumidor_id')->unsigned()->nullable();
+            $table->integer('localretiradaevento_id')->nullable()->change();
 
+            $table->integer('endereco_consumidor_id')->unsigned()->nullable();
             $table->foreign('endereco_consumidor_id')->references('endereco_id')->on('users');
         });
     }
@@ -29,7 +30,7 @@ class UpdatePedidos extends Migration
     public function down()
     {
         //
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('pedidos', function (Blueprint $table) {
             $table->dropForeign(['endereco_consumidor_id']);
 
             $table->dropColumn('endereco_consumidor_id');

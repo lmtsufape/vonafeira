@@ -193,7 +193,13 @@ class ConsumidorController extends Controller
 
       $validator = Validator::make($request->all(),[
         'name' => 'required',
-        'telefone' => 'required|min:10'
+        'telefone' => 'required|min:10',
+        
+        'cep'=> 'required_with:rua,bairro,cidade,uf',
+        'rua' => 'required_with:cep,bairro,cidade,uf',
+        'bairro' => 'required_with:cep,rua,cidade,uf',
+        'cidade' => 'required_with:cep,rua,bairro,uf',
+        'uf' => 'required_with:cep,rua,bairro,cidade',
       ]);
 
       if($validator->fails()){

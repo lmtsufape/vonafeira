@@ -57,15 +57,15 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
                             <!-- onchange="Enable(this)" -->
-                              <input type="radio" onchange="check()" id="radio_retirada" name="destino" value="retirada">
-                              <label for="retirada">Retirar em local</label><br>
+                              <input type="radio" onchange="show_drop_down()" id="radio_retirada" name="tipo" value="retirada" required>
+                              <label for="retirada">Retirar pedido no local do evento</label><br>
                               
-                              <input type="radio"  onchange="check()" id="radio_entrega" name="destino"  value="entrega">
-                              <label for="entrega">Entregar a meu endereço</label><br>
+                              <input type="radio"  onchange="show_drop_down()" id="radio_entrega" name="tipo"  value="entrega">
+                              <label for="entrega">Receber entrega a meu endereço</label><br>
                               
 
-                                <select  class="form-control" id="select_retirada" name="localretiradaevento" required>
-                                    <option value="" selected disabled hidden>Escolha local de retirada</option>
+                                <select  class="form-control" id="select_retirada" name="localretiradaevento" >
+                                    <option value="" selected disabled >Escolha local de retirada</option>
                                     @php($evento = \projetoGCA\Evento::find($evento))
                                     @foreach ($evento->locaisretiradaevento as $local)
                                         @if (old('localretiradaevento') == $local->id)
@@ -76,14 +76,14 @@
                                     @endforeach
                                 </select>
 
-                                <select class="form-control" id="select_entrega" name="entrega_endereco"> -->
+                                <select class="form-control" id="select_entrega" name="entrega_endereco" > -->
                                   <option value="" selected disabled hidden>Entrega a seu endereço</option>
                                   
                                     @if(\Auth::user()->endereco != null )
                                       @if (old('endereco') == $local->id)
-                                      <option value="{{ \Auth::user()->endereco }}" selected> {{\Auth::user()->endereco->rua}}</option>
+                                      <option value="{{ \Auth::user()->endereco->id }}" selected> {{\Auth::user()->endereco->rua}}</option>
                                       @else
-                                          <option value="{{ \Auth::user()->endereco }}">{{\Auth::user()->endereco->rua}}</option>
+                                          <option value="{{ \Auth::user()->endereco->id }}">{{\Auth::user()->endereco->rua}}</option>
                                       @endif
                                     @endif
                                    
@@ -110,37 +110,69 @@
 <script type="text/javascript">
 
 document.addEventListener("DOMContentLoaded", function(event) {
-  // do your stuff here
   document.getElementById("select_retirada").style.display = "none";
   document.getElementById("select_entrega").style.display = "none";
 });
 
  
-check = function()
+
+show_drop_down = function()
  {
-   //console.log(document.getElementById("radio_retirada"));
-      // if(document.getElementById("radio_retirada").checked == true){
+   
+  if(document.getElementById("radio_retirada").checked == true){
+    document.getElementById("select_retirada").style.display = "block";
 
-      //   var options = document.getElementById("select_retirada").options;
-
-      //   console.log(options);
-      // }
-      if(document.getElementById("radio_retirada").checked == true){
-        console.log("true");
-        // var options = 
-        document.getElementById("select_retirada").style.display = "block";
-        document.getElementById("select_entrega").style.display = "none";
-        // .options;
-        // for(opcao in options){
-        //   opcao.removeAttribute("hidden");
-        // }   
-      }
-       if(document.getElementById("radio_entrega").checked == true){
-        console.log("true 2");
-        document.getElementById("select_entrega").style.display = "block";
-        document.getElementById("select_retirada").style.display = "none";
-      }
+    document.getElementById("select_entrega").selectedIndex = 0;
+    document.getElementById("select_entrega").style.display = "none";
+      
   }
+    if(document.getElementById("radio_entrega").checked == true){
+    document.getElementById("select_entrega").style.display = "block";
+
+    document.getElementById("select_retirada").selectedIndex = 0;
+    document.getElementById("select_retirada").style.display = "none";
+
+  }
+
+  name = function() {
+  
+    const select_retirada = document.getElementById("select_retirada");
+    const select_entrega = document.getElementById("select_entrega");
+
+    function init() {
+      
+      select_retirada.addEventListener('change', checkValidity);
+      select_entrega.addEventListener('change', checkValidity);
+            
+      checkValidity();
+    }
+
+    //Deve haver uma opção escolhida para um dos selects
+    function isChecked() {
+        //Checando primeiro select
+        if(select_retirada.selectedIndex != 0 || select_entrega.selectedIndex != 0){
+          return true;
+        }
+        
+        return false;
+    }
+
+    function checkValidity() {
+      
+        const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
+        if(select_retirada.style.display == "none"){
+          select_entrega.setCustomValidity(errorMessage);
+          select_retirada.setCustomValidity("");
+        }else{
+          select_retirada.setCustomValidity(errorMessage); 
+          select_entrega.setCustomValidity("");
+        }
+    }
+
+    init();
+  }();
+    
+}
 
 </script>
 @endsection

@@ -53,6 +53,12 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'telefone' => 'required|numeric',
             'password' => 'required|string|min:6|confirmed',
+
+            'cep'=> 'required_with:rua,bairro,cidade,uf',
+            'rua' => 'required_with:cep,bairro,cidade,uf',
+            'bairro' => 'required_with:cep,rua,cidade,uf',
+            'cidade' => 'required_with:cep,rua,bairro,uf',
+            'uf' => 'required_with:cep,rua,bairro,cidade',
         ]);
     }
 
@@ -64,6 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+       // dd($data);
         
         $user = new User();
         $user->name = $data['name'];

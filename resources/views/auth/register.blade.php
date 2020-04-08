@@ -20,9 +20,10 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Nome</label>
+                            
+                            <div class="col-md-8 col-md-offset-2">
+                                <label for="name" class="col-md control-label">Nome</label>
 
-                            <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" autofocus>
 
                                 @if ($errors->has('name'))
@@ -33,10 +34,26 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('telefone') ? ' has-error' : '' }}">
-                            <label for="telefone" class="col-md-4 control-label">Telefone</label>
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-8 col-md-offset-2">
+                                <label for="email" class="col-md control-label">E-Mail</label>
 
-                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('telefone') || $errors->has('cep') ? ' has-error' : '' }}">
+                            
+                            <div class="col-md-4 col-md-offset-2">
+                                <label for="telefone" class="col-md control-label">Telefone</label>
+
                                 <input  type="digit" name="telefone" id="telefone" minlength="10" placeholder="DDD+Telefone" class="form-control"  maxlength="11" value="{{ old('telefone') }}">
 
                                 @if ($errors->has('telefone'))
@@ -45,80 +62,82 @@
                                     </span>
                                 @endif
                             </div>
+
+                            
+                            <div class="col-md-4">
+                                <label for="cep" class="col-md control-label">{{ __('CEP') }}</label>
+
+                                <input value="{{old('cep')}}" onblur="pesquisacep(this.value);" id="cep" type="text" autocomplete="cep" name="cep" autofocus class="form-control field__input a-field__input" placeholder="CEP" size="10" maxlength="9" >
+                                
+                                @if ($errors->has('cep'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('cep') }}</strong>
+                                    </span>
+                                @endif
+
+                            </div>
+                           
                         </div>
 
                     <!-- ADICIONANDO ENDEREÇO AO USUARIO -->
 
-                    <div class="row subtitulo">
-                        <div class="col-sm-12">
-                            <p>Endereço</p>
-                        </div>
-                    </div>
 
-                    {{-- Rua | Número | Bairro --}}
-                    <div class="form-group row">
-                    <div class="col-md-2">
-                        <label for="cep" class="col-form-label">{{ __('CEP') }}</label>
-                        <input value="{{old('cep')}}" onblur="pesquisacep(this.value);" id="cep" type="text" autocomplete="cep" name="cep" autofocus class="form-control field__input a-field__input" placeholder="CEP" size="10" maxlength="9" >
-                        @error('cep')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>messagem</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    </div>
-                    <div class="form-group row">
+                    
 
-                        <div class="col-md-6">
-                            <label for="rua" class="col-form-label">{{ __('Rua') }}</label>
-                            <input value="{{old('rua')}}" id="rua" type="text" class="form-control @error('rua') is-invalid @enderror" name="rua" autocomplete="new-password">
+                        <div class="form-group row {{ $errors->has('rua') || $errors->has('numero')  ? 'has-error' : '' }}">
+                            <div class="col-md-6 col-md-offset-2">
+                                <label for="rua" class="col-form-label">{{ __('Rua') }}</label>
+                                <input value="{{old('rua')}}" id="rua" type="text" class="form-control @error('rua') is-invalid @enderror" name="rua" autocomplete="new-password">
 
-                            @error('rua')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>messagem</strong>
-                                </span>
-                            @enderror
+                                @if ($errors->has('rua'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('rua') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="numero" class="col-form-label">{{ __('Número') }}</label>
+                                <input value="{{old('numero')}}" id="numero" type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" autocomplete="numero">
+
+                                @if ($errors->has('numero'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('numero') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
 
-                        <div class="col-md-2">
-                            <label for="numero" class="col-form-label">{{ __('Número') }}</label>
-                            <input value="{{old('numero')}}" id="numero" type="text" class="form-control @error('numero') is-invalid @enderror" name="numero" autocomplete="numero">
+                        <div class="form-group row justify-content-center {{ $errors->has('bairro') ? ' has-error' : '' }}">
+                        
+                            <div class="col-md-8 col-md-offset-2">
+                                <label for="bairro" class="col-md control-label">{{ __('Bairro') }}</label>
+                                <input value="{{old('bairro')}}" id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" autocomplete="bairro">
 
-                            @error('numero')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>messagem</strong>
-                                </span>
-                            @enderror
+                                @if ($errors->has('bairro'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('bairro') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+
+
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="bairro" class="col-form-label">{{ __('Bairro') }}</label>
-                            <input value="{{old('bairro')}}" id="bairro" type="text" class="form-control @error('bairro') is-invalid @enderror" name="bairro" autocomplete="bairro">
+                    <div class="form-group row {{ $errors->has('cidade') || $errors->has('uf') ? ' has-error' : '' }}">
 
-                            @error('bairro')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>messagem</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-
-                    </div>
-
-                    <div class="form-group row">
-
-                        <div class="col-md-6">
+                        <div class="col-md-4 col-md-offset-2">
                             <label for="cidade" class="col-form-label">{{ __('Cidade') }}</label>
                             <input value="{{old('cidade')}}" id="cidade" type="text" class="form-control @error('cidade') is-invalid @enderror" name="cidade" autocomplete="cidade">
 
-                            @error('cidade')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>messagem</strong>
+                            @if ($errors->has('cidade'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('cidade') }}</strong>
                                 </span>
-                            @enderror
+                            @endif
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <label for="uf" class="col-form-label">{{ __('UF') }}</label>
                             {{-- <input id="uf" type="text" class="form-control @error('uf') is-invalid @enderror" name="uf" value="{{ old('uf') }}" autocomplete="uf" autofocus> --}}
                             <select class="form-control @error('uf') is-invalid @enderror" id="uf" name="uf">
@@ -152,11 +171,11 @@
                                 <option @if(old('uf') == 'TO') selected @endif value="TO">Tocantins</option>
                             </select>
 
-                            @error('uf')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>messagem</strong>
-                            </span>
-                            @enderror
+                            @if ($errors->has('uf'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('uf') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 
@@ -165,24 +184,12 @@
                     <!-- TERMINANDO ENDEREÇO DO USUÁRIO-->
 
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Senha</label>
+                            <label for="password" class="col-md-3 col-md-offset-2 control-label">Senha</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <input id="password" type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
@@ -194,9 +201,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirme a Senha</label>
+                            <label for="password-confirm" class="col-md-3 col-md-offset-2 control-label">Confirme a Senha</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                             </div>
                         </div>
@@ -211,8 +218,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                        <div class="form-group" align="center">
+                            <div class="col-md ">
                                 <button id="submit" type="submit" class="btn btn-primary" disabled>
                                     Cadastrar
                                 </button>
