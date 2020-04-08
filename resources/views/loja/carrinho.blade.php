@@ -56,14 +56,12 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
-                            <!-- onchange="Enable(this)" -->
                               <input type="radio" onchange="show_drop_down()" id="radio_retirada" name="tipo" value="retirada" required>
                               <label for="retirada">Retirar pedido no local do evento</label><br>
                               
                               <input type="radio"  onchange="show_drop_down()" id="radio_entrega" name="tipo"  value="entrega">
                               <label for="entrega">Receber entrega a meu endereço</label><br>
                               
-
                                 <select  class="form-control" id="select_retirada" name="localretiradaevento" >
                                     <option value="" selected disabled >Escolha local de retirada</option>
                                     @php($evento = \projetoGCA\Evento::find($evento))
@@ -71,7 +69,7 @@
                                         @if (old('localretiradaevento') == $local->id)
                                             <option value="{{$local->id}}"  selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @else
-                                            <option value="{{$local->id}}" >{{$local->localretirada()->withTrashed()->first()->nome}}</option>
+                                            <option value="{{$local->id}}">{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -106,7 +104,6 @@
 @endsection
 
 @section('javascript')
-
 <script type="text/javascript">
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -114,36 +111,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
   document.getElementById("select_entrega").style.display = "none";
 });
 
- 
-
 show_drop_down = function()
  {
-   
   if(document.getElementById("radio_retirada").checked == true){
     document.getElementById("select_retirada").style.display = "block";
 
     document.getElementById("select_entrega").selectedIndex = 0;
-    document.getElementById("select_entrega").style.display = "none";
-      
+    document.getElementById("select_entrega").style.display = "none";   
   }
     if(document.getElementById("radio_entrega").checked == true){
     document.getElementById("select_entrega").style.display = "block";
 
     document.getElementById("select_retirada").selectedIndex = 0;
     document.getElementById("select_retirada").style.display = "none";
-
   }
 
   name = function() {
-  
     const select_retirada = document.getElementById("select_retirada");
     const select_entrega = document.getElementById("select_entrega");
 
     function init() {
-      
       select_retirada.addEventListener('change', checkValidity);
       select_entrega.addEventListener('change', checkValidity);
-            
+     
       checkValidity();
     }
 
@@ -153,12 +143,10 @@ show_drop_down = function()
         if(select_retirada.selectedIndex != 0 || select_entrega.selectedIndex != 0){
           return true;
         }
-        
         return false;
     }
 
     function checkValidity() {
-      
         const errorMessage = !isChecked() ? 'At least one checkbox must be selected.' : '';
         if(select_retirada.style.display == "none"){
           select_entrega.setCustomValidity(errorMessage);
@@ -173,7 +161,6 @@ show_drop_down = function()
   }();
     
 }
-
 </script>
 @endsection
 

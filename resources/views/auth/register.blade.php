@@ -179,12 +179,7 @@
                         </div>
                     </div>
 
-
-
                     <!-- TERMINANDO ENDEREÇO DO USUÁRIO-->
-
-
-                        
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-3 col-md-offset-2 control-label">Senha</label>
@@ -235,8 +230,6 @@
 
 <!-- INICIO SESSÃO SCRIPTS JS -->
 @section('javascript')
-
-
 <script type="text/javascript">
 
 Enable = function(val)
@@ -248,8 +241,6 @@ Enable = function(val)
     }else{
         sbmt.disabled = true;
     }
-
-    
 }
 
 console.log("dentro da sessão js")
@@ -297,7 +288,6 @@ function pesquisacep(valor) {
             document.getElementById('bairro').value="...";
             document.getElementById('cidade').value="...";
             document.getElementById('uf').value="...";
-
 
             //Cria um elemento javascript.
             var script = document.createElement('script');

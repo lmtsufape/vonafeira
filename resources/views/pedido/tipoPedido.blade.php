@@ -28,7 +28,6 @@
                         </thead>
                         
                         <tbody>
-                          
                             <?php
                               $tipo = "";
                               $local = "";
@@ -50,11 +49,8 @@
                             <tr>
                                 <td data-title="Tipo">{{ $tipo }}</td>
                                 <td data-title="Local">{{ $local }}</td>
-                                
                             </tr>
-                          
                         </tbody>
-                        
                     </table>
                   </div>
                 </div>
