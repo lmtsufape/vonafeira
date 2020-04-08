@@ -64,6 +64,7 @@
                           <th>Número de Itens</th>
                           <th>Total</th>
                           <th>Data</th>
+                          <th>Tipo</th>
                           <th>Ações</th>
                         </tr>
                       </thead>
@@ -86,6 +87,17 @@
                             <td data-title="Número de Itens">{{ $quantidade }}</td>
                             <td data-title="Total">{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
                             <td data-title="Data">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
+                            <td>
+                              <a class="btn btn-info" href="{{ route("evento.pedido.tipo", ["pedido_id" => $pedido->id]) }}">
+                                @if($pedido->localretiradaevento_id != null)
+                                  Retirada
+                                @elseif($pedido->endereco_consumidor_id != null)
+                                  Entrega
+                                @else
+                                  Indefinido
+                                @endif
+                              </a>
+                            </td>
                             <td>
                               <a class="btn btn-info" href="{{ route("evento.pedido.itens", ["pedido_id" => $pedido->id]) }}">
                                 Itens

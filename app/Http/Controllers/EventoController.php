@@ -182,6 +182,17 @@ class EventoController extends Controller
                                        'grupoConsumo' => $grupoConsumo]);
     }
 
+    public function tipoPedido($pedido_id){
+
+      $pedido = \projetoGCA\Pedido::find($pedido_id);
+      $evento = \projetoGCA\Evento::find($pedido->evento_id);
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
+
+      return view("pedido.tipoPedido", [ 'pedido' => $pedido,
+                                         'evento' => $evento,
+                                         'grupoConsumo' => $grupoConsumo]);
+    }
+
     public function itensPedido($pedido_id){
 
         $pedido = \projetoGCA\Pedido::find($pedido_id);
