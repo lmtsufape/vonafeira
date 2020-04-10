@@ -61,15 +61,17 @@
                         <tr>
                           <th>Cód.</th>
                           <th>Consumidor</th>
-                          <th>Número de Itens</th>
+                          <!-- <th>Número de Itens</th> -->
                           <th>Total</th>
                           <th>Data</th>
-                          <th>Tipo</th>
-                          <th>Ações</th>
+                          <!-- <th>Tipo</th> -->
+                          <!-- <th>Ações</th> -->
+                          <th></th>
                         </tr>
                       </thead>
-                      <tbody>
+                      
                         @foreach($pedidos as $pedido)
+                        <tbody>
                           <?php
                             $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
                             $quantidade = 0;
@@ -84,10 +86,10 @@
                           <tr>
                             <td data-title="Cód.">{{ $pedido->id }}</td>
                             <td data-title="Consumidor">{{ $consumidor->name }}</td>
-                            <td data-title="Número de Itens">{{ $quantidade }}</td>
+                            <!-- <td data-title="Número de Itens">{{ $quantidade }}</td> -->
                             <td data-title="Total">{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
                             <td data-title="Data">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
-                            <td>
+                            <!-- <td>
                               <a class="btn btn-info" href="{{ route("evento.pedido.tipo", ["pedido_id" => $pedido->id]) }}">
                                 @if($pedido->localretiradaevento_id != null)
                                   Retirada
@@ -97,15 +99,63 @@
                                   Indefinido
                                 @endif
                               </a>
-                            </td>
+                            </td> -->
                             <td>
-                              <a class="btn btn-info" href="{{ route("evento.pedido.itens", ["pedido_id" => $pedido->id]) }}">
+                              <!-- <a class="btn btn-info" href="{{ route("evento.pedido.itens", ["pedido_id" => $pedido->id]) }}">
                                 Itens
-                              </a>
+                              </a> -->
+
+                            <p>
+                              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{$pedido->id}}" aria-expanded="false" aria-controls="collapseExample">
+                                Ver Detalhes
+                              </button>
+                          </p>
+                              
+                            </td>
+                            
+                          </tr>
+                        
+                          <tr >
+                            <td colspan="6">
+                              <div class="collapse" id="{{$pedido->id}}">
+                                <div class="card card-body">
+                                  <!--Informações do consumidor-->
+                                  <label>Email: </label>
+                                  <p>{{$consumidor != null ? $consumidor->email : ""}}</p>
+                                  <label>Telefone: </label>
+                                  <p>{{$consumidor != null ? $consumidor->email : ""}}</p>
+                                  @if($consumidor->endereco != null)
+                                    <label>Rua + num: </label>
+                                    <p>{{$consumidor != null ? $consumidor->email : ""}}</p>
+                                    <label>Bairro: </label>
+                                    <p>{{$consumidor != null ? $consumidor->email : ""}}</p>
+                                    <label>Cidade + uf: </label>
+                                    <p>{{$consumidor != null ? $consumidor->email : ""}}</p>
+                                  @endif
+                                  <!-- Percorrer cada item do pedido -->
+                                  @php($count = 1)
+                                  @php($unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first())
+                                  
+                                  @foreach ($pedido->itens as $item)                          
+
+                                    <label>{{$count++}}</label>
+                                    <label>{{$item->produto->nome}}</label>
+                                    <label>{{$item->quantidade}}</label>
+                                    <label>{{ 'R$ '.number_format($item->produto->preco, 2) }}</label>
+                                    <label>{{ 'R$ '.number_format($item->produto->preco * $item->quantidade, 2)}}</label>
+                                    
+                                    <p>Produzido por: {{$item->produto->produtor->nome}}</p>
+                                    <p>Unidade de venda: {{$unidadeVenda->nome}}</p>
+
+                                  @endforeach
+                                </div>
+                              </div>
                             </td>
                           </tr>
+                        </tbody>
+                          
                         @endforeach
-                      </tbody>
+                      
                     </table>
                   </div>
                 </div>
