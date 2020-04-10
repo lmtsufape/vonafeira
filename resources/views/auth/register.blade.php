@@ -54,7 +54,7 @@
                             <div class="col-md-4 col-md-offset-2">
                                 <label for="telefone" class="col-md control-label">Telefone</label>
 
-                                <input  type="digit" name="telefone" id="telefone" minlength="10" placeholder="DDD+Telefone" class="form-control"  maxlength="11" value="{{ old('telefone') }}">
+                                <input  type="digit" name="telefone" id="telefone" minlength="10" placeholder="DDD+Telefone" class="form-control"  maxlength="15" value="{{ old('telefone') }}">
 
                                 @if ($errors->has('telefone'))
                                     <span class="help-block">
