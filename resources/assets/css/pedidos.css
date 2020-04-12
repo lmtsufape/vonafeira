@@ -1,6 +1,10 @@
+.table-responsive{
+    text-align: center;
+}
+
 #table-pedidos{
     border: 0px;
-    border-left: 1px solid gray;
+    /* border-left: 1px solid gray; */
 }
 #table-pedidos tr{
     background-color: white;
@@ -39,7 +43,7 @@ h4{
 
 #card {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 2fr 3fr;
 }
 
 #detalhes{
@@ -62,7 +66,7 @@ h4{
     justify-items: center;
 }
 
-#lista-pedido{
+#pedidos{
     border-left: 1px solid grey;
 }
 

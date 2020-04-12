@@ -113,7 +113,7 @@
                               <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{$pedido->id}}" aria-expanded="false" aria-controls="collapseExample">
                                 Ver Detalhes
                               </button>
-                          </p>
+                            </p>
 
                             </td>
 
@@ -150,6 +150,15 @@
                                   @php($unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first())
                                   <div id="pedidos">
                                     <h4>Dados do Pedido</h4></br>
+                                    <h4>
+                                      @if($pedido->localretiradaevento_id != null)
+                                        <span class="atributo">Retirada no local do evento</span> - {{$pedido->localretiradaevento->localretirada->withTrashed()->first()->nome}}
+                                      @elseif($pedido->endereco_consumidor_id!= null)
+                                        <span class="atributo">Entrega no endereço do consumidor</span>
+                                      @else
+                                        Indefinido
+                                      @endif
+                                    </h4></br>
                                     <table class="table table-sm" id="table-pedidos">
                                       <thead>
                                         <tr  id="header-pedidos">
@@ -166,10 +175,10 @@
                                         <tr>
                                           <th scope="row">{{$count++}}</th>
                                                                               
-                                          <td>{{$item->produto->nome}}</td>
-                                          <td>{{$item->quantidade}}</td>
-                                          <td>{{ 'R$ '.number_format($item->produto->preco, 2) }}</td>
-                                          <td>{{ 'R$ '.number_format($item->produto->preco * $item->quantidade, 2)}}</td>
+                                          <td><span class="atributo">{{$item->produto->nome}}</span></td>
+                                          <td><span class="atributo">{{$item->quantidade}}</span></td>
+                                          <td><span class="atributo">{{ 'R$ '.number_format($item->produto->preco, 2) }}</span></td>
+                                          <td><span class="atributo">{{ 'R$ '.number_format($item->produto->preco * $item->quantidade, 2)}}</span></td>
                                         </tr>
                                         <tr>
                                           <td class="td-sem-borda"></td>
@@ -179,8 +188,14 @@
                                           <td class="td-sem-borda"></td>
                                           <td colspan="4" class="td-sem-borda"><span class="atributo">Unidade de venda:</span> {{$unidadeVenda->nome}}</td>
                                         </tr>
-                                        @endforeach
-                                        
+                                      @endforeach
+                                      <tr>
+                                          <td ></td>
+                                          <td ></td>
+                                          <td ></td>
+                                          <td ><span class="atributo">Total:</td>
+                                          <td><span class="atributo">{{'R$ '.number_format($valor_pedido, 2)}}</span></td>
+                                        </tr>
                                        
                                       </tbody>
                                     </table>
