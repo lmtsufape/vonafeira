@@ -66,7 +66,7 @@
                         <tr id="table-header">
                           <th>Cód.</th>
                           <th>Consumidor</th>
-                          <!-- <th>Número de Itens</th> -->
+                          <th>Número de Itens</th>
                           <th>Total</th>
                           <th>Data</th>
                           <!-- <th>Tipo</th> -->
@@ -90,7 +90,7 @@
                           <tr>
                             <td data-title="Cód.">{{ $pedido->id }}</td>
                             <td data-title="Consumidor"><label>{{ $consumidor->name }}</label></td>
-                            <!-- <td data-title="Número de Itens">{{ $quantidade }}</td> -->
+                            <td data-title="Número de Itens">{{ $quantidade }}</td> 
                             <td data-title="Total">{{ 'R$ '.number_format($valor_pedido, 2) }}</td>
                             <td data-title="Data">{{ \projetoGCA\Http\Controllers\UtilsController::dataFormato($pedido->data_pedido, 'd/m/Y') }}</td>
                             <!-- <td>
@@ -156,7 +156,7 @@
                                       @elseif($pedido->endereco_consumidor_id!= null)
                                         <span class="atributo">Entrega no endereço do consumidor</span>
                                       @else
-                                        Indefinido
+                                        Local - Indefinido
                                       @endif
                                     </h4></br>
                                     <table class="table table-sm" id="table-pedidos">
@@ -174,8 +174,10 @@
                                       @foreach ($pedido->itens as $item)
                                         <tr>
                                           <th scope="row">{{$count++}}</th>
-                                                                              
-                                          <td><span class="atributo">{{$item->produto->nome}}</span></td>
+                                          <div class="tooltip">
+                                            <td><span class="atributo" >{{$item->produto->nome}}</span>
+                                            <span class="tooltiptext">Tooltip text</span></td>
+                                          </div>
                                           <td><span class="atributo">{{$item->quantidade}}</span></td>
                                           <td><span class="atributo">{{ 'R$ '.number_format($item->produto->preco, 2) }}</span></td>
                                           <td><span class="atributo">{{ 'R$ '.number_format($item->produto->preco * $item->quantidade, 2)}}</span></td>

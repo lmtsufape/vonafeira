@@ -5,11 +5,20 @@ table {
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid #2e2d2d28;
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
-    background-color: #dddddd;
+tr, th {
+    background-color: #f1efef;
+}
+
+tr:nth-child(6n+1), tr:nth-child(6n+2)  {
+    background-color: white;
+}
+
+#ultima-linha{
+    border: 0px;
+    background-color: white;
 }
