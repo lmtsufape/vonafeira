@@ -161,7 +161,7 @@ class EventoController extends Controller
 
 
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('data_evento', 'desc')->get();
             $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->where('estaAberto', '=' ,'True')->first();
             return view("evento.eventos", [
               'eventos' => $eventos,
