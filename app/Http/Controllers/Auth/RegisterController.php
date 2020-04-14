@@ -51,7 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'telefone' => 'required|numeric',
+            'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
             'password' => 'required|string|min:6|confirmed',
 
             'cep'=> 'required_with:rua,bairro,cidade,uf',
@@ -80,9 +80,14 @@ class RegisterController extends Controller
         $user->save();
         
         if($data['cep'] != null){
-            // endereço
             $end = new Endereco();
-            $end->rua = $data['rua'];
+           
+            if(strtok($data['rua'], " ") === "Rua" || strtok($data['rua'], " ") === "rua"){
+                $end->rua = substr( $data['rua'], strlen(strtok($data['rua'], " "))+1 );    
+            }else{
+                $end->rua = $data['rua'];
+            }
+            // dd($end->rua);            
             $end->numero = $data['numero'];
             $end->bairro = $data['bairro'];
             $end->cidade = $data['cidade'];
