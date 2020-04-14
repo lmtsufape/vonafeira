@@ -13,7 +13,6 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Cód.</th>
                 <th>Produto</th>
                 <th>Descrição</th>
                 <th>Produtor</th>
@@ -22,7 +21,7 @@
                 <th>Valor Unt.</th>
                 <th>Total</th>
                 <th>Consumidor</th>
-                <!-- <th>Retirada</th> -->
+                <th>Retirada</th>
             </tr>
         </thead>
         <tbody>
@@ -39,11 +38,10 @@
                             $consumidor = $pedido->consumidor->usuario;
                             if($pedido->localretiradaevento != null){
                                 $local_retirada = $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome;
-                            }
+                            }     
                         ?>
 
                         <tr>
-                            <td>{{$pedido->id}}</td>
                             <td>{{$produto->nome}}</td>
                             <td>{{$produto->descricao}}</td>
                             <td>{{$produto->produtor()->withTrashed()->first()->nome}}</td>
@@ -52,24 +50,11 @@
                             <td>{{'R$ '.number_format($produto->preco,2)}}</td>
                             <td>{{'R$ '.number_format($valor_item,2)}}</td>
                             <td>{{$consumidor->name}}</td>
-                        </tr>
-                        <tr>
                             @if($pedido->localretiradaevento_id != null)
-                                <td colspan="4">Retirada no local do evento: </td>
-                                <td colspan="5">{{$local_retirada}}</td>
-                            @elseif($pedido->endereco_consumidor_id!= null)
-                                <td colspan='4'>Entrega no endereço do consumidor: </td>
-                                @php($end = $consumidor->endereco)
-                                    <td colspan='5'>Rua: {{ $end->rua }}                               
-                                    @if($end->numero != null)
-                                        {{''. ', nº '. $end->numero}}
-                                    @endif
-                                <br/>Bairro: {{ $end->bairro }}
-                                <br/>Cidade: {{ $end->cidade . '-' . $end->uf }}</td>                                      
-                            @else Local - Indefinido @endif
-                        </tr>
-                        <tr>
-                            <td colspan="9" id="ultima-linha"></td>
+                                <td>{{$local_retirada}}</td>
+                            @else
+                                <td></td>
+                            @endif
                         </tr>
 
                     @endif

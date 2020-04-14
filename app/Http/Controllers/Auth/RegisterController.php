@@ -70,8 +70,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-       // dd($data);
-        
         $user = new User();
         $user->name = $data['name'];
         $user->email = $data['email'];
@@ -81,13 +79,7 @@ class RegisterController extends Controller
         
         if($data['cep'] != null){
             $end = new Endereco();
-           
-            if(strtok($data['rua'], " ") === "Rua" || strtok($data['rua'], " ") === "rua"){
-                $end->rua = substr( $data['rua'], strlen(strtok($data['rua'], " "))+1 );    
-            }else{
-                $end->rua = $data['rua'];
-            }
-            // dd($end->rua);            
+            $end->rua = $data['rua'];           
             $end->numero = $data['numero'];
             $end->bairro = $data['bairro'];
             $end->cidade = $data['cidade'];
@@ -99,6 +91,5 @@ class RegisterController extends Controller
         }
 
         return $user;
-      
     }
 }

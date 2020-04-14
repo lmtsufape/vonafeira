@@ -77,14 +77,25 @@ class PdfController extends Controller
 
         $pedidos = \projetoGCA\Pedido::where('evento_id','=',$evento_id)->get();
 
-        $consumidores = array();
+        $consumidores_sem_end = array();
+        $enderecos = array();
         foreach ($pedidos as $pedido) {
             $consumidor = \projetoGCA\User::find($pedido->consumidor->user_id);
-            if(!(in_array($consumidor,$consumidores))){
-                array_push($consumidores,$consumidor);
+            if(!(in_array($consumidor,$consumidores_sem_end)) && $consumidor->endereco == null){
+                array_push($consumidores_sem_end,$consumidor);
             }
+            if( !(in_array($consumidor->endereco,$enderecos)) && $consumidor->endereco != null ){
+                array_push($enderecos, $consumidor->endereco);
+            }
+            
         }
-
+        $consumidores_sem_end = array_unique($consumidores_sem_end);
+        $enderecos = array_unique($enderecos);
+       
+        //ordenar consumidores por ordem alfabética do endereço (cidade->bairro->rua)
+        //consumidores que não possuem endereço ficam por último
+        $consumidores = $this->ordenarConsumidores($enderecos, $consumidores_sem_end);
+        
         $data = date('d/m/Y');
         $view = \View::make($view, compact('data', 'consumidores','pedidos'))->render();
         $pdf = \App::make('dompdf.wrapper');
@@ -92,6 +103,28 @@ class PdfController extends Controller
         $evento = \projetoGCA\Evento::find($evento_id);
         $filename = 'RelatorioConsumidores_Grupo'.$evento->grupoconsumo_id.'_Evento'.$evento->id.'_'.$data;
         return $pdf->stream($filename.'.pdf');
+    }
+
+    public function  ordenarConsumidores($enderecos,$consumidores_sem_end){
+        $array_final = [];
+
+        usort($enderecos, 'self::comparar_endereco');
+
+        foreach($enderecos as $end){
+            array_push($array_final, $end->user);
+        }
+        foreach($consumidores_sem_end as $consumidor){
+            array_push($array_final, $consumidor);
+        }
+
+        return $array_final;
+    }
+
+    static function comparar_endereco($a, $b) {
+        $retval = strnatcmp($a['cidade'], $b['cidade']);
+        if(!$retval) $retval = strnatcmp($a['bairro'], $b['bairro']);
+        if(!$retval) $retval = strnatcmp($a['rua'], $b['rua']);
+        return $retval;
     }
 
     public function downloadRelatorioPedidosProdutores($evento_id){
