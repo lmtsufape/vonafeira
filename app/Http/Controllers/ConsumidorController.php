@@ -235,11 +235,7 @@ class ConsumidorController extends Controller
         }
         
       }
-
-     
-
-      
-
+ 
       return redirect()->back()->with('success','Dados cadastrais salvos.');
     }
 

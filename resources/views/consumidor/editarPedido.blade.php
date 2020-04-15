@@ -48,15 +48,15 @@
                                   <td data-title="Preço">{{ $produto->preco }}</td>
                                   @if(($produto->unidadeVenda->is_fracionado) == 1)
                                     @if(old('nome',NULL) != NULL)
-                                      <td data-title="Quantidade"><input id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
+                                      <td data-title="Quantidade"><input {{$produto->ativo==false?'disabled':''}} id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @else
-                                      <td data-title="Quantidade"><input id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$i}}]" value="{{ $itemPedido->quantidade }}" autofocus></td>
+                                      <td data-title="Quantidade"><input {{$produto->ativo==false?'disabled':''}} id="quantidade" type="number" min="0" step="0.1" class="form-control" name="quantidade[{{$i}}]" value="{{ $itemPedido->quantidade }}" autofocus></td>
                                     @endif
                                   @else
                                     @if(old('nome',NULL) != NULL)
-                                      <td data-title="Quantidade"><input id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
+                                      <td data-title="Quantidade"><input {{$produto->ativo==false?'disabled':''}} id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$i}}]" value="{{ old('quantidade') }}" autofocus></td>
                                     @else
-                                      <td data-title="Quantidade"><input id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$i}}]" value="{{ $itemPedido->quantidade }}" autofocus></td>
+                                      <td data-title="Quantidade"><input {{$produto->ativo==false?'disabled':''}} id="quantidade" type="number" min="0" step="1" class="form-control" name="quantidade[{{$i}}]" value="{{ $itemPedido->quantidade }}" autofocus></td>
                                     @endif
                                   @endif
                                   <td data-title="Unidade">{{ $produto->unidadeVenda->nome }}</td>

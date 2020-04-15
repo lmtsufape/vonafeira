@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/evento.eventos.css') }}" rel="stylesheet"/>
+   
+@stop
+
 @section('titulo','Lista de Eventos')
 
 @section('navbar')
@@ -12,7 +17,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Eventos</div>
                     @if(old('data_evento'))
@@ -53,7 +58,7 @@
                                 <th>Aberto</th>
                                 <th>Locais de retirada</th>
                                 <th>Pedidos</th>
-                                <th>Ações</th>
+                                <th colspan='2'>Ações</th>
 
                             </tr>
                           </thead>
@@ -89,8 +94,14 @@
                                       Fechar
                                     </a>
                                   </td>
+                                  <td>
+                                    <a class="btn btn-warning" href="{{ route("evento.editar.produtos", ["idGrupoConsumo" => $evento->grupoConsumo->id]) }}">
+                                      Editar
+                                    </a>
+                                  </td>
                                 @else
                                     <td><button type="button" class="btn btn-danger" disabled>Fechado</button></td>
+                                    <td></td>
                                 @endif
 
                               </tr>
