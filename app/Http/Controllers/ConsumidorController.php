@@ -183,7 +183,7 @@ class ConsumidorController extends Controller
 
       if($request->email != $usuario->email){
         $validator = Validator::make($request->all(), [
-          'email' => 'unique:users|email'
+          'email' => 'required|string|email|max:255|unique:users'
         ]);
 
         if($validator->fails()){
@@ -192,8 +192,8 @@ class ConsumidorController extends Controller
       }
 
       $validator = Validator::make($request->all(),[
-        'name' => 'required',
-        'telefone' => 'required|min:10',
+        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/',
+        'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
         
         'cep'=> 'required_with:rua,bairro,cidade,uf',
         'rua' => 'required_with:cep,bairro,cidade,uf',
