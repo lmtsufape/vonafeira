@@ -69,7 +69,7 @@
                      </tbody>
                      <tfoot>
                        <tr>
-                         <th colspan="8" style="text-align:right">Total: {{'R$ '.number_format($total,2)}}</th>
+                         <th colspan="9" style="text-align:right">Total: {{'R$ '.number_format($total,2)}}</th>
                        </tr>
                      </tfoot>
                    </table>
