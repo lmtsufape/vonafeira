@@ -161,7 +161,7 @@ class EventoController extends Controller
 
 
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('data_evento', 'desc')->get();
             $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->where('estaAberto', '=' ,'True')->first();
             return view("evento.eventos", [
               'eventos' => $eventos,
@@ -180,6 +180,17 @@ class EventoController extends Controller
         return view("pedido.pedidos", ['pedidos' => $pedidos,
                                        'evento' => $evento,
                                        'grupoConsumo' => $grupoConsumo]);
+    }
+
+    public function tipoPedido($pedido_id){
+
+      $pedido = \projetoGCA\Pedido::find($pedido_id);
+      $evento = \projetoGCA\Evento::find($pedido->evento_id);
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
+
+      return view("pedido.tipoPedido", [ 'pedido' => $pedido,
+                                         'evento' => $evento,
+                                         'grupoConsumo' => $grupoConsumo]);
     }
 
     public function itensPedido($pedido_id){

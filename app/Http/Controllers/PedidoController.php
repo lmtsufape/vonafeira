@@ -70,7 +70,7 @@ class PedidoController extends Controller
 
 
     public function finalizar(Request $request){
-
+        
         $input = $request->input();
         $array_of_item_ids = $input['produto_id'];
 
@@ -83,7 +83,13 @@ class PedidoController extends Controller
         $pedido->consumidor_id = $consumidor->id;
         $pedido->evento_id = $input['evento_id'];
         $pedido->data_pedido = new DateTime();
-        $pedido->localretiradaevento_id = $request->localretiradaevento;
+
+        if($request->tipo == "retirada"){
+            $pedido->localretiradaevento_id = $request->localretiradaevento;
+        }else if ($request->tipo == "entrega"){
+            $pedido->endereco_consumidor_id = $request->entrega_endereco;
+        }
+
         $pedido->is_confirmado = false;
         $pedido->save();
         $itens = array();

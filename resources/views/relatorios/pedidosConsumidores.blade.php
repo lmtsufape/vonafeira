@@ -4,26 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="{{ asset('css/relatorios.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/relatorios-consumidor.css') }}" rel="stylesheet">
     <title>Relatório de Pedidos para o Consumidor.pdf</title>
 </head>
 <body>
-    <h3>Relatório de Pedidos para o Consumidor - Emitido em {{$data}}</h3>
+    <h3 class="centralizar">Relatório de Pedidos para o Consumidor - Emitido em {{$data}}</h3>
     @php($total_evento = 0)
     @foreach($consumidores as $consumidor)
         <div style="page-break-after: always">
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th colspan="7" style="text-align:center">Consumidor: {{ $consumidor->name }}</th>
+                        <th colspan="7" style="text-align:center" class="bg-dark">Consumidor: {{ $consumidor->name }}</th>
                     </tr>
+                    <tr class="bg-white">
+                        <th colspan="3">Telefone: {{$consumidor->telefone}}<br/>
+                        Email: {{$consumidor->email}}</th>
+                        @if( $consumidor->endereco != null)
+                            <th colspan="4">Rua: {{$consumidor->endereco->rua}} 
+                                @if( $consumidor->endereco->numero != null)
+                                    {{''. ', nº ' .$consumidor->endereco->numero }}
+                                @endif
+                                <br/>Bairro: {{$consumidor->endereco->bairro}}
+                                <br/>Cidade: {{$consumidor->endereco->cidade . '-' . $consumidor->endereco->uf}}
+                            </th>
+                        @else
+                            <th colspan="4" class="centralizar">Não há endereço cadastrado</th>                        
+                        @endif
+                    </tr>
+                    <tr><td colspan="7" class="sem-borda"></td></tr>
                 </thead>
                 <tbody>
                     @php($total=0)
                     @foreach($pedidos as $pedido)
                         @if($pedido->consumidor->user_id == $consumidor->id)
-                            <tr><th colspan="7">Pedido #{{$pedido->id}} | Local de retirada: {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}</th></tr>
-                            <tr>
+                            <tr><th colspan="7" class="bg-white">Pedido #{{$pedido->id}} | 
+                                @if($pedido->localretiradaevento_id != null)
+                                    Retirada no local do evento - {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}
+                                @elseif($pedido->endereco_consumidor_id!= null)
+                                    Entrega no endereço do consumidor
+                                @else
+                                    Local - Indefinido
+                                @endif
+                            </th></tr>
+                            <tr class="bg-medium">
                                 <th>Qtd.</th>
                                 <th>Und. Venda</th>
                                 <th>Produto</th>
@@ -52,10 +76,12 @@
                                     <td>{{'R$ '.number_format($subtotal_item,2)}}</td>
                                 </tr>
                             @endforeach
-                            <tr>
-                                <td colspan="7" style="text-align:left"><strong>Subtotal do Pedido:</strong> {{'R$ '.number_format($subtotal,2)}}</td>
+                            <tr class="bg-medium">
+                                <td colspan="6" style="text-align:right"><strong>Subtotal do Pedido:</strong></td>
+                                <td>{{'R$ '.number_format($subtotal,2)}}</td>
                                 @php($total = $total+$subtotal)
                             </tr>
+                            <tr><td colspan="7" class="sem-borda"></td></tr>
                         @endif
                     @endforeach
                     <tr>

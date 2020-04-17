@@ -12,6 +12,8 @@ use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
 use Illuminate\Support\Facades\Hash;
+use projetoGCA\Endereco;
+
 class ConsumidorController extends Controller
 {
     /**
@@ -191,7 +193,13 @@ class ConsumidorController extends Controller
 
       $validator = Validator::make($request->all(),[
         'name' => 'required',
-        'telefone' => 'required|min:10'
+        'telefone' => 'required|min:10',
+        
+        'cep'=> 'required_with:rua,bairro,cidade,uf',
+        'rua' => 'required_with:cep,bairro,cidade,uf',
+        'bairro' => 'required_with:cep,rua,cidade,uf',
+        'cidade' => 'required_with:cep,rua,bairro,uf',
+        'uf' => 'required_with:cep,rua,bairro,cidade',
       ]);
 
       if($validator->fails()){
@@ -209,6 +217,28 @@ class ConsumidorController extends Controller
       $usuario->telefone = $request->telefone;
 
       $usuario->save();
+
+      if($request->cep != null){
+        $endereco = $usuario->endereco == null ? new Endereco() : $usuario->endereco;
+        
+        $endereco->rua = $request['rua'];
+        $endereco->numero = $request['numero'];
+        $endereco->bairro = $request['bairro'];
+        $endereco->cidade = $request['cidade'];
+        $endereco->uf = $request['uf'];
+        $endereco->cep = $request['cep'];
+       
+        if($usuario->endereco == null){
+          $usuario->endereco()->save($endereco);
+        }else{
+          $endereco->save();
+        }
+        
+      }
+
+     
+
+      
 
       return redirect()->back()->with('success','Dados cadastrais salvos.');
     }

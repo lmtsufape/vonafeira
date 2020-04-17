@@ -9,6 +9,11 @@ use \projetoGCA\Evento;
 
 class Pedido extends Model
 {
+
+    public function endereco(){
+        return $this->belongsTo(Endereco::class, "endereco_consumidor_id", "id");
+    }
+
     public function itens(){
         return $this->hasMany(ItemPedido::class, "pedido_id", "id");
     }

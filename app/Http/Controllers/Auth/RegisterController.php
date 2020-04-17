@@ -6,6 +6,7 @@ use projetoGCA\User;
 use projetoGCA\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use projetoGCA\Endereco;
 
 class RegisterController extends Controller
 {
@@ -50,8 +51,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'telefone' => 'required|numeric',
+            'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
             'password' => 'required|string|min:6|confirmed',
+
+            'cep'=> 'required_with:rua,bairro,cidade,uf',
+            'rua' => 'required_with:cep,bairro,cidade,uf',
+            'bairro' => 'required_with:cep,rua,cidade,uf',
+            'cidade' => 'required_with:cep,rua,bairro,uf',
+            'uf' => 'required_with:cep,rua,bairro,cidade',
         ]);
     }
 
@@ -63,11 +70,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'telefone' => $data['telefone'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);  
+        $user->telefone = $data['telefone'];
+        $user->save();
+        
+        if($data['cep'] != null){
+            $end = new Endereco();
+            $end->rua = $data['rua'];           
+            $end->numero = $data['numero'];
+            $end->bairro = $data['bairro'];
+            $end->cidade = $data['cidade'];
+            $end->uf = $data['uf'];
+            $end->cep = $data['cep'];
+            
+            
+            $user->endereco()->save($end);
+        }
+
+        return $user;
     }
 }

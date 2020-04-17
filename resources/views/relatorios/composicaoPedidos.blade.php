@@ -36,7 +36,9 @@
                             $valor_item = $itemPedido->quantidade * $produto->preco;
                             $pedido = $itemPedido->pedido;
                             $consumidor = $pedido->consumidor->usuario;
-                            $local_retirada = $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome;
+                            if($pedido->localretiradaevento != null){
+                                $local_retirada = $pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome;
+                            }     
                         ?>
 
                         <tr>
@@ -48,7 +50,11 @@
                             <td>{{'R$ '.number_format($produto->preco,2)}}</td>
                             <td>{{'R$ '.number_format($valor_item,2)}}</td>
                             <td>{{$consumidor->name}}</td>
-                            <td>{{$local_retirada}}</td>
+                            @if($pedido->localretiradaevento_id != null)
+                                <td>{{$local_retirada}}</td>
+                            @else
+                                <td></td>
+                            @endif
                         </tr>
 
                     @endif
