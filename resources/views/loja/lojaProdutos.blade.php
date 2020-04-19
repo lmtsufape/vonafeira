@@ -69,9 +69,9 @@
                                   </tr>
                                   @endforeach
                                 <tbody>
-                            </table>
-                          <div id="tabela" class="table-responsive">
-
+                            </table>  
+                          </div>                        
+                          @endif
                     </div>
                     <div class="panel-footer">
                         <div class="form-group">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                     </div>
-                    @endif
+                   
                 </form>
             </div>
         </div>
