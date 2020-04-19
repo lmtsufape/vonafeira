@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use \projetoGCA\Consumidor;
 use \projetoGCA\Pedido;
 use \projetoGCA\ItemPedido;
+use \projetoGCA\Produto;
 use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
@@ -111,12 +112,19 @@ class ConsumidorController extends Controller
     public function editarPedido($idPedido){
       $pedido = Pedido::find($idPedido);
       $evento = Evento::find($pedido->evento_id);
-      $itensPedido = ItemPedido::where('pedido_id','=',$pedido->id)->get();
+      $itensPedido = ItemPedido::where('pedido_id','=',$pedido->id)->orderBy('produto_id')->get();
+    
+      $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
+      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
+                         ->where('ativo', '=', True)
+                         ->orderBy('id')->get();
 
       return view("consumidor.editarPedido", [
           'pedido' => $pedido,
           'evento' => $evento,
-          'itensPedido' => $itensPedido]
+          'itensPedido' => $itensPedido,
+          'grupoConsumo' => $grupoConsumo,
+          'produtos' => $produtos]
       );
     }
 
@@ -141,20 +149,43 @@ class ConsumidorController extends Controller
 
     public function atualizarPedido(Request $request){
       $input = $request->input();
-      $array_of_item_ids = $input['item_id'];
-      $quantidades = $input['quantidade'];
-
-      $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
-
-      $i = 0;
-
-      foreach ($itensPedido as $item){
-          if($quantidades[$i] > 0){
-              $item->quantidade = $quantidades[$i];
-              $item->update();
-          }
-          $i = $i + 1;
+      if(!(array_key_exists("quantidade",$input))){
+        return redirect()->back()->with('fail','Necessária a seleção de um ou mais itens.');
       }
+      
+      //itens que faziam parte do pedido original
+      $array_of_item_ids = $input['item_id'];      
+      $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
+     
+      //no formato: $quantidades[id_produto_selecionado] = quantidade
+      $quantidades = $input['quantidade'];
+      $array_of_product_ids = array_keys($quantidades);
+      
+      foreach($itensPedido as $item){        
+        if( ($key = array_search($item->produto_id, $array_of_product_ids)) !== false ){
+          if( $item->quantidade != $quantidades[$item->produto_id] && $quantidades[$item->produto_id] > 0){
+            //se os produtos adicionados já existiam no pedido original => atualizar
+            $item->quantidade = $quantidades[$item->produto_id];
+            $item->update();
+          }            
+          unset($array_of_product_ids[$key]);
+        }else if(!in_array($item->produto_id, $array_of_product_ids)){
+          //se existem produtos que existiam no pedido original e não existem mais => remover
+          $item->delete();
+        }
+      }
+      
+      //se os produtos adicionados não existiam no pedido original => adicionar
+      $produtos = Produto::whereIn('id', $array_of_product_ids)->get();
+      foreach($produtos as $produto){
+        if($quantidades[$produto->id] > 0){
+          $item = new ItemPedido();
+          $item->pedido_id = $input['pedido_id'];
+          $item->produto_id = $produto->id;
+          $item->quantidade = $quantidades[$produto->id];
+          $item->save();
+        }
+      }  
 
       return redirect("/meusPedidos");
     }
