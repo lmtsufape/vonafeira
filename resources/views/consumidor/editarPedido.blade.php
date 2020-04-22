@@ -38,7 +38,7 @@
                             <th>Preço</th>
                             <th>Quantidade</th>
                             <th>Unidade</th>
-                            <th>Ação</th>
+                            <th>Produtor</th>
                           </tr>
                         </thead>
                         <tbody>
