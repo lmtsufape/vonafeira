@@ -27,5 +27,8 @@ class UpdateGrupoConsumos extends Migration
     public function down()
     {
         //
+        Schema::table('grupo_consumos', function (Blueprint $table) {
+            $table->dropColumn('deleted_at');
+        });
     }
 }
