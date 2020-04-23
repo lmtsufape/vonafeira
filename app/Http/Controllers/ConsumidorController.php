@@ -298,4 +298,16 @@ class ConsumidorController extends Controller
 
       return redirect()->back()->with('success','Senha alterada com sucesso!');
     }
+
+    public function escreverEmail(Request $request, $grupoConsumoId){
+      // dd($request);
+      //dd($grupoConsumoId);
+      $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
+      //$destinatarios = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->get();
+
+      return view('consumidor.escreverEmail',
+                [
+                'grupoConsumo' => $grupoConsumo]
+      );
+    }
 }

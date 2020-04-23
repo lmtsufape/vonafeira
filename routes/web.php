@@ -57,6 +57,7 @@ Route::middleware('autorizacao')->group(function() {
     Route::post('/atualizarCadastro', 'ConsumidorController@atualizarCadastro')->name('consumidor.cadastro.atualizar');
     Route::get('/alterarSenha', 'ConsumidorController@alterarSenha')->name('consumidor.alterarSenha');
     Route::post('/atualizarSenha', 'ConsumidorController@atualizarSenha')->name('consumidor.atualizarSenha');
+    Route::post('/escreverEmail/{grupoConsumoId}', 'ConsumidorController@escreverEmail')->name('consumidor.escrever.email');
 
     // Rotas para pedidos do Consumidor
     Route::get('/meusPedidos', 'ConsumidorController@pedidos')->name('consumidor.meusPedidos');
@@ -122,6 +123,7 @@ Route::middleware('autorizacao')->group(function() {
 
     //Rotas para emails
     Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar.post');
+    Route::post('/enviaremail', 'MyMailController@enviarEmail')->name('enviar.email');
 
     //Rotas para Locais de Retirada
     Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/listar','LocalRetiradaController@listar')->name('locaisretirada.listar');

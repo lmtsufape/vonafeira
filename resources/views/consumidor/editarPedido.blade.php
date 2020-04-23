@@ -66,7 +66,7 @@
 
                               <tr>
                                 <td data-title="Comprar?">
-                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this)" nome="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
+                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this)" name="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
                                 </td>
                                 <td data-title="Produto">{{ $produto->nome }}</td>
                                 <td data-title="Descrição">{{ $produto->descricao }}</td>

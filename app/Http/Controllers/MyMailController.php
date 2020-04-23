@@ -41,6 +41,9 @@ class MyMailController extends Controller
 
         return back()->with('success',('Enviado para '.$to_email));
     }
-
+ 
+    public function enviarEmail(Request $request){
+        $input = $request->input();
+    }
 }
 

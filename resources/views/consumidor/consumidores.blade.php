@@ -15,38 +15,45 @@
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Consumidores</div>
+                <form class="form-horizontal" method="POST" action="{{ route('consumidor.escrever.email', ['grupoConsumoId' => $grupoConsumo]) }}">
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">                  
 
-                <div class="panel-body">
-                @if(count($consumidores) == 0)
-                    <div class="alert alert-danger">
-                            Não existem Consumidores cadastrados.
+                  <div class="panel-body">
+                  @if(count($consumidores) == 0)
+                      <div class="alert alert-danger">
+                              Não existem Consumidores cadastrados.
+                      </div>
+                  @else
+                      <input type="checkbox"  onchange="marcar(this)" name="checkbox_all" value="old()" id="checkbox_all">
+                      <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
+                      <button type="submit" id="email-btn">Enviar Email</button>
+
+                    <div id="tabela" class="table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                              <th></th>
+                              <th>Usuário</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($consumidores as $consumidor)
+                            @if($consumidor->id != $grupoConsumo->coordenador->id)
+                              <tr>
+                                  <td><input type="checkbox" class="checkbox" name="checkbox[{{$consumidor->id}}]" value="old()" id="checkbox_{{$consumidor->id}}"></td>
+                                  <td data-title="Usuario">{{ $consumidor->name }}</td>
+                              </tr>
+                            @endif
+                          @endforeach
+                        </tbody>
+                      </table>
                     </div>
-                @else
-                    <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
-
-                  <div id="tabela" class="table-responsive">
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                            <th>Usuário</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($consumidores as $consumidor)
-                          @if($consumidor->id != $grupoConsumo->coordenador->id)
-                            <tr>
-                                <td data-title="Usuario">{{ $consumidor->name }}</td>
-                            </tr>
-                          @endif
-                        @endforeach
-                      </tbody>
-                    </table>
+                  @endif
                   </div>
-                @endif
-                </div>
-                <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
-                </div>
+                  <div class="panel-footer">
+                      <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                  </div>
+                </form>
             </div>
         </div>
     </div>
@@ -75,6 +82,14 @@
         }
       }
     }
+
+    function marcar(elemento) {
+      checkboxes = document.getElementsByClassName('checkbox');
+      console.log(checkboxes);
+      for(var i=0, n=checkboxes.length;i<n;i++) {
+        checkboxes[i].checked = elemento.checked;
+    }
+}
 </script>
 
 @endsection
