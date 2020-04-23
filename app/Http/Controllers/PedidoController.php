@@ -118,24 +118,24 @@ class PedidoController extends Controller
         //PDF END
 
         //ENVIAR EMAIL
-        // $usuario = $pedido->consumidor->usuario;
-        // $to_name = $usuario->name;
-        // $to_email = $usuario->email;
+        $usuario = $pedido->consumidor->usuario;
+        $to_name = $usuario->name;
+        $to_email = $usuario->email;
 
-        // $data = array(
-        //     'pedido' => $pedido,
-        //     'to_name' => $to_name,
-        // );
+        $data = array(
+            'pedido' => $pedido,
+            'to_name' => $to_name,
+        );
 
-        // $subject = 'Feira Solidária - Grupo Consumo ';
-        // $pdf_name = 'pedido_#'.$pedido->id.'.pdf';
+        $subject = 'Feira Solidária - Grupo Consumo ';
+        $pdf_name = 'pedido_#'.$pedido->id.'.pdf';
 
-        // Mail::send('emails.mail_pedido', $data, function($message) use ($to_name, $to_email, $subject, $pdf, $pdf_name) {
-        //     $message->to($to_email, $to_name)
-        //             ->attachData($pdf->output(),$pdf_name)
-        //             ->subject($subject);
-        //     $message->from('naoresponder.lmts@gmail.com','Nome do coordenador');            
-        // });
+        Mail::send('emails.mail_pedido', $data, function($message) use ($to_name, $to_email, $subject, $pdf, $pdf_name) {
+            $message->to($to_email, $to_name)
+                    ->attachData($pdf->output(),$pdf_name)
+                    ->subject($subject);
+            $message->from('naoresponder.lmts@gmail.com','Feira Solidária');            
+        });
 
         return redirect("/visualizarPedido/$pedido->id")->with('success','Uma cópia do pedido foi enviada pra seu e-mail cadastrado');
     }

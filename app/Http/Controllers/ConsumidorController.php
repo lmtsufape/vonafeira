@@ -300,13 +300,23 @@ class ConsumidorController extends Controller
     }
 
     public function escreverEmail(Request $request, $grupoConsumoId){
-      // dd($request);
-      //dd($grupoConsumoId);
-      $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
-      //$destinatarios = Consumidor::where('grupo_consumo_id', '=', $idGrupoConsumo)->get();
+      
+      if(!(isset($request["checkbox"]))){
+        return redirect()->back()->with('fail','Selecione um ou mais consumidores');
+      }
 
+      $destinatarios_id = array_keys($request["checkbox"]);
+      $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
+      $consumidores = Consumidor::whereIn('id', $destinatarios_id)->get();
+
+      $users_id = array();
+      foreach($consumidores as $consumidor){
+          array_push($users_id,$consumidor->user_id);
+      }
+      $destinatarios = User::whereIn('id',$users_id)->orderBy('name')->get();
+      
       return view('consumidor.escreverEmail',
-                [
+                ['destinatarios' => $destinatarios,
                 'grupoConsumo' => $grupoConsumo]
       );
     }

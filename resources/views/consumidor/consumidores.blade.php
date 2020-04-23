@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/consumidor.consumidores.css') }}" rel="stylesheet"/>
+@stop
+
 @section('titulo','Consumidores')
 
 @section('navbar')
@@ -13,6 +17,12 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+          @if (\Session::has('success'))
+            <div style="text-align: center" class="alert alert-success">
+                <strong>Sucesso!</strong>
+                {!! \Session::get('success') !!}
+            </div>
+          @endif
             <div class="panel panel-default">
                 <div class="panel-heading">Consumidores</div>
                 <form class="form-horizontal" method="POST" action="{{ route('consumidor.escrever.email', ['grupoConsumoId' => $grupoConsumo]) }}">
@@ -24,22 +34,29 @@
                               Não existem Consumidores cadastrados.
                       </div>
                   @else
-                      <input type="checkbox"  onchange="marcar(this)" name="checkbox_all" value="old()" id="checkbox_all">
-                      <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">
-                      <button type="submit" id="email-btn">Enviar Email</button>
+                  @if (\Session::has('fail'))
+                      <br>
+                      <div class="alert alert-danger">
+                          <strong>Erro!</strong>
+                          {!! \Session::get('fail') !!}
+                      </div>
+                  @endif
+                    <div id="cabecalho">
+                      <input type="text" id="termo" onkeyup="buscar()" placeholder="Busca">                     
+                    </div></br>
 
                     <div id="tabela" class="table-responsive">
                       <table class="table table-hover">
                         <thead>
-                          <tr>
-                              <th></th>
-                              <th>Usuário</th>
+                          <tr>                              
+                              <th><input type="checkbox"  onchange="marcar(this)" name="checkbox_all" value="old()" id="checkbox_all"></th>
+                              <th width="80%">Usuário</th>
                           </tr>
                         </thead>
                         <tbody>
                           @foreach ($consumidores as $consumidor)
                             @if($consumidor->id != $grupoConsumo->coordenador->id)
-                              <tr>
+                              <tr>                             
                                   <td><input type="checkbox" class="checkbox" name="checkbox[{{$consumidor->id}}]" value="old()" id="checkbox_{{$consumidor->id}}"></td>
                                   <td data-title="Usuario">{{ $consumidor->name }}</td>
                               </tr>
@@ -51,7 +68,8 @@
                   @endif
                   </div>
                   <div class="panel-footer">
-                      <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                      <a class="btn btn-danger" href="{{ route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id]) }}">Voltar</a>
+                      <button id="email" class="btn btn-primary" type="submit">Enviar Email</button>
                   </div>
                 </form>
             </div>
@@ -71,7 +89,7 @@
 
       // Loop through all table rows, and hide those who don't match the search query
       for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {

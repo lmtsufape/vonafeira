@@ -6,6 +6,7 @@ use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Routing\UrlGenerator;
+use Auth;
 
 class MyMailController extends Controller
 {
@@ -44,6 +45,28 @@ class MyMailController extends Controller
  
     public function enviarEmail(Request $request){
         $input = $request->input();
+        
+
+        $to_name = $input["nomes"];
+        $to_email = $input["emails"];
+        $coordenador = \Auth::user();        
+        $grupo_consumo = $input['grupo_consumo'];
+                
+        $data = array(
+            'mensagem' => $input["mensagem"],        
+        );
+
+        $subject = $input["assunto"];        
+
+        Mail::send("emails.mail_grupo", $data, function($message) use ($to_name, $to_email, $subject, $coordenador) {
+            $message->to($to_email, $to_name)                    
+                    ->subject($subject);
+            $message->from('naoresponder.lmts@gmail.com', $coordenador->name);            
+            $message->replyTo($coordenador->email, $coordenador->name);
+        });
+
+        return redirect("/consumidores/$grupo_consumo")->with('success','Email enviado');
+       
     }
 }
 
