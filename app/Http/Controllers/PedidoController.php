@@ -123,8 +123,8 @@ class PedidoController extends Controller
         $to_email = $usuario->email;
 
         $data = array(
-             'pedido' => $pedido,
-             'to_name' => $to_name,
+           'pedido' => $pedido,
+           'to_name' => $to_name,
         );
 
         $subject = 'Feira Solidária - Grupo Consumo ';

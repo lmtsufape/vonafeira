@@ -218,4 +218,9 @@ class GrupoConsumoController extends Controller
 
       return view("grupoConsumo.exibir", ['grupoConsumo' => $grupoConsumo]);
     }
+
+    public function deletar($grupoConsumoId){
+        $grupoConsumo = \projetoGCA\GrupoConsumo::find($grupoConsumoId);
+        $grupoConsumo->delete();
+    }
 }

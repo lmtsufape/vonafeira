@@ -147,12 +147,12 @@
                                   </div>
 
                                   <!-- Percorrer cada item do pedido -->  
-                                  @php($unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first())
+                                  @php($unidadeVenda = \projetoGCA\UnidadeVenda::withTrashed()->where('id','=',$produto->unidadevenda_id)->first())                
                                   <div id="pedidos">
                                     <h4>Dados do Pedido</h4></br>
                                     <h4>
                                       @if($pedido->localretiradaevento_id != null)
-                                        <span class="atributo">Retirada no local do evento</span> - {{$pedido->localretiradaevento->localretirada->withTrashed()->first()->nome}}
+                                        <span class="atributo">Retirada no local do evento</span> - {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}
                                       @elseif($pedido->endereco_consumidor_id!= null)
                                         <span class="atributo">Entrega no endereço do consumidor</span>
                                       @else
