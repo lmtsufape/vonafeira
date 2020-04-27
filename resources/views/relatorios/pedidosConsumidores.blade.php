@@ -41,8 +41,14 @@
                             <tr><th colspan="7" class="bg-white">Pedido #{{$pedido->id}} | 
                                 @if($pedido->localretiradaevento_id != null)
                                     Retirada no local do evento - {{$pedido->localretiradaevento->localretirada()->withTrashed()->first()->nome}}
-                                @elseif($pedido->endereco_consumidor_id!= null)
-                                    Entrega no endereço do consumidor
+                                @elseif($pedido->endereco_consumidor_id != null)
+                                    @if($pedido->endereco != $consumidor->endereco)
+                                        Entrega no endereço: Rua: $pedido->endereco->rua {{$pedido->endereco->numero != null ? ''.', '.$pedido->endereco->numero:''}}</br>
+                                        Bairro: $pedido->endereco->bairro</br>
+                                        Cidade: $pedido->endereco->cidade . '-' . $pedido->endereco->uf
+                                    @else
+                                        Entrega no endereço do consumidor
+                                    @endif                                    
                                 @else
                                     Local - Indefinido
                                 @endif

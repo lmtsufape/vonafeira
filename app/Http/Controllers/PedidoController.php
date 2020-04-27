@@ -27,13 +27,13 @@ class PedidoController extends Controller
         $grupoConsumo = GrupoConsumo::find($input['grupo_consumo_id']);
 
         $quantidades = $input['quantidade'];
+        //array formado pelos ids dos produtos que foram pedidos (foram selecionados na checkbox)
         $array_of_item_ids = array_keys($quantidades);
         
         $thereAre_itens = false;
         
-        foreach ($quantidades as $quantidade) {
-            //dd($quantidade);
-            if($quantidade != 0 && $quantidade != null){
+        foreach ($quantidades as $quantidade) {            
+            if($quantidade != null && $quantidade > 0){
                 $thereAre_itens = true;
             }
         }
@@ -42,6 +42,7 @@ class PedidoController extends Controller
             return redirect()->back()->with('fail','Necessário que a quantidade de itens seja superior à 0.');
         }
         
+        //retorna todos os produtos que foram selecionados na checkbox
         $produtos = Produto::whereIn('id', $array_of_item_ids)->orderBy('nome')->get();
         $itens = array();
         
@@ -59,10 +60,7 @@ class PedidoController extends Controller
         }
         
         $produtos_array = $produtos->toArray();
-        /*if(!$is_produtos){
-            return back()->withInput();
-        }*/
-
+        
         $produtos = array_values($produtos_comprados);
         $quantidades = array_values($quantidades);
         return view("loja.carrinho", ['grupoConsumo' => $grupoConsumo, 'produtos' => $produtos, 'quantidades'=>$quantidades, 'total' => $total, 'evento' => $input['evento_id']]);
@@ -119,6 +117,7 @@ class PedidoController extends Controller
 
         //PDF END
 
+        //ENVIAR EMAIL
         $usuario = $pedido->consumidor->usuario;
         $to_name = $usuario->name;
         $to_email = $usuario->email;

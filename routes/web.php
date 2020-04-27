@@ -87,6 +87,7 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento')->name('evento.fechar');
     Route::get('/evento/produtores/{idGrupoConsumo}',  'EventoController@listarProdutores')->name('evento.produtores');
     Route::get('/evento/produtos/{idGrupoConsumo}',  'EventoController@listarProdutos')->name('evento.produtos');
+    Route::get('/evento/editarProduto/{idGrupoConsumo}',  'EventoController@editarProdutos')->name('evento.editar.produtos');
     Route::post('/evento/desativarProdutores',  'EventoController@desativarProdutores')->name('evento.produtores.desativar');
     Route::post('/evento/desativarProdutos',  'EventoController@desativarProdutos')->name('evento.produtos.desativar');
     Route::post('/cadastrarEvento', 'EventoController@cadastrar')->name('evento.cadastrar');
