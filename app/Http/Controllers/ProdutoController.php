@@ -25,7 +25,6 @@ class ProdutoController extends Controller
 
     public function cadastrar(Request $request){
         $validator = Validator::make($request->all(), [
-            // 'nome' => 'required|unique:produtos,nome,NULL,id,deleted_at,NULL|min:2|max:191',
             'nome' => ['required','min:2','max:191',Rule::unique('produtos','nome')
                           ->where(function($query) use ($request){ $query->where('grupoconsumo_id', $request->grupoConsumo)
                                                                          ->whereNull('deleted_at'); })
@@ -47,6 +46,7 @@ class ProdutoController extends Controller
         $produto->descricao = $request->descricao;
         $produto->unidadevenda_id = $request->unidadeVenda;
         $produto->grupoconsumo_id = $request->grupoConsumo;
+        $produto->ativo = false;
         $produto->save();
         return redirect()
                 ->action('ProdutoController@listar', $request->grupoConsumo)

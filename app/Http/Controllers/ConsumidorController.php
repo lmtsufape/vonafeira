@@ -112,13 +112,26 @@ class ConsumidorController extends Controller
     public function editarPedido($idPedido){
       $pedido = Pedido::find($idPedido);
       $evento = Evento::find($pedido->evento_id);
-      $itensPedido = ItemPedido::where('pedido_id','=',$pedido->id)->orderBy('produto_id')->get();
+     
+      $itensPedido = itemPedido::where('pedido_id','=',$pedido->id)->join('produtos', 'item_pedidos.produto_id', '=', 'produtos.id')->orderBy('produtos.nome')->select('item_pedidos.*')->get();
     
       $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
       $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
                          ->where('ativo', '=', True)
-                         ->orderBy('id')->get();
-
+                         ->orderBy('nome')->get();
+     
+      $produtos_ids = [];
+      foreach($itensPedido as $item){
+        array_push($produtos_ids, $item->produto_id);
+      }
+   
+      foreach($produtos as $produto){
+        array_push($produtos_ids, $produto->id);
+      }
+  
+      $produtos_ids = array_unique($produtos_ids);      
+      $produtos = Produto::whereIn('id',$produtos_ids)->orderBy('nome')->get();
+      
       return view("consumidor.editarPedido", [
           'pedido' => $pedido,
           'evento' => $evento,

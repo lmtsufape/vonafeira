@@ -42,22 +42,26 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @php $item_pos = 0; $itemPedido=null; $i=0; @endphp
-                          
-                          @foreach($produtos as $produto)
-                              
-                              <?php                            
-                                if($item_pos >= count($itensPedido) ){
+                          @php $i=0; @endphp
+                          @php
+                            $pedidos_ids = [];
+                            foreach($itensPedido as $item){
+                              array_push($pedidos_ids, $item->produto_id);
+                            }
+                            
+                          @endphp
+                          @foreach($produtos as $produto)                              
+                              <?php
+                                //checando se produto atual está entre os itens do pedido   
+                                //se produto->id estiver entre as ids de itensPedidos->produto_id
+                                if( ($key_item = array_search($produto->id, $pedidos_ids)) !== false ){                                  
+                                  $foiPedido = true;
+                                  $itemPedido = $itensPedido[$key_item];
+                                }else{                                  
                                   $foiPedido = false;
                                   $itemPedido = null; 
-                                }else if($itensPedido[$item_pos]->produto_id != $produto->id){                                  
-                                  $foiPedido = false;
-                                  $itemPedido = null;                                 
-                                } else {
-                                  $foiPedido = true;
-                                  $itemPedido = $itensPedido[$item_pos];    
-                                  $item_pos++;;
                                 }
+                                
                               ?>
 
                               @if($foiPedido)
@@ -66,7 +70,7 @@
 
                               <tr>
                                 <td data-title="Comprar?">
-                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this)" name="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
+                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this, '{{$produto->ativo}}')" name="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
                                 </td>
                                 <td data-title="Produto">{{ $produto->nome }}</td>
                                 <td data-title="Descrição">{{ $produto->descricao }}</td>
@@ -90,6 +94,7 @@
                               </tr>
                             @php($i++)
                           @endforeach
+
                         </tbody>
                       </table>
                     </div>
@@ -111,16 +116,20 @@
 @endsection
 
 <script type="text/javascript">
-Enable = function(checkbox)
+Enable = function(checkbox, ativo)
     {
       var element_id = (checkbox.id).replace('checkbox_','');
       var input = document.getElementById(("quantidade[").concat(element_id,"]"));
-
-      if(checkbox.checked == true){
-          input.disabled = false;
+     
+      if(ativo){
+        if(checkbox.checked == true){
+            input.disabled = false;
+        }else{
+            input.disabled = true;
+            input.value = "";
+        }      
       }else{
-          input.disabled = true;
-          input.value = "";
-      }      
+        input.disabled = true;        
+      }
     }
 </script>
