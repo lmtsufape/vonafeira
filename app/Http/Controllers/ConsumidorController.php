@@ -162,7 +162,7 @@ class ConsumidorController extends Controller
 
     public function atualizarPedido(Request $request){
       $input = $request->input();
-      if(!(array_key_exists("quantidade",$input))){
+      if(!(array_key_exists("checkbox",$input))){
         return redirect()->back()->with('fail','Necessária a seleção de um ou mais itens.');
       }
       
@@ -171,8 +171,12 @@ class ConsumidorController extends Controller
       $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
      
       //no formato: $quantidades[id_produto_selecionado] = quantidade
+      $checkboxes = $input['checkbox'];
+      $keys_checkbox = array_keys($checkboxes);
       $quantidades = $input['quantidade'];
-      $array_of_product_ids = array_keys($quantidades);
+      $keys_quantidades = array_keys($quantidades);
+
+      $array_of_product_ids = array_intersect($keys_quantidades, $keys_checkbox);
       
       foreach($itensPedido as $item){        
         if( ($key = array_search($item->produto_id, $array_of_product_ids)) !== false ){

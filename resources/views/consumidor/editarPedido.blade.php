@@ -70,7 +70,7 @@
 
                               <tr>
                                 <td data-title="Comprar?">
-                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this, '{{$produto->ativo}}')" name="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
+                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this, '{{$produto->ativo}}')" name="checkbox[{{$produto->id}}]" value="old()" id="checkbox_{{$produto->id}}">
                                 </td>
                                 <td data-title="Produto">{{ $produto->nome }}</td>
                                 <td data-title="Descrição">{{ $produto->descricao }}</td>
@@ -87,6 +87,9 @@
                                   @else
                                     <td data-title="Quantidade"><input {{$produto->ativo==false||!$foiPedido?'disabled':''}} id="quantidade[{{$produto->id}}]" type="number" min="0" step="1" class="form-control" style="width: 6em" name="quantidade[{{$produto->id}}]" value="{{ $itemPedido!=null?$itemPedido->quantidade:'' }}" autofocus></td>
                                   @endif
+                                @endif
+                                @if($produto->ativo == false)
+                                  <input type="hidden" name="quantidade[{{$produto->id}}]" value="{{ $itemPedido!=null?$itemPedido->quantidade:'' }}"/>
                                 @endif
                                 <td data-title="Unidade">{{ $produto->unidadeVenda->nome }}</td>
                                 @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
@@ -128,7 +131,7 @@ Enable = function(checkbox, ativo)
             input.disabled = true;
             input.value = "";
         }      
-      }else{
+      }else{        
         input.disabled = true;        
       }
     }
