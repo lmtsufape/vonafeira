@@ -27,7 +27,7 @@ $factory->define(\projetoGCA\Produto::class, function (Faker $faker) {
                           ->where('grupoConsumoId', '=', $grupoConsumoId)
                           ->get()->toArray();
 
-    $unidadeVendaId = $unidadesVendaIds[rand(0,count($unidadesVendaIds)-1)]->id;
+    $unidadeVendaId = $unidadesVendaIds[rand(0,(count($unidadesVendaIds)-1))]->id;
 
     return [
         'produtor_id' => $produtorId,
