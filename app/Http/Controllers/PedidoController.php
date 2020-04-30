@@ -134,7 +134,7 @@ class PedidoController extends Controller
             $message->to($to_email, $to_name)
                     ->attachData($pdf->output(),$pdf_name)
                     ->subject($subject);
-            $message->from('naoresponder.lmts@gmail.com','Feira Solidária');
+            $message->from('naoresponder.lmts@gmail.com','Feira Solidária');            
         });
 
         return redirect("/visualizarPedido/$pedido->id")->with('success','Uma cópia do pedido foi enviada pra seu e-mail cadastrado');

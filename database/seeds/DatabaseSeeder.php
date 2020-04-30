@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
       $this->call(LocalRetiradaEventoSeeder::class);
       $this->call(PedidoSeeder::class);
       $this->call(ItemPedidoSeeder::class);
+      $this->call(EnderecoSeeder::class);
     }
 }

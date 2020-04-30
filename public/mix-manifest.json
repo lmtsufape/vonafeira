@@ -2,5 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/styles.css": "/css/styles.css",
-    "/css/evento.eventos.css": "/css/evento.eventos.css"
+    "/css/evento.eventos.css": "/css/evento.eventos.css",
+    "/css/consumidor.escreverEmail.css": "/css/consumidor.escreverEmail.css",
+    "/css/consumidor.consumidores.css": "/css/consumidor.consumidores.css"
 }

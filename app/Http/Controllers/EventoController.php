@@ -300,6 +300,11 @@ class EventoController extends Controller
 
     public function desativarProdutos(Request $request){
       $input = $request->input();
+      //dd($input);
+      
+      if(!(isset($input["checkbox"]))){
+        return redirect()->back()->with('fail','Selecione um ou mais produtos');
+      }
 
       $produtos= \projetoGCA\Produto::where('grupoconsumo_id','=',$input['idGrupoConsumo'])->get();
                                                         // ->where('ativo','=',True)->get();

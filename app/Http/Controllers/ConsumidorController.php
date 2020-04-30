@@ -112,13 +112,26 @@ class ConsumidorController extends Controller
     public function editarPedido($idPedido){
       $pedido = Pedido::find($idPedido);
       $evento = Evento::find($pedido->evento_id);
-      $itensPedido = ItemPedido::where('pedido_id','=',$pedido->id)->orderBy('produto_id')->get();
+     
+      $itensPedido = itemPedido::where('pedido_id','=',$pedido->id)->join('produtos', 'item_pedidos.produto_id', '=', 'produtos.id')->orderBy('produtos.nome')->select('item_pedidos.*')->get();
     
       $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
       $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
                          ->where('ativo', '=', True)
-                         ->orderBy('id')->get();
-
+                         ->orderBy('nome')->get();
+     
+      $produtos_ids = [];
+      foreach($itensPedido as $item){
+        array_push($produtos_ids, $item->produto_id);
+      }
+   
+      foreach($produtos as $produto){
+        array_push($produtos_ids, $produto->id);
+      }
+  
+      $produtos_ids = array_unique($produtos_ids);      
+      $produtos = Produto::whereIn('id',$produtos_ids)->orderBy('nome')->get();
+      
       return view("consumidor.editarPedido", [
           'pedido' => $pedido,
           'evento' => $evento,
@@ -149,7 +162,7 @@ class ConsumidorController extends Controller
 
     public function atualizarPedido(Request $request){
       $input = $request->input();
-      if(!(array_key_exists("quantidade",$input))){
+      if(!(array_key_exists("checkbox",$input))){
         return redirect()->back()->with('fail','Necessária a seleção de um ou mais itens.');
       }
       
@@ -158,8 +171,12 @@ class ConsumidorController extends Controller
       $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
      
       //no formato: $quantidades[id_produto_selecionado] = quantidade
+      $checkboxes = $input['checkbox'];
+      $keys_checkbox = array_keys($checkboxes);
       $quantidades = $input['quantidade'];
-      $array_of_product_ids = array_keys($quantidades);
+      $keys_quantidades = array_keys($quantidades);
+
+      $array_of_product_ids = array_intersect($keys_quantidades, $keys_checkbox);
       
       foreach($itensPedido as $item){        
         if( ($key = array_search($item->produto_id, $array_of_product_ids)) !== false ){
@@ -297,5 +314,27 @@ class ConsumidorController extends Controller
       $usuario->save();
 
       return redirect()->back()->with('success','Senha alterada com sucesso!');
+    }
+
+    public function escreverEmail(Request $request, $grupoConsumoId){
+      
+      if(!(isset($request["checkbox"]))){
+        return redirect()->back()->with('fail','Selecione um ou mais consumidores');
+      }
+
+      $destinatarios_id = array_keys($request["checkbox"]);
+      $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
+      $consumidores = Consumidor::whereIn('id', $destinatarios_id)->get();
+
+      $users_id = array();
+      foreach($consumidores as $consumidor){
+          array_push($users_id,$consumidor->user_id);
+      }
+      $destinatarios = User::whereIn('id',$users_id)->orderBy('name')->get();
+      
+      return view('consumidor.escreverEmail',
+                ['destinatarios' => $destinatarios,
+                'grupoConsumo' => $grupoConsumo]
+      );
     }
 }

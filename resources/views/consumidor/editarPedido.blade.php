@@ -42,22 +42,26 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @php $item_pos = 0; $itemPedido=null; $i=0; @endphp
-                          
-                          @foreach($produtos as $produto)
-                              
-                              <?php                            
-                                if($item_pos >= count($itensPedido) ){
+                          @php $i=0; @endphp
+                          @php
+                            $pedidos_ids = [];
+                            foreach($itensPedido as $item){
+                              array_push($pedidos_ids, $item->produto_id);
+                            }
+                            
+                          @endphp
+                          @foreach($produtos as $produto)                              
+                              <?php
+                                //checando se produto atual está entre os itens do pedido   
+                                //se produto->id estiver entre as ids de itensPedidos->produto_id
+                                if( ($key_item = array_search($produto->id, $pedidos_ids)) !== false ){                                  
+                                  $foiPedido = true;
+                                  $itemPedido = $itensPedido[$key_item];
+                                }else{                                  
                                   $foiPedido = false;
                                   $itemPedido = null; 
-                                }else if($itensPedido[$item_pos]->produto_id != $produto->id){                                  
-                                  $foiPedido = false;
-                                  $itemPedido = null;                                 
-                                } else {
-                                  $foiPedido = true;
-                                  $itemPedido = $itensPedido[$item_pos];    
-                                  $item_pos++;;
                                 }
+                                
                               ?>
 
                               @if($foiPedido)
@@ -66,7 +70,7 @@
 
                               <tr>
                                 <td data-title="Comprar?">
-                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this)" nome="checkbox_{{$produto->id}}" value="old()" id="checkbox_{{$produto->id}}">
+                                  <input type="checkbox" {{$foiPedido ? "checked": ""}}  onchange="Enable(this, '{{$produto->ativo}}')" name="checkbox[{{$produto->id}}]" value="old()" id="checkbox_{{$produto->id}}">
                                 </td>
                                 <td data-title="Produto">{{ $produto->nome }}</td>
                                 <td data-title="Descrição">{{ $produto->descricao }}</td>
@@ -84,12 +88,16 @@
                                     <td data-title="Quantidade"><input {{$produto->ativo==false||!$foiPedido?'disabled':''}} id="quantidade[{{$produto->id}}]" type="number" min="0" step="1" class="form-control" style="width: 6em" name="quantidade[{{$produto->id}}]" value="{{ $itemPedido!=null?$itemPedido->quantidade:'' }}" autofocus></td>
                                   @endif
                                 @endif
+                                @if($produto->ativo == false)
+                                  <input type="hidden" name="quantidade[{{$produto->id}}]" value="{{ $itemPedido!=null?$itemPedido->quantidade:'' }}"/>
+                                @endif
                                 <td data-title="Unidade">{{ $produto->unidadeVenda->nome }}</td>
                                 @php($produtor = \projetoGCA\Produtor::find($produto->produtor_id))
                                 <td data-title="Produtor">{{$produtor->nome}}</td>
                               </tr>
                             @php($i++)
                           @endforeach
+
                         </tbody>
                       </table>
                     </div>
@@ -111,16 +119,20 @@
 @endsection
 
 <script type="text/javascript">
-Enable = function(checkbox)
+Enable = function(checkbox, ativo)
     {
       var element_id = (checkbox.id).replace('checkbox_','');
       var input = document.getElementById(("quantidade[").concat(element_id,"]"));
-
-      if(checkbox.checked == true){
-          input.disabled = false;
-      }else{
-          input.disabled = true;
-          input.value = "";
-      }      
+     
+      if(ativo){
+        if(checkbox.checked == true){
+            input.disabled = false;
+        }else{
+            input.disabled = true;
+            input.value = "";
+        }      
+      }else{        
+        input.disabled = true;        
+      }
     }
 </script>

@@ -2,7 +2,6 @@
 
 @section('styles')
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
-   
 @stop
 
 @section('titulo','Listagem de Pedidos')

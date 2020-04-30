@@ -48,6 +48,14 @@
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <input id="idGrupoConsumo" type="hidden" class="form-control" name="idGrupoConsumo" value="{{ $grupoConsumo->id }}" >
 
+                          @if (\Session::has('fail'))
+                              <br>
+                              <div class="alert alert-danger">
+                                  <strong>Erro!</strong>
+                                  {!! \Session::get('fail') !!}
+                              </div>
+                          @endif
+
                           @foreach ($produtos as $produto)
                             <tr>
                               @php($produtor = \projetoGCA\Produtor::where('id','=',$produto->produtor_id)->first())
