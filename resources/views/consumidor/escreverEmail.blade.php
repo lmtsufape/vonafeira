@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="panel-footer">
-                            <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                            <a class="btn btn-danger" href="{{route('consumidor.listar', ['id' => $grupoConsumo->id])}}">Voltar</a>
                         </div>
 
                     </div>

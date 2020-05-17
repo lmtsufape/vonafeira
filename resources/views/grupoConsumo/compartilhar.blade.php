@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/evento.compartilhar.css') }}" rel="stylesheet"/>
+@stop
+
 @section('titulo','Gerenciar Grupo de Consumo')
 
 @section('navbar')

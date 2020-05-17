@@ -74,7 +74,7 @@
                   </div>
               </div>
               <div class="panel-footer">
-                  <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                  <a class="btn btn-danger" href="{{route('home')}}">Voltar</a>
               </div>
           </div>
       </div>
