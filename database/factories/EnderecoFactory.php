@@ -13,14 +13,18 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(\projetoGCA\User::class, function (Faker $faker) {
+$factory->define(\projetoGCA\Endereco::class, function (Faker $faker) {
+
+    static $usuarioId = 1;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => bcrypt('123456'),
-        'remember_token' => str_random(10),
-        'telefone' =>  '('.$faker->randomNumber($nbDigits = 2).') '. $faker->randomNumber($nbDigits = 5).'-'.
-            $faker->randomNumber($nbDigits = 4), //$faker->phoneNumberCleared,
+        'rua' => $faker->name,
+        'numero' => rand(1,100),
+        'bairro' => $faker->name,
+        'cidade' => $faker->city(),
+        'uf' => $faker->randomElement($array = array ('AC', 'AL', 'AP', 'AM','BA','CE')),
+        'cep' => $faker->randomNumber($nbDigits = 8),
+        'user_id' => $usuarioId++,
     ];
+
 });

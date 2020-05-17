@@ -12,4 +12,8 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .styles('resources/assets/css/pedidos.css', 'public/css/styles.css')
+   .styles('resources/assets/css/evento.eventos.css', 'public/css/evento.eventos.css')
+   .styles('resources/assets/css/consumidor.escreverEmail.css', 'public/css/consumidor.escreverEmail.css')
+   .styles('resources/assets/css/consumidor.consumidores.css','public/css/consumidor.consumidores.css');

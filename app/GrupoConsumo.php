@@ -3,9 +3,13 @@
 namespace projetoGCA;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GrupoConsumo extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+    
     public function coordenador(){
         return $this->belongsTo(User::class, 'coordenador_id');
     }

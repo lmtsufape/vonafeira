@@ -18,7 +18,8 @@ $factory->define(\projetoGCA\Produtor::class, function (Faker $faker) {
     return [
         'nome' => $faker->name,
         'endereco' => $faker->address,
-        'telefone' => $faker->phoneNumberCleared,
+        'telefone' => '('.$faker->randomNumber($nbDigits = 2).') '. $faker->randomNumber($nbDigits = 5).'-'.
+            $faker->randomNumber($nbDigits = 4), 
         'grupoconsumo_id' => rand(1, DB::table('grupo_consumos')->count()),
     ];
 });

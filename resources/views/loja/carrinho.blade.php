@@ -56,17 +56,35 @@
                     <div class="panel-footer">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-13">
-
-                                <select class="form-control" name="localretiradaevento" required>
-                                    <option value="" selected disabled hidden>Escolha local de retirada</option>
+                              <input type="radio" onchange="show_drop_down()" id="radio_retirada" name="tipo" value="retirada" required>
+                              <label for="retirada">Retirar pedido no local do evento</label><br>
+                              
+                              <input type="radio"  onchange="show_drop_down()" id="radio_entrega" name="tipo"  value="entrega">
+                              <label for="entrega">Receber entrega a meu endereço</label><br>
+                              
+                                <select  class="form-control" id="select_retirada" name="localretiradaevento" >
+                                    <option value="" selected disabled >Escolha local de retirada</option>
                                     @php($evento = \projetoGCA\Evento::find($evento))
                                     @foreach ($evento->locaisretiradaevento as $local)
                                         @if (old('localretiradaevento') == $local->id)
-                                            <option value="{{$local->id}}" selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
+                                            <option value="{{$local->id}}"  selected>{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @else
                                             <option value="{{$local->id}}">{{$local->localretirada()->withTrashed()->first()->nome}}</option>
                                         @endif
                                     @endforeach
+                                </select>
+
+                                <select class="form-control" id="select_entrega" name="entrega_endereco" > -->
+                                  <option value="" selected disabled hidden>Entrega a seu endereço</option>
+                                  
+                                    @if(\Auth::user()->endereco != null )
+                                      @if (old('endereco') == $local->id)
+                                      <option value="{{ \Auth::user()->endereco->id }}" selected> {{\Auth::user()->endereco->rua}}</option>
+                                      @else
+                                          <option value="{{ \Auth::user()->endereco->id }}">{{\Auth::user()->endereco->rua}}</option>
+                                      @endif
+                                    @endif
+                                   
                                 </select>
 
                                 <br>
@@ -84,3 +102,65 @@
     </div>
 </div>
 @endsection
+
+@section('javascript')
+<script type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function(event) {
+  document.getElementById("select_retirada").style.display = "none";
+  document.getElementById("select_entrega").style.display = "none";
+});
+
+show_drop_down = function()
+ {
+  if(document.getElementById("radio_retirada").checked == true){
+    document.getElementById("select_retirada").style.display = "block";
+
+    document.getElementById("select_entrega").selectedIndex = 0;
+    document.getElementById("select_entrega").style.display = "none";   
+  }
+    if(document.getElementById("radio_entrega").checked == true){
+    document.getElementById("select_entrega").style.display = "block";
+
+    document.getElementById("select_retirada").selectedIndex = 0;
+    document.getElementById("select_retirada").style.display = "none";
+  }
+
+  name = function() {
+    const select_retirada = document.getElementById("select_retirada");
+    const select_entrega = document.getElementById("select_entrega");
+
+    function init() {
+      select_retirada.addEventListener('change', checkValidity);
+      select_entrega.addEventListener('change', checkValidity);
+     
+      checkValidity();
+    }
+
+    //Deve haver uma opção escolhida para um dos selects
+    function isChecked() {
+        //Checando primeiro select
+        if(select_retirada.selectedIndex != 0 || select_entrega.selectedIndex != 0){
+          return true;
+        }
+        return false;
+    }
+
+    function checkValidity() {
+        const errorMessage = !isChecked() ? 'Escolha uma opção' : '';
+        if(select_retirada.style.display == "none"){
+          select_entrega.setCustomValidity(errorMessage);
+          select_retirada.setCustomValidity("");
+        }else{
+          select_retirada.setCustomValidity(errorMessage); 
+          select_entrega.setCustomValidity("");
+        }
+    }
+
+    init();
+  }();
+    
+}
+</script>
+@endsection
+

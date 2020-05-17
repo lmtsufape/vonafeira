@@ -57,6 +57,7 @@ Route::middleware('autorizacao')->group(function() {
     Route::post('/atualizarCadastro', 'ConsumidorController@atualizarCadastro')->name('consumidor.cadastro.atualizar');
     Route::get('/alterarSenha', 'ConsumidorController@alterarSenha')->name('consumidor.alterarSenha');
     Route::post('/atualizarSenha', 'ConsumidorController@atualizarSenha')->name('consumidor.atualizarSenha');
+    Route::post('/escreverEmail/{grupoConsumoId}', 'ConsumidorController@escreverEmail')->name('consumidor.escrever.email');
 
     // Rotas para pedidos do Consumidor
     Route::get('/meusPedidos', 'ConsumidorController@pedidos')->name('consumidor.meusPedidos');
@@ -83,9 +84,11 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/eventos/{idGrupoConsumo}', 'EventoController@listar')->name('evento.listar');
     Route::get('/evento/pedidos/{evento_id}', 'EventoController@pedidos')->name('evento.pedidos');
     Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido')->name('evento.pedido.itens');
+    Route::get('/evento/pedidos/tipo/{pedido_id}', 'EventoController@tipoPedido')->name('evento.pedido.tipo');
     Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento')->name('evento.fechar');
     Route::get('/evento/produtores/{idGrupoConsumo}',  'EventoController@listarProdutores')->name('evento.produtores');
     Route::get('/evento/produtos/{idGrupoConsumo}',  'EventoController@listarProdutos')->name('evento.produtos');
+    Route::get('/evento/editarProduto/{idGrupoConsumo}',  'EventoController@editarProdutos')->name('evento.editar.produtos');
     Route::post('/evento/desativarProdutores',  'EventoController@desativarProdutores')->name('evento.produtores.desativar');
     Route::post('/evento/desativarProdutos',  'EventoController@desativarProdutos')->name('evento.produtos.desativar');
     Route::post('/cadastrarEvento', 'EventoController@cadastrar')->name('evento.cadastrar');
@@ -120,6 +123,7 @@ Route::middleware('autorizacao')->group(function() {
 
     //Rotas para emails
     Route::post('/share/mail','MyMailController@emailCompartilhar')->name('compartilhar.post');
+    Route::post('/enviaremail', 'MyMailController@enviarEmail')->name('enviar.email');
 
     //Rotas para Locais de Retirada
     Route::get('/grupoconsumo/{grupoconsumo_id}/locaisretirada/listar','LocalRetiradaController@listar')->name('locaisretirada.listar');

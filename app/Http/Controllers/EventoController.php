@@ -161,7 +161,7 @@ class EventoController extends Controller
 
 
             $grupoConsumo = \projetoGCA\GrupoConsumo::where('id','=',$idGrupoConsumo)->first();
-            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->get();
+            $eventos = \projetoGCA\Evento::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('data_evento', 'desc')->get();
             $ultimoEvento = \projetoGCA\Evento::where('grupoconsumo_id', '=', $grupoConsumo->id)->where('estaAberto', '=' ,'True')->first();
             return view("evento.eventos", [
               'eventos' => $eventos,
@@ -180,6 +180,17 @@ class EventoController extends Controller
         return view("pedido.pedidos", ['pedidos' => $pedidos,
                                        'evento' => $evento,
                                        'grupoConsumo' => $grupoConsumo]);
+    }
+
+    public function tipoPedido($pedido_id){
+
+      $pedido = \projetoGCA\Pedido::find($pedido_id);
+      $evento = \projetoGCA\Evento::find($pedido->evento_id);
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($evento->grupoconsumo_id);
+
+      return view("pedido.tipoPedido", [ 'pedido' => $pedido,
+                                         'evento' => $evento,
+                                         'grupoConsumo' => $grupoConsumo]);
     }
 
     public function itensPedido($pedido_id){
@@ -266,16 +277,46 @@ class EventoController extends Controller
                                       'grupoConsumo' => $grupoConsumo]);
     }
 
+    public function editarProdutos($idGrupoConsumo){
+
+      $grupoConsumo = \projetoGCA\GrupoConsumo::find($idGrupoConsumo);
+
+      $produtoresDesativados = \projetoGCA\Produtor::where('grupoconsumo_id', '=', $idGrupoConsumo)
+                                       ->where('ativo', '=', False)->get();
+
+      $produtos = \projetoGCA\Produto::where('grupoconsumo_id', '=', $idGrupoConsumo)->orderBy('nome')->get();
+
+      foreach ($produtoresDesativados as $produtor) {
+        foreach ($produtos as $key => $produto) {
+          if($produtor->id == $produto->produtor_id) {
+            unset($produtos[$key]);
+          }
+        }
+      }
+
+      return view("evento.editarProduto", ['produtos' => $produtos,
+                                      'grupoConsumo' => $grupoConsumo]);
+    }
+
     public function desativarProdutos(Request $request){
       $input = $request->input();
+      //dd($input);
+      
+      if(!(isset($input["checkbox"]))){
+        return redirect()->back()->with('fail','Selecione um ou mais produtos');
+      }
 
-      $produtos= \projetoGCA\Produto::where('grupoconsumo_id','=',$input['idGrupoConsumo'])
-                                    ->where('ativo','=',True)->get();
+      $produtos= \projetoGCA\Produto::where('grupoconsumo_id','=',$input['idGrupoConsumo'])->get();
+                                                        // ->where('ativo','=',True)->get();
 
+      
       foreach ($produtos as $produto) {
         if(!in_array($produto['id'], $input['checkbox'])){
           $produto = \projetoGCA\Produto::find($produto['id']);
           $produto->ativo = False;
+          $produto->update();
+        }else{
+          $produto->ativo = True;
           $produto->update();
         }
       }

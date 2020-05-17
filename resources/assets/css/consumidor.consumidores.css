@@ -1,0 +1,12 @@
+
+#cabecalho{    
+    text-align: center;
+}
+
+input[type="checkbox"]{
+    margin-left: 50%;
+}
+
+.panel-footer{
+    text-align: center;
+}

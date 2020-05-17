@@ -8,10 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use \projetoGCA\Consumidor;
 use \projetoGCA\Pedido;
 use \projetoGCA\ItemPedido;
+use \projetoGCA\Produto;
 use \projetoGCA\User;
 use \projetoGCA\Evento;
 use \projetoGCA\GrupoConsumo;
 use Illuminate\Support\Facades\Hash;
+use projetoGCA\Endereco;
+
 class ConsumidorController extends Controller
 {
     /**
@@ -109,12 +112,32 @@ class ConsumidorController extends Controller
     public function editarPedido($idPedido){
       $pedido = Pedido::find($idPedido);
       $evento = Evento::find($pedido->evento_id);
-      $itensPedido = ItemPedido::where('pedido_id','=',$pedido->id)->get();
-
+     
+      $itensPedido = itemPedido::where('pedido_id','=',$pedido->id)->join('produtos', 'item_pedidos.produto_id', '=', 'produtos.id')->orderBy('produtos.nome')->select('item_pedidos.*')->get();
+    
+      $grupoConsumo = GrupoConsumo::find($evento->grupoconsumo_id);
+      $produtos = Produto::where('grupoconsumo_id', '=', $evento->grupoconsumo_id)
+                         ->where('ativo', '=', True)
+                         ->orderBy('nome')->get();
+     
+      $produtos_ids = [];
+      foreach($itensPedido as $item){
+        array_push($produtos_ids, $item->produto_id);
+      }
+   
+      foreach($produtos as $produto){
+        array_push($produtos_ids, $produto->id);
+      }
+  
+      $produtos_ids = array_unique($produtos_ids);      
+      $produtos = Produto::whereIn('id',$produtos_ids)->orderBy('nome')->get();
+      
       return view("consumidor.editarPedido", [
           'pedido' => $pedido,
           'evento' => $evento,
-          'itensPedido' => $itensPedido]
+          'itensPedido' => $itensPedido,
+          'grupoConsumo' => $grupoConsumo,
+          'produtos' => $produtos]
       );
     }
 
@@ -139,20 +162,47 @@ class ConsumidorController extends Controller
 
     public function atualizarPedido(Request $request){
       $input = $request->input();
-      $array_of_item_ids = $input['item_id'];
-      $quantidades = $input['quantidade'];
-
-      $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
-
-      $i = 0;
-
-      foreach ($itensPedido as $item){
-          if($quantidades[$i] > 0){
-              $item->quantidade = $quantidades[$i];
-              $item->update();
-          }
-          $i = $i + 1;
+      if(!(array_key_exists("checkbox",$input))){
+        return redirect()->back()->with('fail','Necessária a seleção de um ou mais itens.');
       }
+      
+      //itens que faziam parte do pedido original
+      $array_of_item_ids = $input['item_id'];      
+      $itensPedido = ItemPedido::whereIn('id', $array_of_item_ids)->get();
+     
+      //no formato: $quantidades[id_produto_selecionado] = quantidade
+      $checkboxes = $input['checkbox'];
+      $keys_checkbox = array_keys($checkboxes);
+      $quantidades = $input['quantidade'];
+      $keys_quantidades = array_keys($quantidades);
+
+      $array_of_product_ids = array_intersect($keys_quantidades, $keys_checkbox);
+      
+      foreach($itensPedido as $item){        
+        if( ($key = array_search($item->produto_id, $array_of_product_ids)) !== false ){
+          if( $item->quantidade != $quantidades[$item->produto_id] && $quantidades[$item->produto_id] > 0){
+            //se os produtos adicionados já existiam no pedido original => atualizar
+            $item->quantidade = $quantidades[$item->produto_id];
+            $item->update();
+          }            
+          unset($array_of_product_ids[$key]);
+        }else if(!in_array($item->produto_id, $array_of_product_ids)){
+          //se existem produtos que existiam no pedido original e não existem mais => remover
+          $item->delete();
+        }
+      }
+      
+      //se os produtos adicionados não existiam no pedido original => adicionar
+      $produtos = Produto::whereIn('id', $array_of_product_ids)->get();
+      foreach($produtos as $produto){
+        if($quantidades[$produto->id] > 0){
+          $item = new ItemPedido();
+          $item->pedido_id = $input['pedido_id'];
+          $item->produto_id = $produto->id;
+          $item->quantidade = $quantidades[$produto->id];
+          $item->save();
+        }
+      }  
 
       return redirect("/meusPedidos");
     }
@@ -181,7 +231,7 @@ class ConsumidorController extends Controller
 
       if($request->email != $usuario->email){
         $validator = Validator::make($request->all(), [
-          'email' => 'unique:users|email'
+          'email' => 'required|string|email|max:255|unique:users'
         ]);
 
         if($validator->fails()){
@@ -190,8 +240,14 @@ class ConsumidorController extends Controller
       }
 
       $validator = Validator::make($request->all(),[
-        'name' => 'required',
-        'telefone' => 'required|min:10'
+        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/',
+        'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
+        
+        'cep'=> 'required_with:rua,bairro,cidade,uf',
+        'rua' => 'required_with:cep,bairro,cidade,uf',
+        'bairro' => 'required_with:cep,rua,cidade,uf',
+        'cidade' => 'required_with:cep,rua,bairro,uf',
+        'uf' => 'required_with:cep,rua,bairro,cidade',
       ]);
 
       if($validator->fails()){
@@ -210,6 +266,24 @@ class ConsumidorController extends Controller
 
       $usuario->save();
 
+      if($request->cep != null){
+        $endereco = $usuario->endereco == null ? new Endereco() : $usuario->endereco;
+        
+        $endereco->rua = $request['rua'];
+        $endereco->numero = $request['numero'];
+        $endereco->bairro = $request['bairro'];
+        $endereco->cidade = $request['cidade'];
+        $endereco->uf = $request['uf'];
+        $endereco->cep = $request['cep'];
+       
+        if($usuario->endereco == null){
+          $usuario->endereco()->save($endereco);
+        }else{
+          $endereco->save();
+        }
+        
+      }
+ 
       return redirect()->back()->with('success','Dados cadastrais salvos.');
     }
 
@@ -240,5 +314,27 @@ class ConsumidorController extends Controller
       $usuario->save();
 
       return redirect()->back()->with('success','Senha alterada com sucesso!');
+    }
+
+    public function escreverEmail(Request $request, $grupoConsumoId){
+      
+      if(!(isset($request["checkbox"]))){
+        return redirect()->back()->with('fail','Selecione um ou mais consumidores');
+      }
+
+      $destinatarios_id = array_keys($request["checkbox"]);
+      $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
+      $consumidores = Consumidor::whereIn('id', $destinatarios_id)->get();
+
+      $users_id = array();
+      foreach($consumidores as $consumidor){
+          array_push($users_id,$consumidor->user_id);
+      }
+      $destinatarios = User::whereIn('id',$users_id)->orderBy('name')->get();
+      
+      return view('consumidor.escreverEmail',
+                ['destinatarios' => $destinatarios,
+                'grupoConsumo' => $grupoConsumo]
+      );
     }
 }

@@ -101,6 +101,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'name' => [
+            'regex' => 'Insira nome e sobrenome',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
