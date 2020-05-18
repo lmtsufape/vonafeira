@@ -83,8 +83,8 @@ Route::middleware('autorizacao')->group(function() {
     Route::get('/adicionarEvento/{idGrupoConsumo}',  'EventoController@novo')->name('evento.novo');
     Route::get('/eventos/{idGrupoConsumo}', 'EventoController@listar')->name('evento.listar');
     Route::get('/evento/pedidos/{evento_id}', 'EventoController@pedidos')->name('evento.pedidos');
-    Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido')->name('evento.pedido.itens');
-    Route::get('/evento/pedidos/tipo/{pedido_id}', 'EventoController@tipoPedido')->name('evento.pedido.tipo');
+    //Route::get('/evento/pedidos/itens/{pedido_id}', 'EventoController@itensPedido')->name('evento.pedido.itens');
+    //Route::get('/evento/pedidos/tipo/{pedido_id}', 'EventoController@tipoPedido')->name('evento.pedido.tipo');
     Route::get('/evento/fechar/{eventoId}', 'EventoController@fecharEvento')->name('evento.fechar');
     Route::get('/evento/produtores/{idGrupoConsumo}',  'EventoController@listarProdutores')->name('evento.produtores');
     Route::get('/evento/produtos/{idGrupoConsumo}',  'EventoController@listarProdutos')->name('evento.produtos');

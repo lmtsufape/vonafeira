@@ -151,7 +151,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                                <a class="btn btn-danger" href="{{route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id])}}">Voltar</a>
                                 <button type="submit" class="btn btn-success">
                                     Atualizar
                                 </button>

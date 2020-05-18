@@ -50,7 +50,7 @@
                     <hr>
 
                     <div class="panel-footer">
-                      <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                      <a class="btn btn-danger" href="{{route('grupoConsumo.listar')}}">Voltar</a>
                     </div>
                 </div>
             </div>

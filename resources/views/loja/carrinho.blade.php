@@ -88,7 +88,7 @@
                                 </select>
 
                                 <br>
-                                <a href="{{URL::previous()}}" class="btn btn-danger">Voltar</a>
+                                <a href="{{route('loja.evento', ['id' => $evento])}}" class="btn btn-danger">Voltar</a>
                                 <button type="submit" class="btn btn-primary">
                                     Finalizar Pedido
                                 </button>

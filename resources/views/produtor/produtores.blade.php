@@ -65,7 +65,7 @@
                   @endif
                 </div>
                 <div class="panel-footer">
-                  <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                  <a class="btn btn-danger" href="{{route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id])}}">Voltar</a>
                   <a class="btn btn-success" href="{{ route("produtor.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">
                     Novo
                   </a>
