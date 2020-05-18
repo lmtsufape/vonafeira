@@ -17,4 +17,4 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .styles('resources/assets/css/evento.eventos.css', 'public/css/evento.eventos.css')
    .styles('resources/assets/css/consumidor.escreverEmail.css', 'public/css/consumidor.escreverEmail.css')
    .styles('resources/assets/css/consumidor.consumidores.css','public/css/consumidor.consumidores.css')
-   .styles('resources/assets/css/evento.compartilhar.css', 'public/css/evento.compartilhar.css');
+   .styles('resources/assets/css/footer-relative.css', 'public/css/footer-relative.css');

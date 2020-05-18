@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link href="{{ asset('css/evento.compartilhar.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/footer-relative.css') }}" rel="stylesheet"/>
 @stop
 
 @section('titulo','Gerenciar Grupo de Consumo')

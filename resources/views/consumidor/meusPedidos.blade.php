@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('titulo','Meus Pedidos')
 
 @section('navbar')
