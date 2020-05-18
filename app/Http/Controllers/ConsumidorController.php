@@ -240,7 +240,7 @@ class ConsumidorController extends Controller
       }
 
       $validator = Validator::make($request->all(),[
-        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/',
+        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/|regex:/^[\pL\s\-\á\Á\é\É\í\Í\ó\Ó\ú\Ú\ã\Ã\õ\Õ\â\Â\ê\Ê\î\Î\ô\Ô\û\Û\']+$/',
         'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
         
         'cep'=> 'required_with:rua,bairro,cidade,uf',
