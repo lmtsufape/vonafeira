@@ -83,7 +83,7 @@
                             <label for="preco" class="col-md-4 control-label">Preço</label>
 
                             <div class="col-md-6">
-                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{ old('preco') }}">
+                                <input id="preco" type="number" step="0.01" min="0" class="form-control" name="preco" value="{{ old('preco') }}">
 
                                 @if ($errors->has('preco'))
                                     <span class="help-block">
@@ -118,7 +118,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                                <a class="btn btn-danger" href="{{route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id])}}">Voltar</a>
                                 <button type="submit" class="btn btn-success">
                                     Cadastrar
                                 </button>

@@ -60,7 +60,7 @@ Listar Unidades de Venda
                   @endif
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">
+                    <a class="btn btn-danger" href="{{route("grupoConsumo.gerenciar", ["id" => $grupoConsumo->id])}}">
                       Voltar
                     </a>
                     <a class="btn btn-success" href="{{ route("unidadeVenda.novo", ["grupoConsumoId" => $grupoConsumo->id]) }}">

@@ -104,9 +104,9 @@
                             <div class="col-md-6">
 
                                 @if(old() != NULL)
-                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{old('preco')}}">
+                                <input id="preco" type="number" step="0.01" min="0" class="form-control" name="preco" value="{{old('preco')}}">
                                 @else
-                                <input id="preco" type="number" step="0.01" class="form-control" name="preco" value="{{$produto->preco}}">
+                                <input id="preco" type="number" step="0.01" min="0" class="form-control" name="preco" value="{{$produto->preco}}">
                                 @endif
 
                                 @if ($errors->has('preco'))
@@ -151,7 +151,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                                <a class="btn btn-danger" href="{{route("produto.listar", ["idGrupoConsumo" => $grupoConsumo->id])}}">Voltar</a>
                                 <button type="submit" class="btn btn-success">
                                     Atualizar
                                 </button>

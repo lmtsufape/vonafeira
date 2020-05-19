@@ -112,10 +112,10 @@
                     @endif
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                    <a class="btn btn-danger" href="{{route('grupoConsumo.gerenciar',['id' => $grupoConsumo->id] )}}">Voltar</a>
 
                     @if(is_null($ultimoEvento))
-                      <a class="btn btn-success" href="{{ route("evento.novo", ["idGrupoConsumo" => $grupoConsumo->id]) }}">Novo</a>
+                      <a class="btn btn-success" href="{{ route('evento.novo', ['idGrupoConsumo' => $grupoConsumo->id]) }}">Novo</a>
                     @else
                       <a class="btn btn-success" disabled>Novo</a>
                     @endif

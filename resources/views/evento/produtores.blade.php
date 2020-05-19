@@ -59,7 +59,7 @@
                 </div>
                 <div class="panel-footer">
                   <button type="submit" class="btn btn-primary">
-                    continuar
+                    Continuar
                   </button>
                 </div>
             </div>

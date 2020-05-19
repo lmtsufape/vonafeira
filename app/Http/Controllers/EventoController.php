@@ -182,6 +182,7 @@ class EventoController extends Controller
                                        'grupoConsumo' => $grupoConsumo]);
     }
 
+    /* Exibe janela com endereço ou local de retirada. Substituído por collapse
     public function tipoPedido($pedido_id){
 
       $pedido = \projetoGCA\Pedido::find($pedido_id);
@@ -192,7 +193,9 @@ class EventoController extends Controller
                                          'evento' => $evento,
                                          'grupoConsumo' => $grupoConsumo]);
     }
+    */
 
+    /* --Exibe janela com itens de um pedido. Substituído por collapse
     public function itensPedido($pedido_id){
 
         $pedido = \projetoGCA\Pedido::find($pedido_id);
@@ -203,6 +206,7 @@ class EventoController extends Controller
                                            'evento' => $evento,
                                            'grupoConsumo' => $grupoConsumo]);
     }
+    */
 
     public function fecharEvento($eventoId){
         $evento = \projetoGCA\Evento::find($eventoId);

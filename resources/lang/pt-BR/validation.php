@@ -102,7 +102,7 @@ return [
             'rule-name' => 'custom-message',
         ],
         'name' => [
-            'regex' => 'Insira nome e sobrenome',
+            'regex' => 'Insira nome e sobrenome, sem números',
         ],
     ],
     /*

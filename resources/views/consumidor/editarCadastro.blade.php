@@ -259,7 +259,7 @@
                         </br>
                         <div align ="center" class="form-group">
                             <div >
-                                <a class="btn btn-danger" href="{{URL::previous()}}">Retornar</a>
+                                <a class="btn btn-danger" href="{{ route("home") }}">Retornar</a>
                             
                                 <button type="submit" class="btn btn-success">Atualizar</button>
                             </div>

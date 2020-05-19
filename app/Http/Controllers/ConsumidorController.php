@@ -240,7 +240,7 @@ class ConsumidorController extends Controller
       }
 
       $validator = Validator::make($request->all(),[
-        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/',
+        'name' => 'required|string|max:255|regex:/^\s*\S+(?:\s+\S+){1,}$/|regex:/^[\pL\s\-\á\Á\é\É\í\Í\ó\Ó\ú\Ú\ã\Ã\õ\Õ\â\Â\ê\Ê\î\Î\ô\Ô\û\Û\']+$/',
         'telefone' => 'required|regex:/^\(\d{2}\)\s\d{4,5}-\d{4}$/',
         
         'cep'=> 'required_with:rua,bairro,cidade,uf',
@@ -324,13 +324,9 @@ class ConsumidorController extends Controller
 
       $destinatarios_id = array_keys($request["checkbox"]);
       $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
-      $consumidores = Consumidor::whereIn('id', $destinatarios_id)->get();
-
-      $users_id = array();
-      foreach($consumidores as $consumidor){
-          array_push($users_id,$consumidor->user_id);
-      }
-      $destinatarios = User::whereIn('id',$users_id)->orderBy('name')->get();
+      
+      $destinatarios = User::whereIn('id',$destinatarios_id)->orderBy('name')->get();
+      
       
       return view('consumidor.escreverEmail',
                 ['destinatarios' => $destinatarios,

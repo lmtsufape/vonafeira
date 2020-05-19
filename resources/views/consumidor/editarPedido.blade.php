@@ -105,7 +105,7 @@
                 
                   <div class="panel-footer">
                       <div class="form-group">
-                        <a class="btn btn-danger" href="{{URL::previous()}}">Voltar</a>
+                        <a class="btn btn-danger" href="{{ route('consumidor.meusPedidos') }}">Voltar</a>
                         <button type="submit" class="btn btn-primary">
                             Atualizar Pedido
                         </button>
