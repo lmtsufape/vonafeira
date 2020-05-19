@@ -324,13 +324,9 @@ class ConsumidorController extends Controller
 
       $destinatarios_id = array_keys($request["checkbox"]);
       $grupoConsumo = GrupoConsumo::find($grupoConsumoId);
-      $consumidores = Consumidor::whereIn('id', $destinatarios_id)->get();
-
-      $users_id = array();
-      foreach($consumidores as $consumidor){
-          array_push($users_id,$consumidor->user_id);
-      }
-      $destinatarios = User::whereIn('id',$users_id)->orderBy('name')->get();
+      
+      $destinatarios = User::whereIn('id',$destinatarios_id)->orderBy('name')->get();
+      
       
       return view('consumidor.escreverEmail',
                 ['destinatarios' => $destinatarios,
